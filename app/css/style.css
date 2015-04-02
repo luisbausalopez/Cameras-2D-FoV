@@ -25,6 +25,7 @@
 
 	core-header-panel {
 		height: 10%;
+/*		height: 100px;*/
         min-height: 90px;
 /*		overflow: auto;*/
 		-webkit-overflow-scrolling: touch;
@@ -67,15 +68,14 @@
 /*        position: sticky;*/
 /*        left: 0;*/
 /*        top: 15%;*/
-/*        top: 100px;*/
-        top: 3%;
-        margin-top: 90px;
+/*        top: 110px;*/
+        top: 5%;
+        margin-top: 100px;
 /*        bottom: 0;*/
-        bottom: 2%;
+        bottom: 3%;
         max-height: 650px;
 /*        max-height: 325px;*/
         min-height: 325px;
-/*        height: 300px;*/
         height: auto;
 /*        height: 325px;*/
 /*        height: inherit;*/
