@@ -1,0 +1,1490 @@
+var layers = {
+    // DITSS Cameras: Ekkersrijt 
+    "DITSS_Cameras_Ekkersrijt_20150319": {
+        "type": "overlay", 
+        "category": "Cameras", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Cameras Ekkersrijt WMS",
+            "url":"/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WMSServer?",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":0,
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // DITSS Cameras: All 
+    , "DITSS_Surveillance_Cameras": {
+        "type": "overlay", 
+        "category": "Cameras", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"DITSS Surveillance Cameras WMS",
+            "url":"/service/geodanarcgis/services/multipos/DITSS_Surveillance_Cameras/MapServer/WmsServer?",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":0,
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // PDOK AHN1: Terrain Height 
+    , "AHN1_hoogtes": {
+        "type": "overlay", 
+        "category": "Terrain", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Height map",
+            "url":"http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map",
+            "layerOptions": {
+                "layers":"hoogtes",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // BAG Pand: Building footprints
+    , "BAG_pand": {
+        "type": "overlay", 
+        "category": "BAG", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Building footprints (Pand)",
+            "url":"/service/ngr/bag/wms",
+            "layerOptions": {
+                "layers":"pand",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.85
+            }
+        }
+    }
+    // BAG Ligplaats: floating houses
+    , "BAG_ligplaats": {
+        "type": "overlay", 
+        "category": "BAG", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Floating houses (Ligplaats)",
+            "url":"/service/ngr/bag/wms",
+            "layerOptions": {
+                "layers":"ligplaats",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.85
+            }
+        }
+    }
+    // BAG Standplaats: temporary pitches/caravans
+    , "BAG_standplaats": {
+        "type": "overlay", 
+        "category": "BAG", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Seasonal pitches (Standplaats)",
+            "url":"/service/ngr/bag/wms",
+            "layerOptions": {
+                "layers":"standplaats",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+//    // BAG Verblijfobject: Residential objects
+//    , "BAG_verblijfsobject": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Residential objects (Verblijfobject)",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "layers":"verblijfsobject",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // BAG Woonplaats: 
+//    , "BAG_woonplaats": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"woonplaats",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "layers":"woonplaats",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+    // PDOK AHN2: Terrain height 0.5m interpolated
+    , "AHN2_05m_int": {
+        "type": "overlay", 
+        "category": "AHN2", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Terrain Height (0.5m interpolated)",
+            "url":"/service/ngr/ahn2/wms",
+            "layerOptions": {
+                "layers":"ahn2_05m_int",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+//    // PDOK AHN2: Terrain height 0.5m no interpolated
+//    , "AHN2_05m_non": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (0.5m no interpolated)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "layers":"ahn2_05m_non",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Terrain height 0.5m raw
+//    , "AHN2_05m_ruw": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (0.5m raw)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "layers":"ahn2_05m_ruw",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+    // PDOK AHN2: Terrain height 5m
+    , "AHN2_5m": {
+        "type": "overlay", 
+        "category": "AHN2", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Terrain Height (5m)",
+            "url":"/service/ngr/ahn2/wms",
+            "layerOptions": {
+                "layers":"ahn2_5m",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+//    // PDOK AHN2: Bladindex
+//    , "AHN2_bladindex": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"AHN2 Bladindex",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "layers":"ahn2_bladindex",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_wegdeelvlakken": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Pathways (Wegdeelvlakken)",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"wegdeelvlakken",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Waterdeellijnen: Waterways lines
+//    , "TOP10NL_waterdeellijnen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"waterdeellijnen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"waterdeellijnen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Waterdeelvlakken: Waterways sections
+//    , "TOP10NL_waterdeel_vlakken": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"waterdeel_vlakken",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"waterdeel_vlakken",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+    // PDOK TOP10NL Terreinen: Terrain (land use)
+    , "TOP10NL_terreinen": {
+        "type": "overlay", 
+        "category": "TOP10NL", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Land use",
+            "url":"/service/ngr/top10nl/wms",
+            "layerOptions": {
+                "layers":"terreinen",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // PDOK TOP10NL Spoorbaandeel lijnen: 
+    , "TOP10NL_spoorbaandeel_lijnen": {
+        "type": "overlay", 
+        "category": "TOP10NL", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"spoorbaandeel_lijnen",
+            "url":"/service/ngr/top10nl/wms",
+            "layerOptions": {
+                "layers":"spoorbaandeel_lijnen",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+//    // PDOK TOP10NL Inrichtingselementlijnen: 
+//    , "TOP10NL_inrichtingselementlijnen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"inrichtingselementlijnen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"inrichtingselementlijnen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_inrichtingselement_punten": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"inrichtingselement_punten",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"inrichtingselement_punten",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_geo_labels": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"geo_labels",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"geo_labels",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Gebouwen: 
+//    , "TOP10NL_gebouwen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"gebouwen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"gebouwen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Functioneelgebied labels: 
+//    , "TOP10NL_functioneelgebied_labels": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"functioneelgebied_labels",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"functioneelgebied_labels",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK BRP Gewaspercelen: Crop parcels
+//    , "BRP_brpgewaspercelen": {
+//        "type": "overlay", 
+//        "category": "BRP", 
+//        "layer": {
+//            "type": "betterwms",
+//            "visible": true, 
+//            "name": "Crop parcels", 
+//            "url": "/service/ngr/brpgewaspercelen/wms", 
+//            "layerOptions": {
+//                "layers": "brpgewaspercelen",
+//                "format": "image/png", 
+//                "transparent": true
+//            }
+//        }
+//    }
+//    // 3Di Wave Front
+//    , golffront: {
+//    type: 'overlay', 
+//    category: '3Di', 
+//    layer: { 
+//            name: "Wave front",
+//            type:  'betterwms',
+//            url: "http://result.3di.lizard.net/3di/wms",
+//            visible: true,
+//            layerOptions: {
+//                layers: '61f5a464c35044c19bc7d4b42d7f58cb:arrival',
+//                format: 'image/png',
+//                transparent: true
+//            }
+//        }
+//    }
+//    // 3Di Water Depth
+//    , waterdepth: {
+//        type: 'overlay', 
+//        category: '3Di', 
+//        layer: { 
+//            name: "Water depth",
+//            type:  'betterwms',
+//            url: "http://result.3di.lizard.net/3di/wms",
+//            visible: true,
+//            layerOptions: {
+//                layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
+//                format: 'image/png',
+//                transparent: true
+//            }
+//        }
+//    }
+};
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////           Layers          //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+var layers2 = {
+    // DITSS Cameras: Ekkersrijt 
+    "DITSS_Cameras_Ekkersrijt": {
+        "type": "overlay", 
+        "category": "Cameras", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Cameras Ekkersrijt WMS",
+            "url":"/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WMSServer",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":0,
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // DITSS Cameras: All 
+    , "DITSS_Surveillance_Cameras": {
+        "type": "overlay", 
+        "category": "Cameras", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"DITSS Surveillance Cameras WMS",
+            "url":"/service/geodanarcgis/services/multipos/DITSS_Surveillance_Cameras/MapServer/WmsServer",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":0,
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // PDOK AHN1: Terrain Height 
+    , "AHN1_hoogtes": {
+        "type": "overlay", 
+        "category": "Terrain", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Height map",
+            "url":"http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":"hoogtes",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.8
+            }
+        }
+    }
+    // BAG Pand: Building footprints
+    , "BAG_pand": {
+        "type": "overlay", 
+        "category": "BAG", 
+        "layer": {
+            "type":"betterwms",
+            "visible":true,
+            "name":"Building footprints (Pand)",
+            "url":"/service/ngr/bag/wms",
+            "layerOptions": {
+                "maxZoom": 25,
+                "minZoom":2,
+                "layers":"pand",
+                "format":"image/png",
+                "transparent":true,
+                "opacity":0.85
+            }
+        }
+    }
+//    // BAG Ligplaats: floating houses
+//    , "BAG_ligplaats": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Floating houses (Ligplaats)",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ligplaats",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.85
+//            }
+//        }
+//    }
+//    // BAG Standplaats: temporary pitches/caravans
+//    , "BAG_standplaats": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Seasonal pitches (Standplaats)",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"standplaats",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // BAG Verblijfobject: Residential objects
+//    , "BAG_verblijfsobject": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Residential objects (Verblijfobject)",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"verblijfsobject",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // BAG Woonplaats: 
+//    , "BAG_woonplaats": {
+//        "type": "overlay", 
+//        "category": "BAG", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"woonplaats",
+//            "url":"/service/ngr/bag/wms",
+//            "layerOptions": {
+//                "layers":"woonplaats",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Terrain height 0.5m interpolated
+//    , "AHN2_05m_int": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (0.5m interpolated)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ahn2_05m_int",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Terrain height 0.5m no interpolated
+//    , "AHN2_05m_non": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (0.5m no interpolated)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ahn2_05m_non",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Terrain height 0.5m raw
+//    , "AHN2_05m_ruw": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (0.5m raw)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ahn2_05m_ruw",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Terrain height 5m
+//    , "AHN2_5m": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Terrain Height (5m)",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ahn2_5m",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK AHN2: Bladindex
+//    , "AHN2_bladindex": {
+//        "type": "overlay", 
+//        "category": "AHN2", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"AHN2 Bladindex",
+//            "url":"/service/ngr/ahn2/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"ahn2_bladindex",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_wegdeelvlakken": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Pathways (Wegdeelvlakken)",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"wegdeelvlakken",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Waterdeellijnen: Waterways lines
+//    , "TOP10NL_waterdeellijnen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"waterdeellijnen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"waterdeellijnen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Waterdeelvlakken: Waterways sections
+//    , "TOP10NL_waterdeel_vlakken": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"waterdeel_vlakken",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"waterdeel_vlakken",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Terreinen: Terrain (land use)
+//    , "TOP10NL_terreinen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Land use",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"terreinen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Spoorbaandeel lijnen: Train Rails
+//    , "TOP10NL_spoorbaandeel_lijnen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"Train Rails",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"spoorbaandeel_lijnen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Inrichtingselementlijnen: 
+//    , "TOP10NL_inrichtingselementlijnen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"inrichtingselementlijnen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"inrichtingselementlijnen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_inrichtingselement_punten": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"inrichtingselement_punten",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"inrichtingselement_punten",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Wegdeelvlakken: Pathways/roadways sections
+//    , "TOP10NL_geo_labels": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"geo_labels",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "layers":"geo_labels",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Gebouwen: 
+//    , "TOP10NL_gebouwen": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"gebouwen",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"gebouwen",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK TOP10NL Functioneelgebied labels: 
+//    , "TOP10NL_functioneelgebied_labels": {
+//        "type": "overlay", 
+//        "category": "TOP10NL", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":true,
+//            "name":"functioneelgebied_labels",
+//            "url":"/service/ngr/top10nl/wms",
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":"functioneelgebied_labels",
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // PDOK BRP Gewaspercelen: Crop parcels
+//    , "BRP_brpgewaspercelen": {
+//        "type": "overlay", 
+//        "category": "BRP", 
+//        "layer": {
+//            "type": "betterwms",
+//            "visible": true, 
+//            "name": "Crop parcels", 
+//            "url": "/service/ngr/brpgewaspercelen/wms", 
+//            "layerOptions": {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers": "brpgewaspercelen",
+//                "format": "image/png", 
+//                "transparent": true
+//            }
+//        }
+//    }
+//    // 3Di Wave Front
+//    , golffront: {
+//    type: 'overlay', 
+//    category: '3Di', 
+//    layer: { 
+//            name: "Wave front",
+//            type:  'betterwms',
+//            url: "http://result.3di.lizard.net/3di/wms",
+//            visible: true,
+//            layerOptions: {
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                layers: '61f5a464c35044c19bc7d4b42d7f58cb:arrival',
+//                format: 'image/png',
+//                transparent: true
+//            }
+//        }
+//    }
+//    // 3Di Water Depth
+//    , waterdepth: {
+//        type: 'overlay', 
+//        category: '3Di', 
+//        layer: { 
+//            name: "Water depth",
+//            type:  'betterwms',
+//            url: "http://result.3di.lizard.net/3di/wms",
+//            visible: true,
+//            layerOptions: {
+//                name: "Water depth",
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                layers: '61f5a464c35044c19bc7d4b42d7f58cb:maxdepth',
+//                format: 'image/png',
+//                transparent: true
+//            }
+//        }
+//    }
+    
+    // BASEMAPS
+    // Basemap CartoDB Light Grey 
+    , lightgrey: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Light Grey',
+            type: "tilelayer",
+            url: "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+            visible: true,
+            layerOptions: {
+                name: 'Light Grey',
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+//    // Basemap CartoDB Light Grey (no labels)
+//    , lightgreynl: {
+//        type: 'basemap', 
+//        category: 'Basemaps', 
+//        layer: { 
+//            name: 'Light Grey (no labels)',
+//            type: "tilelayer",
+//            url: "http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png",
+//            visible: true,
+//            layerOptions: {
+//                name: 'Light Grey (no labels)',
+//                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+    // Basemap CartoDB Dark Grey
+    , darkgrey: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Dark Grey',
+            type: "tilelayer",
+            url: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Dark Grey',
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+//    // Basemap CartoDB Dark Grey (no labels)
+//    , darkgreynl: {
+//        type: 'basemap', 
+//        category: 'Basemaps', 
+//        layer: { 
+//            name: 'Darak Grey (no labels)',
+//            type: "tilelayer",
+//            url: 'http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
+//            visible: true,
+//            layerOptions: {
+//                name: 'Darak Grey (no labels)',
+//                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+    // Basemap OSM Humanitarian
+    , humanitarian: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Humanitarian',
+            type: "tilelayer",
+            url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Humanitarian',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 20,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap OSM Default
+    , openstreetmaps: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'OpenStreetMaps',
+            type: "tilelayer",
+            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'OpenStreetMaps',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 19,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap OSM Landscape
+    , landscape: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Landscape',
+            type: "tilelayer",
+            url: 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Landscape',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap CartoDB Light Grey (no labels)
+    , transport: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Transport',
+            type: "tilelayer",
+            url: 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Transport',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap Mapnik
+    , mapnik: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Mapnik',
+            type: "tilelayer",
+            url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Mapnik',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 17,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap Navteq
+    , navteq: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Navteq',
+            type: "tilelayer",
+            url: 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+            visible: true,
+            layerOptions: {
+                name: 'Navteq',
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+                maxZoom: 19,
+                minZoom: 1
+            }
+        }
+    }
+    // Basemap Topography
+    , esritopo: {
+        type: 'basemap', 
+        category: 'Basemaps', 
+        layer: { 
+            name: 'Topography',
+            type: "tilelayer",
+            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+            visible: true,
+            layerOptions: {
+                name: 'Topography',
+                attribution: '<a href="http://www.nconemap.com">NC OneMap</a> Tiles: &copy; Esri',
+                maxZoom: 19,
+                minZoom: 1
+            }
+        }
+    }
+    
+//    // FEATURE LAYERS
+//    // GeoJSON Feature Layer geojson
+//    , geojson: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'geojson',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // MarkerCluster Feature Layer markercluster
+//    , markercluster: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'markercluster',
+//            type: "markercluster",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // Esri Feature Layer esrifeaturelayer
+//    , esrifeaturelayer: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'esrifeaturelayer',
+//            type: "esrifeaturelayer",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+    // Esri Feature Layer Cams Ekk FS
+    , camsekkfslh: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Cams Ekk FS LH',
+            type: "esrifeaturelayer",
+            url: '/service/localhostarcgis/rest/services/Cameras/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
+            visible: true,
+            layerOptions: {
+//                attribution: '',
+                name: 'Cams Ekk FS LH',
+//                pointToLayer: function (geojson, latlng) {
+//                    return L.marker(latlng, {
+//                        icon: L.Icon({
+//                            iconUrl: 'img/camera.png',
+//                            iconSize: [18, 18],
+//                            iconAnchor: [9, 9],
+//                        })
+//                    });
+//                },
+//                style: {
+//                    "icon": {
+//                        "iconUrl": 'img/camera.png',
+//                        "iconSize": [18, 18],
+//                        "iconAnchor": [9, 9]
+//                    }
+//                },
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // Esri Feature Layer Cams Ekk FS
+    , camsekkfsgeodan: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Cams Ekk FS Geodan',
+            type: "esrifeaturelayer",
+            url: '/service/geodanarcgis/rest/services/multipos/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
+            visible: true,
+            layerOptions: {
+                name: 'Cams Ekk FS Geodan',
+//                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // MarkerCluster Feature Layer GeoJSON Ekkersrijt Cameras
+    , camsekkgeojsonmk: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON Ekkersrijt Cameras',
+//            name: 'GeoJSON Ekkersrijt Cameras 2',
+            type: "markercluster",
+            url: './data/cameras_ekkersrijt.json',
+            visible: true,
+            layerOptions: {
+                name: 'GeoJSON Ekkersrijt Cameras',
+                spiderfyOnMaxZoom: true,    // default true
+                showCoverageOnHover: true,     // default true
+                zoomToBoundsOnClick: true,     // default true
+                removeOutsideVisibleBounds: true,   // true for enhanced performance
+                animateAddingMarkers: true,    // default true
+                disableClusteringAtZoom: 13,    // default disabled
+                maxClusterRadius: 100, // Default 80
+                spiderfyDistanceMultiplier: 100, // default 1
+                polygonOptions: {
+                    color: 'yellow',
+                    weight: 15,
+                    opacity: 0.9,
+                    fillOpacity: 0.6
+                },
+//                iconCreateFunction: function(cluster) {
+//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+//                },
+                singleMarkerMode: false,     // default false
+//                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Identification
+    , geojsonfovidentification: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON FoV Identification',
+//            name: 'GeoJSON FoV Identification 2',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Recognition
+    , geojsonfovrecognition: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON FoV Recognition',
+//            name: 'GeoJSON FoV Recognition 2',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Detection
+    , geojsonfovdetection: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON FoV Detection',
+//            name: 'GeoJSON FoV Detection 2',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Monitor
+    , geojsonfovmonitor: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON FoV Monitor',
+//            name: 'GeoJSON FoV Monitor 2',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Visible
+    , geojsonfovvisible: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'GeoJSON FoV Visible',
+//            name: 'GeoJSON FoV Visible 2',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'GeoJSON FoV Visible',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    
+    // MarkerCluster Feature Layer GeoJSON Ekkersrijt Cameras
+    , wfstcamsekkgeojsonmk: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS',
+            type: "markercluster",
+            url: '/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS',
+                spiderfyOnMaxZoom: true,    // default true
+                showCoverageOnHover: true,     // default true
+                zoomToBoundsOnClick: true,     // default true
+                removeOutsideVisibleBounds: true,   // true for enhanced performance
+                animateAddingMarkers: true,    // default true
+                disableClusteringAtZoom: 13,    // default disabled
+                maxClusterRadius: 100, // Default 80
+                spiderfyDistanceMultiplier: 100, // default 1
+                polygonOptions: {
+                    color: 'yellow',
+                    weight: 15,
+                    opacity: 0.9,
+                    fillOpacity: 0.6
+                },
+//                iconCreateFunction: function(cluster) {
+//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+//                },
+                singleMarkerMode: false,     // default false
+//                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Identification
+    , wfstgeojsonfovidentification: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Identification',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Identification',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Recognition
+    , wfstgeojsonfovrecognition: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Recognition',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Recognition',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Detection
+    , wfstgeojsonfovdetection: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Detection',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Detection',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Monitor
+    , wfstgeojsonfovmonitor: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV M&C',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV M&C',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON Feature Layer GeoJSON FoV Visible
+    , wfstgeojsonfovvisible: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Visible',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Visible',
+                attribution: '',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    
+    
+    
+    
+    
+};
+
+
+
+//  # PROXY Web Services
+//  ProxyPass /service/ngr/     http://geodata.nationaalgeoregister.nl/
+//  ProxyPass /service/cams/    http://wingis/camera/api/
+//  ProxyPass /service/multipos/    http://arcgisdemo.geodan.nl/arcgis/rest/services/multipos/
+//  ProxyPass /service/geodanarcgis/    http://arcgis.geodan.nl:6080/arcgis/
+//  ProxyPass /service/localhostarcgis/     http://localhost:6080/arcgis/
+
+

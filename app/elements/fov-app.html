@@ -1,0 +1,250 @@
+<polymer-element name="fov-app">
+    
+  <template>
+      
+    <style>
+        
+        fov-app {
+            width: 100%;
+            margin: 0;
+            height: 100%;
+	   }
+    </style>
+    
+
+
+<!-- main page content will go here -->		
+      <div>
+<!--
+            <p>CHAT LIST</p>
+			<chat-list id="chatlist" chats="{{chats}}"></chat-list>
+		</div>
+		<div class="container">
+            <p>CHAT</p>
+            <p>chatapp user: {{activeuser}}</p>
+            <p>chatapp user id: {{activeuserid}}</p>
+			<chat-message-list id="chatmessagelist"  activeuser="{{activeuser}}" activeuserid="{{activeuserid}}"></chat-message-list>
+-->
+            
+          <div id="summary">
+              <h2>Surveillance coverage map - Ekkersrijt, Eindhoven (NL)</h2>
+              <h3>2D Field of View (FoV) Service</h3>
+              <p>Demo <b>coverage map</b> of surveillance camera constellations.<br>The area of the demo is the Ekkersrijt industrial area located north of Eindhoven, The Netherlands.</p>
+          </div>
+          
+          <div id="map"></div>
+          
+    
+            <!--    // LEAFLET JS 0.7.3 -->
+            <script src="../bower_components/leaflet-0.7/leaflet.js"></script>
+            <!--    // JQUERY 1.10.2 -->
+            <script src="../bower_components/jquery-1.9.1/jquery.min.js"></script>
+            <!--    // LEAFLET COMPASS JS -->
+            <script src="../bower_components/leaflet-compass/leaflet-compass.js"></script>
+          
+      </div>
+        
+    </template>
+    
+    <script>
+    Polymer({
+//        activeuser: null,
+//        activeuserid: null,
+//        aFunction: function(attrib){
+//            // DO SOMETHING
+//        },
+        map: null,
+        cameras: [],
+        requestUrls: [],
+        fovsAll: [],
+        fovsIdent: [],
+        fovsRecog: [],
+        fovsDetec: [],
+        fovsMC: [],
+        fovsVisib: [],
+        addFov2Map: function(longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical){
+            var self = this;
+            // Compose the request url
+            function createRequestUrl(){
+                // var baseurl = "api/camera/fieldofviewactual?";
+                var baseurl = "/service/cams/camera/fieldofviewactual?";
+                var requesturl = baseurl + "terrainheight=" + "0";                          // Terrain height from sea level (meters)
+                requesturl = requesturl + "&sensorwidth=" + sensorwidth;                // Sensor width (meters)
+                requesturl = requesturl + "&verticalresolution=" + resolutionvertical;  // Vertical resolution (pixels)
+                requesturl = requesturl + "&focallength=" + focallength;                // Focal length (meters)
+                requesturl = requesturl + "&longitude=" + longitude;                    // Longitude of the camera (decimal coordinates)
+                requesturl = requesturl + "&latitude=" + latitude;                      // Latitude of the camera (decimal coordinates)
+                requesturl = requesturl + "&cameraheight=" + "3";                       // Height of the camera from ground (meters)
+                requesturl = requesturl + "&insrs=" + "4326";                           // Input reference system. Default 4326
+                requesturl = requesturl + "&outsrs=" + "4326";                          // Output reference system. Default 4326
+                requesturl = requesturl + "&zoned=" + "true";                           // Bool, true returns FoV divided in I, R, D, M&C and visible, false returns M&C & visible
+                requesturl = requesturl + "&rotation=" + rotation;                      // Camera Rotation angle from north, azimuth (degrees)
+                console.log(requesturl);
+                self.requestUrls[this.requestUrls.length] = requesturl;
+                return requesturl;
+            }
+            var fovRequest = createRequestUrl();
+            
+            $.getJSON(requesturl, function(data) {      // Perform request to 2D FoV Service
+                var monitoringzoneFeature = data.features[0];       // Monitor & Control area
+                var detectionzoneFeature = data.features[1];        // Detection area
+                var recognitionzoneFeature = data.features[2];      // Recognition area
+                var identificationzoneFeature = data.features[3];   // Identification area
+                var visibleFeature = data.features[4];              // Visible area
+                
+                this.fovsIdent[this.fovsIdent.length] = identificationzoneFeature;
+                this.fovsRecog[this.fovsRecog.length] = recognitionzoneFeature;
+                this.fovsDetec[this.fovsDetec.length] = detectionzoneFeature;
+                this.fovsMC[this.fovsMC.length] = monitoringzoneFeature;
+                this.fovsVisib[this.fovsVisib.length] = visibleFeature;
+                this.fovsAll[this.fovsAll.length] = identificationzoneFeature;
+                this.fovsAll[this.fovsAll.length] = recognitionzoneFeature;
+                this.fovsAll[this.fovsAll.length] = detectionzoneFeature;
+                this.fovsAll[this.fovsAll.length] = monitoringzoneFeature;
+                this.fovsAll[this.fovsAll.length] = visibleFeature;
+
+                // add FoV features to map
+                L.geoJson(monitoringzoneFeature, { color: 'yellow', weight: 2, fillOpacity: 0.4, opacity: 0.1 }).addTo(map);
+                L.geoJson(detectionzoneFeature, { color: 'orange', weight: 3, fillOpacity: 0.5, opacity: 0.1 }).addTo(map);
+                L.geoJson(recognitionzoneFeature, { color: 'pink', weight: 4, fillOpacity: 0.6, opacity: 0.1 }).addTo(map);
+                L.geoJson(identificationzoneFeature, { color: 'red', weight: 5, fillOpacity: 0.7, opacity: 0.1 }).addTo(map);
+                if (visibleFeature != null) {
+                    L.geoJson(visibleFeature, { color: 'green', weight: 1, fillOpacity: 0.3, opacity: 0.1 }).addTo(map);
+                }
+
+            });      // END getJSON
+        },      // END addFov2Map
+        addCam2Map: function(name,x,y,rotation, focallength, sensorwidth, resolutionvertical){
+            var CameraIcon = L.Icon.extend({
+                options: {
+                    iconUrl: 'img/camera.png',
+                    iconSize: [18, 18]
+                }
+            });
+            console.log("addCam2Map - name:" + name + " x:" + x + " y:" + y + " fl:" + focallength + " sw:" +sensorwidth  + " rv:" + resolutionvertical + " rotation:" + rotation);
+            var cameraIcon = new CameraIcon();
+            L.marker([y, x], { icon: cameraIcon }).addTo(map).bindPopup(name);
+            this.addFov(x, y, rotation, focallength, sensorwidth, resolutionvertical);
+        },      // END addCam2Map
+        getCameras: function(dataUrl, perfmon){
+            // logging
+            var verbose = false;
+            var camdata = [];
+            if(perfmon){ verbose = true; }
+//            $.getJSON(dataUrl, function (data) {
+//                for (var i = 0; i < data.length; i++) {
+//                    camdata[i] = data[i];
+//                    this.addCamera(
+//                        data[i].Camera_ID, 
+//                        data[i].Longitude, 
+//                        data[i].Latitude, 
+//                        Math.floor(Math.random() * (360 - 0)) + 0, 
+//                        Math.random() * (flmax - flmin) + flmin, 
+//                        data[i].SensorSizeWidth, 
+//                        data[i].SensorResolutionVertical
+//                    );
+//                }
+//            });        // getJSON END
+            $.getJSON(dataUrl, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    camdata[i] = data[i];
+                    if(verbose){        // PERFORMANCE
+                        var time1 = performance.now();
+                        console.log("Camera ID: " + data[i].Camera_ID + " - Start time: " + time1);
+                    }
+                    // load params
+                    var x1 = data[i].Longitude;
+                    var y1 = data[i].Latitude;
+                    var id = data[i].Camera_ID;
+                    var name = "Id: " + id + ", Type: " + data[i].Camera_Type;
+                    var rot = Math.floor(Math.random() * (360 - 0)) + 0; //random rotation 0-360
+                    // var fldef = data[i].FocalLengthDefault;
+                    var flmin = data[i].FocalLengthMin;
+                    var flmax = data[i].FocalLengthMax;
+                    var foclen = Math.random() * (flmax - flmin) + flmin;
+                    var sw = data[i].SensorSizeWidth;
+                    var srv = data[i].SensorResolutionVertical;
+                    if(verbose){        // PERFORMANCE
+                        var time2 = performance.now();
+                    }
+                    this.addCamera(name, x1, y1, rot, foclen, sw, srv);     // add camera
+                    if(verbose){        // PERFORMANCE
+                        var time3 = performance.now();
+                        var time12 = time2 - time1;
+                        console.log("Camera " + data[i].Camera_ID + " Time12: " + time12);
+                        var time23 = time3 - time2;
+                        console.log("Camera " + data[i].Camera_ID + " Time23 (addCamera exec time in ms): " + time23);
+                        var time13 = time3 - time1;
+                        console.log("Camera " + data[i].Camera_ID + " Time13 (get camera exec time in ms): " + time13);
+                    }
+                }   // END for
+            });     // getJSON END
+            if(verbose){        // PERFORMANCE
+                console.log("getCams - Print camdata[i]");
+                for(var i = 0; i < camdata.length; i++){
+                    console.log("* camdata[" + i + "]: " + camdata[i]);
+                }
+                console.log("END camdata END" + '/n');
+                console.log("getCams - Print data[i]");
+                for(var i = 0; i < camdata.length; i++){
+                    console.log("* data[" + i + "]: " + data[i]);
+                }
+                console.log("END data END" + '/n');
+            }
+            console.log("getCams - FUNCTION END");
+        },  // getCams FUNCTION END
+        ready: function(){
+            var self = this;
+//            this.chats = [
+//                {projectid: "p1", projectname: "project 1", username: "Tom", userid: "101"},
+//                {projectid: "p2", projectname: "project 2", username: "Tom", userid: "101"},
+//                {projectid: "p3", projectname: "project 3", username: "Steven", userid: "103"}
+//            ];
+//            this.$.chatlist.addEventListener('userchange', function(e){
+//                console.log(e.detail.msg);
+//                self.activeuser = e.detail.msg;
+//                self.activeuserid = self.chats.filter(function(e){return e.username == self.activeuser}).userid;
+//            });
+//            this.$.chatmessagelist.addEventListener('chatchange', function(e){
+//                console.log(e.detail.msg);
+//                self.activechat = e.detail.msg;
+//            });
+            
+            
+            // CREATE LEAFLET MAP
+            var map = L.map('map');             // Create map
+            map.setView([51.50, 5.475], 15);    // Map Center: Ejjersrijt, Zoom: 15
+            // Basemap and attribution
+            var osmUrl = 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+            var osmAttrib = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+            // var osmUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png';
+            // var osmUrl = 'https://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png';
+            // var osmUrl = 'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            // var osmUrl = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+            // var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+            var basemap = new L.TileLayer(osmUrl, { maxZoom: 20, attribution: osmAttrib }); // Create basemap with max zoom 20
+            basemap.addTo(map);     // Add basemap to map
+            map.addControl( new L.Control.Compass() );      // add compass
+            
+        // getCams -> 
+            this.getCams("cameras_ekkersrijt.json", true);
+
+            var endtime = performance.now();
+            console.log("End time: " + endtime);
+            var exectime = endtime - starttime;
+            console.log("Execution time: " + exectime);
+        // READY FUNCTION END
+        }
+        
+    // POLYMER JSON END
+    });
+    
+    </script>
+    
+</polymer-element>

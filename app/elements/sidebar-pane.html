@@ -1,0 +1,165 @@
+<polymer-element name="sidebar-pane">
+    
+  <template>
+      
+    <style>
+/*
+        sidebar-pane {
+            width: 100%;
+            margin: 0;
+            height: 100%;
+	   }
+*/
+    </style>
+    
+
+
+<!-- main page content will go here -->		
+      <div id="sidebar" class="sidebar collapsed">
+
+          <ul class="sidebar-tabs" role="tablist">
+              <li repeat="{{tab in tablist}}">
+                  <a href="#{{tab.href}}" role="tab">
+                      <i class="{{tab.class}}"></i>
+                  </a>
+              </li>
+          </ul>
+<!--
+          <ul class="sidebar-tabs" role="tablist">
+              <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+              <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+              <li><a href="#cameras" role="tab"><i class="fa fa-envelope"></i></a></li>
+              <li><a href="#basemaps" role="tab"><i class="fa fa-gear"></i></a></li>
+              <li><a href="#overlays" role="tab"><i class="fa fa-gear"></i></a></li>
+              <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul>
+-->
+          <div class="sidebar-content active">
+              <div repeat="{{tab in tablist}}">
+                  <h1>{{tab.title}}</h1>
+                  <div class="sidebar-pane" id="{{tab.href}}">
+<!--                      <sidebar-pane-content type="{{tab.href}}" content="{{tab.content}}"></sidebar-pane-content>-->
+                      {{tab.content}}
+                  </div>
+              </div>
+          </div>
+
+      </div>
+      
+<!--
+      <div>
+          <div>
+            <p>CHAT LIST</p>
+            <chat-list id="chatlist" chats="{{chats}}"></chat-list>
+          </div>
+          <div class="container">
+                <p>CHAT</p>
+                <p>chatapp user: {{activeuser}}</p>
+                <p>chatapp user id: {{activeuserid}}</p>
+                <chat-message-list id="chatmessagelist"  activeuser="{{activeuser}}" activeuserid="{{activeuserid}}"></chat-message-list>
+              <div id="summary">
+                  <h2>Surveillance coverage map - Ekkersrijt, Eindhoven (NL)</h2>
+                  <h3>2D Field of View (FoV) Service</h3>
+                  <p>Demo <b>coverage map</b> of surveillance camera constellations.<br>The area of the demo is the Ekkersrijt industrial area located north of Eindhoven, The Netherlands.</p>
+              </div>
+          </div>
+      </div>
+-->
+        
+    </template>
+    
+    <script>
+    Polymer(appContent, {
+        app: {
+            title: 'Demo 2D FoV',
+            subtitle: 'DITSS Surveillance Cameras - Coverage Map - Ekkersrijt area',
+            description: 'Demo client for the Cameras 2D FoV service. This prototype app is a coverage map of surveilled areas. The cameras are the DITSS surveillance cameras and the area of study is the Ekkersrijt industrial area, located north of Eindhoven (NL).',
+            meta:''
+        },
+        tablist: {
+            home: { href: "home", class: "fa fa-home", title: "Surveillance Cameras Coverage Map", content: "" },
+            profile: { href: "profile", class: "fa fa-user", title: "Profile", content: "" },
+            basemaps: { href: "basemaps", class: "fa fa-bars", title: "Basemap", content: "" },
+            overlays: { href: "overlays", class: "fa fa-bars", title: "Overlays", content: "" },
+            cameras: { href: "cameras", class: "fa fa-bars", title: "Cameras", content: "" },
+            featurelayers: { href: "featurelayers", class: "fa fa-bars", title: "Feature Layers", content: "" },
+            settings: { href: "settings", class: "fa fa-gear", title: "Settings", content: "" },
+            controls: { href: "controls", class: "fa fa-gear", title: "Controls", content: "" }
+        },
+        cameras: appContent.cameras,
+        basemaps: appContent.basemaps,
+        overlays: appContent.overlays,
+        featurelayers: appContent.featurelayers,
+        controls: appContent.controls,
+        settings: appContent.settings,
+        profile: appContent.profile,
+        home: appContent.home,
+        self: this,
+        
+        ready: function(self){
+            self.tablist.home.content = "";
+            self.tablist.profile.content = "";
+            self.tablist.basemaps.content = "";
+            self.tablist.overlays.content = "";
+            self.tablist.cameras.content = "";
+            self.tablist.featurelayers.content = "";
+            self.tablist.controls.content = "";
+            self.tablist.settings.content = "";
+            
+            function populateCamerasContent(cameras){
+                var content = "<h1>" + self.tablist.cameras.title + "</h1>";
+                content = content + "<div center horizontal layout>";
+                for (var c in cameras) {
+                    content = content + "<div center horizontal layout>";
+                    
+                    content = content + "<label flex>" + c + "</label>";
+                    content = content + "<paper-toggle-button class='camera' checked></paper-toggle-button>";
+                    content = content + "</div>";
+                    content = content + "<br><br>";
+                }
+                content = content + "</div>";
+                return content;
+            }
+            self.tablist.cameras.content = populateCamerasContent(self.cameras);
+            
+            function populateBasemapsContent(basemaps){
+                var content = "<h1>" + self.tablist.basemaps.title + "</h1>";
+                content = content + "<div center horizontal layout>";
+                for (var b in basemaps) {
+                    content = content + "<div center horizontal layout>";
+                    
+                    content = content + "<label flex>" + b + "</label>";
+                    content = content + "<paper-toggle-button class='basemap'></paper-toggle-button>";
+                    content = content + "</div>";
+                    content = content + "<br><br>";
+                }
+                content = content + "</div>";
+                return content;
+            }
+            self.tablist.basemaps.content = populateBasemapsContent(self.basemaps);
+            
+            function populateOverlaysContent(overlays){
+                var content = "<h1>" + self.tablist.overlays.title + "</h1>";
+                content = content + "<div center horizontal layout>";
+                for (var o in overlays) {
+                    content = content + "<div center horizontal layout>";
+                    
+                    content = content + "<label flex>" + o + "</label>";
+                    content = content + "<paper-toggle-button class='overlay'></paper-toggle-button>";
+                    content = content + "</div>";
+                    content = content + "<br><br>";
+                }
+                content = content + "</div>";
+                return content;
+            }
+            self.tablist.overlays.content = populateOverlaysContent(self.overlays);
+
+
+        }        // READY FUNCTION END
+        
+
+    });    // POLYMER JSON END
+    
+    </script>
+    
+</polymer-element>

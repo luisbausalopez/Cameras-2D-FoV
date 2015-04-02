@@ -1,0 +1,16 @@
+{
+    mapInitConfig: {
+        fovServiceBaseUrl: "/service/cams/camera/fieldofviewactual?",
+        defaultMapCenter: [51.50, 5.475],   // Ekkersrijt
+        defaultMapZoom: 15,
+        maxZoom: 20,
+        camJsonUrl: "./data/cameras_ekkersrijt.json",
+        basemapUrl: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+        basemapAttrib: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+        cameraIconUrl: './img/camera.png',
+        cameraIconSize: [18, 18],
+        title: "POLYMER 2D FOV SERVICE"
+    },
+    layers: {}
+    
+}
