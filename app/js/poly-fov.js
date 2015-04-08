@@ -210,6 +210,84 @@
         console.log(c);
         console.log("switch Basemap");
     }
+
+
+
+    function switchButton (buttonName) {
+//    function switchButton (buttonName, layer) {
+        var starttime = performance.now();
+        console.log(performance.now() + ", switchButton( " + buttonName + " ), START: " + starttime + '\n');
+        var layer = null;
+        
+//        if (map.hasLayer(layer)) {
+//            map.removeLayer(layer);
+//        } else {
+//            map.addLayer(layer);
+//        }
+        
+        switch (buttonName) {
+            case 'buttoncamera':
+                layer = appContent.cameras.cameras;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttoncamera ) \n");
+                break;
+            case 'buttonfovmonitor':
+                layer = appContent.cameras.monitor;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttonfovmonitor ) \n");
+                break;
+            case 'buttonfovdetection':
+                layer = appContent.cameras.detection;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttonfovdetection ) \n");
+                break;
+            case 'buttonfovrecognition':
+                layer = appContent.cameras.recognition;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttonfovrecognition ) \n");
+                break;
+            case 'buttonfovidentification':
+                layer = appContent.cameras.identification;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttonfovidentification ) \n");
+                break;
+            case 'buttonfovvisible':
+                layer = appContent.cameras.visible;
+//                if (map.hasLayer(layer)) { map.removeLayer(layer); } 
+//                else { map.addLayer(layer); }
+//                map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+                console.log(performance.now() + ", switchButton( buttonfovvisible ) \n");
+                break;
+                
+            default:
+                layer = null;
+                console.log(performance.now() + ", switchButton( DEFAULT ) \n");
+                break;
+        }   // END switch(buttonName)
+
+        if (layer != null) {   
+            map.hasLayer(layer) ? map.removeLayer(layer) : map.addLayer(layer);
+        }
+        
+        console.log(buttonName);
+        console.log(layer);
+        
+        var endtime = performance.now();
+        var exectime = endtime - starttime;
+        console.log(performance.now() + ", switchButton( " + buttonName + " ), END: " + endtime + ", Exec time (ms): " + exectime + '\n');
+    }
+
+
 //      var mainmenu = document.getElementById('mainmenu');
 ////      var mainmenu = document.querySelector('paper-menu-button')
 //      mainmenu.addEventListener('core-select', function() {

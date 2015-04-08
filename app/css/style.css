@@ -82,11 +82,12 @@
 /*        max-width: 500px;*/
 /*        min-width: 250px;*/
 /*        width: auto;*/
-/*        overflow: auto;*/
+        overflow: auto;
 /*        overflow: inherit;*/
-/*        overflow-y: auto;*/
-/*        overflow-x: auto;*/
+        overflow-y: auto;
+        overflow-x: auto;
     }
+
 
 
     paper-spinner.blue::shadow .circle {
@@ -108,15 +109,26 @@
 	}
 
     .popup {
-        max-height: 600px;
+/*        max-height: 600px;*/
+        max-height: 400px;
+/*        max-height: 40%;*/
         min-height: 250px;
-        height: 300px;
+/*        height: 300px;*/
+        height: auto;
         max-width: 800px;
+/*        max-width: 40%;*/
         min-width: 300px;
         width: auto;
         overflow: auto;
-        overflow-y: scroll;
-        overflow-x: auto;
+/*        overflow-y: auto;*/
+/*        overflow-y: scroll;*/
+/*        overflow-x: auto;*/
+    }
+
+    .sidebar-pane {
+/*        overflow: auto;*/
+/*        overflow-y: auto;*/
+/*        overflow-x: auto;*/
     }
 
 

@@ -72,27 +72,27 @@ function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwid
     var fovStyles = {
         identification: {
             color: 'red', 
-            weight: 5, 
-            fillOpacity: 0.7, 
-            opacity: 0.1
+            weight: 10, 
+            fillOpacity: 0, 
+            opacity: 0.7
         },
         recognition: {
             color: 'pink', 
-            weight: 4, 
-            fillOpacity: 0.6, 
-            opacity: 0.1
+            weight: 8, 
+            fillOpacity: 0, 
+            opacity: 0.6
         },
         detection: {
             color: 'orange', 
-            weight: 3, 
-            fillOpacity: 0.5, 
-            opacity: 0.1
+            weight: 6, 
+            fillOpacity: 0, 
+            opacity: 0.5
         },
         monitor: {
             color: 'yellow', 
-            weight: 2, 
-            fillOpacity: 0.4, 
-            opacity: 0.1
+            weight: 4, 
+            fillOpacity: 0, 
+            opacity: 0.4
         },
         visible: {
             color: 'green', 
@@ -101,6 +101,39 @@ function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwid
             opacity: 0.1
         }
     };
+        
+//    var fovStyles = {
+//        identification: {
+//            color: 'red', 
+//            weight: 5, 
+//            fillOpacity: 0.7, 
+//            opacity: 0.1
+//        },
+//        recognition: {
+//            color: 'pink', 
+//            weight: 4, 
+//            fillOpacity: 0.6, 
+//            opacity: 0.1
+//        },
+//        detection: {
+//            color: 'orange', 
+//            weight: 3, 
+//            fillOpacity: 0.5, 
+//            opacity: 0.1
+//        },
+//        monitor: {
+//            color: 'yellow', 
+//            weight: 2, 
+//            fillOpacity: 0.4, 
+//            opacity: 0.1
+//        },
+//        visible: {
+//            color: 'green', 
+//            weight: 1, 
+//            fillOpacity: 0.3, 
+//            opacity: 0.1
+//        }
+//    };
     
     // Perform request to 2D FoV Service
     $.getJSON(fovreq, function (data) {
@@ -245,7 +278,8 @@ function getFovPopup (cameraid, longitude, latitude, rotation, focallength, sens
     // Create Camera popup template
 //    var fovPopup = "<h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3><ln><table><tr><td><label>Camera ID: </label></td><td><input value='{cameraid}'></input></td></tr><tr><td><label>FoV type: </label></td><td><input value='{fovtype}'></input></td></tr><tr><td><label>Latitude: </label></td><td><input value='{latitude}'></input></td></tr><tr><td><label>Longitude: </label></td><td><input value='{longitude}'></input></td></tr><tr><td><label>Rotation: </label></td><td><input value='{rotation}'>dg</input></td></tr><tr><td><label>Current Focal length: </label></td><td><input value='{focallength}'>m</input></td></tr><tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}'>m</input></td></tr><tr><td><label>Vertical resolution: </label></td><td><input value='{resolutionvert}'>px</input></td></tr></table>";
     
-    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>" + fovtype + " FoV of <b>" + cameraid + "</b></h3><ln>";    // Popup header
+//    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>" + fovtype + " FoV of <b>" + cameraid + "</b></h3><ln>";    // Popup header
+    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>" + fovtype + " FoV of <b>" + cameraid + "</b></h3>";    // Popup header
     fovPopup = fovPopup + "<table><tr><td><label>Camera ID: </label></td><td><input value='" + cameraid + "'></input></td></tr>";    // Camera ID
     fovPopup = fovPopup + "<tr><td><label>FoV type: </label></td><td><input value='" + fovtype + "'></input></td></tr>";    // FoV Type
     fovPopup = fovPopup + "<tr><td><label>Latitude: </label></td><td><input value='" + latitude + "'></input></td></tr>";    // Camera location - latitude 
@@ -282,7 +316,9 @@ function fovPopupTemplate () {
     
     // Create Camera popup template
 //    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3><ln><table><tr><td><label>Camera ID: </label></td><td><input value='{cameraid}'></input></td></tr><tr><td><label>FoV type: </label></td><td><input value='{fovtype}'></input></td></tr><tr><td><label>Latitude: </label></td><td><input value='{latitude}'></input></td></tr><tr><td><label>Longitude: </label></td><td><input value='{longitude}'></input></td></tr><tr><td><label>Rotation: </label></td><td><input value='{rotation}'>dg</input></td></tr><tr><td><label>Current Focal length: </label></td><td><input value='{focallength}'>m</input></td></tr><tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}'>m</input></td></tr><tr><td><label>Vertical resolution: </label></td><td><input value='{resolutionvert}'>px</input></td></tr></table></div>";
-    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3><ln>";    // Popup header
+    
+//    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3><ln>";    // Popup header
+    var fovPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3>";    // Popup header
     fovPopup = fovPopup + "<table><tr><td><label>Camera ID: </label></td><td><input value='{cameraid}'></input></td></tr>";    // Camera ID
     fovPopup = fovPopup + "<tr><td><label>FoV type: </label></td><td><input value='{fovtype}'></input></td></tr>";    // FoV Type
     fovPopup = fovPopup + "<tr><td><label>Latitude: </label></td><td><input value='{latitude}'></input></td></tr>";    // Camera location - latitude 
@@ -391,7 +427,8 @@ function cameraPopupTemplate () {
     console.log(performance.now() + ", cameraPopupTemplate(), START: " + starttime + '\n');
     
     // Create Camera popup template
-    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>{id}</b></h3><ln><br>";    // Popup header
+//    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>{id}</b></h3><ln><br>";    // Popup header
+    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>{id}</b></h3>";    // Popup header
     camPopup = camPopup + "<table><tr><td><label>ID: </label></td><td><input value='{id}'></input></td></tr>";    // Camera ID
     camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input value='{camtype}'></input></td></tr>";    // Camera Type
     camPopup = camPopup + "<tr><td><label>Brand: </label></td><td><input value='{brand}'></input></td></tr>";    // Camera Brand
@@ -435,7 +472,8 @@ function createCameraPopup (id, name, camtype, cammodel, cambrand, camregion, ca
     console.log(performance.now() + ", createCameraPopup(" + id + "), START: " + starttime + '\n');
     
     // Create Camera popup
-    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>" + id + "</b></h3><ln>";    // Popup header
+//    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>" + id + "</b></h3><ln>";    // Popup header
+    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>" + id + "</b></h3>";    // Popup header
     camPopup = camPopup + "<table><tr><td><label>ID: </label></td><td><input value='" + id + "'></input></td></tr>";    // Camera ID
     camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input value='" + camtype + "'></input></td></tr>";    // Camera Type
     camPopup = camPopup + "<tr><td><label>Brand: </label></td><td><input value='" + cambrand + "'></input></td></tr>";    // Camera Brand
@@ -575,6 +613,18 @@ function getCams2(camsUrl, camlay, fovlay) {
             console.log(myfovs[myfovs.length-1]);
             console.log(performance.now() + ", myfovs" + '\n');
             console.log(myfovs);
+            
+            console.log(JSON.stringify(data[i]));
+            console.log(JSON.stringify(mycamerasjson[mycamerasjson.length-1]));
+            console.log(JSON.stringify(cameraGeoJSONFeature));
+            console.log(JSON.stringify(mycamerasgeojson[mycamerasgeojson.length-1]));
+            console.log(JSON.stringify(mycamerasjson));
+            console.log(JSON.stringify(cam));
+            console.log(JSON.stringify(camerasLayerClustered));
+            console.log(JSON.stringify(fieldsofview));
+            console.log(JSON.stringify(myfovs[myfovs.length-1]));
+            console.log(JSON.stringify(myfovs));
+            
         }       // END FOR
         console.log("END FOR \n\n\n\n\n\n camerasLayerClustered \n mycamerasjson \n mycamerasgeojson \n");
         console.log(camerasLayerClustered);
@@ -590,6 +640,11 @@ function getCams2(camsUrl, camlay, fovlay) {
     console.log(mycamerasgeojson);
     console.log("fovlay");
     console.log(fovlay);
+    
+    console.log(JSON.stringify(camerasLayerClustered));
+    console.log(JSON.stringify(mycamerasjson));
+    console.log(JSON.stringify(mycamerasgeojson));
+    console.log(JSON.stringify(fovlay));
     
     var endtime = performance.now();
     var totaltime = endtime - starttime;
@@ -682,50 +737,47 @@ function getCams3(camsUrl, camlay, fovlay) {
             
             var mycamerasjsonindex = mycamerasjson.length;
             mycamerasjson[mycamerasjsonindex] = data[i];
-//            mycamerasjson[mycamerasjson.length] = data[i];
             var mycamerasgeojsonindex = mycamerasgeojson.length;
             mycamerasgeojson[mycamerasgeojsonindex] = cameraGeoJSONFeature;
-//            mycamerasgeojson[mycamerasgeojson.length] = cameraGeoJSONFeature;
             var myfovsindex = myfovs.length;
             myfovs[myfovsindex] = fieldsofview;
-//            myfovs[myfovs.length] = fieldsofview;
             
-            var time3 = performance.now();
-            var time01 = time1 - time0;
-            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T01: " + time01 + '\n');
-            var time12 = time2 - time1;
-            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T12: " + time12 + '\n');
-            var time23 = time3 - time2;
-            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T23: " + time23 + '\n');
-            var time13 = time3 - time1;
-            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T13: " + time13 + '\n');
-            var time03 = time3 - time0;
-            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T03: " + time03 + '\n');
+//            var time3 = performance.now();
+//            var time01 = time1 - time0;
+//            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T01: " + time01 + '\n');
+//            var time12 = time2 - time1;
+//            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T12: " + time12 + '\n');
+//            var time23 = time3 - time2;
+//            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T23: " + time23 + '\n');
+//            var time13 = time3 - time1;
+//            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T13: " + time13 + '\n');
+//            var time03 = time3 - time0;
+//            console.log(performance.now() + ", Cam: " + data[i].Camera_ID + ", T03: " + time03 + '\n');
             
-            console.log(performance.now() + ", data[i]" + '\n');console.log(data[i]);
-            console.log(performance.now() + ", mycamerasjson[mycamerasjsonindex]" + '\n');console.log(mycamerasjson[mycamerasjsonindex]);
-            console.log(performance.now() + ", cameraGeoJSONFeature" + '\n');console.log(cameraGeoJSONFeature);
-            console.log(performance.now() + ", mycamerasgeojson[mycamerasgeojsonindex]" + '\n');console.log(mycamerasgeojson[mycamerasgeojsonindex]);
-            console.log(performance.now() + ", mycamerasjson" + '\n');console.log(mycamerasjson);
-            console.log(performance.now() + ", mycamerasgeojson" + '\n');console.log(mycamerasgeojson);
-            console.log(performance.now() + ", cam" + '\n');console.log(cam);
-            console.log(performance.now() + ", camerasLayer" + '\n');console.log(camerasLayer);
-            console.log(performance.now() + ", fieldsofview" + '\n');console.log(fieldsofview);
-            console.log(performance.now() + ", myfovs[myfovsindex]" + '\n');console.log(myfovs[myfovsindex]);
-            console.log(performance.now() + ", myfovs" + '\n');console.log(myfovs);
+//            console.log(performance.now() + ", data[i]" + '\n');console.log(data[i]);
+//            console.log(performance.now() + ", mycamerasjson[mycamerasjsonindex]" + '\n');console.log(mycamerasjson[mycamerasjsonindex]);
+//            console.log(performance.now() + ", cameraGeoJSONFeature" + '\n');console.log(cameraGeoJSONFeature);
+//            console.log(performance.now() + ", mycamerasgeojson[mycamerasgeojsonindex]" + '\n');console.log(mycamerasgeojson[mycamerasgeojsonindex]);
+//            console.log(performance.now() + ", mycamerasjson" + '\n');console.log(mycamerasjson);
+//            console.log(performance.now() + ", mycamerasgeojson" + '\n');console.log(mycamerasgeojson);
+//            console.log(performance.now() + ", cam" + '\n');console.log(cam);
+//            console.log(performance.now() + ", camerasLayer" + '\n');console.log(camerasLayer);
+////            console.log(performance.now() + ", fieldsofview" + '\n');console.log(fieldsofview);
+////            console.log(performance.now() + ", myfovs[myfovsindex]" + '\n');console.log(myfovs[myfovsindex]);
+//            console.log(performance.now() + ", myfovs" + '\n');console.log(myfovs);
             
         }       // END FOR
-        console.log("END FOR \n\n\n\n\n\n\n");
-        console.log("camerasLayer");console.log(camerasLayer);
-        console.log("mycamerasjson");console.log(mycamerasjson);
-        console.log("mycamerasgeojson");console.log(mycamerasgeojson);
+//        console.log("\n\n\n END FOR \n\n");
+//        console.log("camerasLayer");console.log(camerasLayer);
+//        console.log("mycamerasjson");console.log(mycamerasjson);
+//        console.log("mycamerasgeojson");console.log(mycamerasgeojson);
         
     });     // END getJSON
-    console.log("END getJSON \n\n\n\n\n\n\n");
-    console.log("camerasLayer");console.log(camerasLayer);
-    console.log("mycamerasjson");console.log(mycamerasjson);
-    console.log("mycamerasgeojson");console.log(mycamerasgeojson);
-    console.log("fovlay");console.log(fovlay);
+//    console.log("\n\n\n END getJSON \n\n\n\n");
+//    console.log("camerasLayer");console.log(camerasLayer);
+//    console.log("mycamerasjson");console.log(mycamerasjson);
+//    console.log("mycamerasgeojson");console.log(mycamerasgeojson);
+//    console.log("fovlay");console.log(fovlay);
     
     
     var result = {
@@ -737,6 +789,7 @@ function getCams3(camsUrl, camlay, fovlay) {
         visible: fovLayers.visible
     };
     console.log("result");console.log(result);
+//    console.log(JSON.stringify(result));
     
     
     var endtime = performance.now();
@@ -792,31 +845,18 @@ function getCams3(camsUrl, camlay, fovlay) {
 
 //function getWFSCameras (camerasLayer) {
 function getWFSCameras (layer) {
-    
-    
-//    var geojsonLayer = new L.GeoJSON();
-//    var currSelectionLayer = 'DRCOGPUB:rea_drcog_jurisdiction_county';
-//    var sw_lat = 39.93290692296977;
-//    var sw_long = -105.39459228515624;
-//    var ne_lat = 40.094882122321174;
-//    var ne_long = -105.150146484375;
-//    var geoJsonUrl = "http://gis.drcog.org/geoserver/DRCOGPUB/ows?service=WFS&version=1.0.0&request=GetFeature&typeName="+ currSelectionLayer +"&srsName=EPSG:4326&maxFeatures=10000&outputFormat=json&format_options=callback:getJson&cql_filter=BBOX(the_geom," + ne_long + "," + ne_lat + "," + sw_long + "," + sw_lat + ")"; 
-
-//    function loadGeoJson(data) {
-//            console.log(data);
-//            geojsonLayer.addData(data);
-//    }
+    var starttime = performance.now();
+    console.log(performance.now() + ", getWFSCameras(), START: " + starttime + '\n');
     
     var geojsonLayer = layer;
+    var wfsrequesturl = "/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";   // "http://localhost:6080/arcgis/services/...
+    
 //    var currSelectionLayer = 'Cameras_Ekkersrijt_withspecs';
-//    var sw_lat = 51.497020000000248;
-//    var sw_long = 5.4512790000001132;
-//    var ne_lat = 51.504995000000008;
-//    var ne_long = 5.4934539999999856;
-//    var lowerCorner = [51.497020000000248, 5.4512790000001132];
-//    var upperCorner = [51.504995000000008, 5.4934539999999856];
+//    var sw_lat = 51.49702;  // lowerCorner = [51.49702, 5.451279];
+//    var sw_long = 5.451279;
+//    var ne_lat = 51.504995;  // upperCorner = [51.504995, 5.493454];
+//    var ne_long = 5.493454;
 //    var wfsrequesturl = "http://localhost:6080/arcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    var wfsrequesturl = "/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
     
     function loadData(data) {
         console.log(data);
@@ -916,7 +956,7 @@ function getWFSCameras (layer) {
             var cameraFeature = L.geoJson.css(createGeoJsonCamera (id, name, camtype, cammodel, cambrand, camregion, camarea, lat, lon, rot, foclen, fldef, flmax, flmin, sh, sw, srv, srh));
             console.log(cameraFeature);
             
-            // HERE WE CAN QUERY AND LOAD THE FoVS OF EACH CAMERA
+            // HERE QUERY AND LOAD THE FoVS OF EACH CAMERA
 
             cameraFeature.addTo(geojsonLayer);
 //            geojsonLayer.addData(cameraFeature);
@@ -925,23 +965,32 @@ function getWFSCameras (layer) {
 //        geojsonLayer.addTo(map);
     }   // END Ajax Request - Load Data
 
+    
+    // AJAX request to the WFS-T Service: getFeatures()
     $.ajax({
-//            url: geoJsonUrl,
             url: wfsrequesturl,
-//            dataType: 'jsonp',
             dataType: 'xml',
-//            jsonpCallback: 'getJson',
+            success: loadData
+    });
+
+//    $.ajax({
+//            url: geoJsonUrl,
+//            dataType: 'jsonp',
 //            jsonpCallback: 'getJson',
 //            contentType: 'application/json',
 //            contentType: 'text/xml',
-            success: loadData
-    });
+//            success: loadData
+//    });
     
     
+    
+    var endtime = performance.now();
+    var totaltime = endtime - starttime;
+    console.log(performance.now() + ", getWFSCameras(), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n');
     
 //    return camerasLayer;
     return geojsonLayer;
-}
+}       //  END getWFSCameras()
 
 
 
@@ -1081,7 +1130,7 @@ function getFovs2(cameraid, longitude, latitude, rotation, focallength, sensorwi
 //        result.recognition = L.geoJson.css(fovFeatures[2], { color: 'pink', weight: 4, fillOpacity: 0.6, opacity: 0.1 });
         result.recognition = L.geoJson.css(fovFeatures[2], fovStyles.recognition);
         result.recognition.bindPopup(fovFeatures[2].properties.popupContent);
-        result.recognition.addTo(layers.recognition);
+//        result.recognition.addTo(layers.recognition);
         // identification
 //        result.identification = L.geoJson.css(fovFeatures[3], { color: 'red', weight: 5, fillOpacity: 0.7, opacity: 0.1 });
         result.identification = L.geoJson.css(fovFeatures[3], fovStyles.identification);
@@ -1096,6 +1145,8 @@ function getFovs2(cameraid, longitude, latitude, rotation, focallength, sensorwi
         } else { result.visible = null; }
         
         // some variables for logging, tracking and debug
+            console.log(fovpopups);
+            console.log(fovFeatures);
             console.log(performance.now() + ", addFov() " + cameraid + " M&C: " + fovFeatures[0] + ", Popup: " + fovpopups[0] +'\n');
             console.log(fovFeatures[0]);
             console.log(result.monitor);
@@ -1131,17 +1182,18 @@ function getFovs2(cameraid, longitude, latitude, rotation, focallength, sensorwi
 
 
 
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////      getWFSCameras2()     //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 // getWFSCameras2() {
 function getWFSCameras2 (url, camLayer, fovLayers) {
-    
-    var cameras = camLayer;
-    var fovs = {
-        identification: fovLayers.identification,
-        recognition: fovLayers.recognition,
-        detection: fovLayers.detection,
-        monitor: fovLayers.monitor,
-        visible: fovLayers.visible,
-    };
     
 //    var currSelectionLayer = 'Cameras_Ekkersrijt_withspecs';
 //    var sw_lat = 51.497020000000248;
@@ -1152,7 +1204,16 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
 //    var upperCorner = [51.504995000000008, 5.4934539999999856];
 //    var wfsrequesturl = "http://localhost:6080/arcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
 //    var wfsrequesturl = "/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+    
     var wfsrequesturl = url;
+    var cameras = camLayer;
+    var fovs = {
+        identification: fovLayers.identification,
+        recognition: fovLayers.recognition,
+        detection: fovLayers.detection,
+        monitor: fovLayers.monitor,
+        visible: fovLayers.visible,
+    };
     
     function loadData(data) {
         console.log(data);
@@ -1270,6 +1331,15 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
             var foclen2 = (flmax + flmin*7)/8;
             var camFovs = getFovs(id, lon, lat, rot, foclen2, sh, srv, fovs);
 //            var camFovs = getFovs2(id, lon, lat, rot, foclen2, sh, srv);
+            
+//            .success( function() {
+//                cameraFeature.addTo(cameras);
+//                camFovs.identification.addTo(fovs.identification);
+//                camFovs.recognition.addTo(fovs.recognition);
+//                camFovs.detection.addTo(fovs.detection);
+//                camFovs.monitor.addTo(fovs.monitor);
+//                if ( camFovs.visible != null ) { camFovs.visible.addTo(fovs.visible); }
+//            } );
 
             cameraFeature.addTo(cameras);
 //            camFovs.identification.addTo(fovs.identification);
@@ -1291,16 +1361,24 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
         success: loadData
     });
     
-    var result = {
-        cameras: cameras,
-        identification: fovs.identification,
-        recognition: fovs.recognition,
-        detection: fovs.detection,
-        monitor: fovs.monitor,
-        visible: fovs.visible
-    };
+//    var result = {
+//        cameras: cameras,
+//        identification: fovs.identification,
+//        recognition: fovs.recognition,
+//        detection: fovs.detection,
+//        monitor: fovs.monitor,
+//        visible: fovs.visible
+//    };
+//    return result;
     
-    return result;
+    return {
+                cameras: cameras,
+                identification: fovs.identification,
+                recognition: fovs.recognition,
+                detection: fovs.detection,
+                monitor: fovs.monitor,
+                visible: fovs.visible
+            };
 }
 
 

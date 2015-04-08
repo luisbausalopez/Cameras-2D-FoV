@@ -126,13 +126,13 @@
 
         <ul class="sidebar-tabs" role="tablist">
             <li title="Home"><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
-            <li title="Profile"><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+<!--            <li title="Profile"><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>-->
             <li title="Cameras and FoVs layers"><a href="#cameras" role="tab"><i class="fa fa-video-camera"></i></a></li>
             <li title="Basemaps"><a href="#basemaps" role="tab"><i class="fa fa-photo"></i></a></li>
             <li title="Overlays"><a href="#overlays" role="tab"><i class="fa fa-th-list"></i></a></li>
-            <li title="Feature layers"><a href="#featurelayers" role="tab"><i class="fa fa-map-marker"></i></a></li>
-            <li title="Settings"><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-            <li title="Map controls"><a href="#controls" role="tab"><i class="fa fa-sashboard"></i></a></li>
+<!--            <li title="Feature layers"><a href="#featurelayers" role="tab"><i class="fa fa-map-marker"></i></a></li>-->
+<!--            <li title="Settings"><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>-->
+<!--            <li title="Map controls"><a href="#controls" role="tab"><i class="fa fa-sashboard"></i></a></li>-->
         </ul>
 
         <div class="sidebar-content active">
@@ -166,31 +166,31 @@
             
             <div class="sidebar-pane" id="cameras">
                 <h1>Cameras</h1>
-                <div>
+                <div flex>
                     <div center horizontal layout>
                       <label flex>Cameras</label>
-                      <paper-toggle-button class="camera" checked></paper-toggle-button>
+                      <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" checked></paper-toggle-button>
                     </div><br><br>
                     <div center horizontal layout>
                       <label flex>FoV Visible</label>
-                      <paper-toggle-button class="fov"></paper-toggle-button>
+                      <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisible')" checked></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
                       <label flex>FoV Identification</label>
-                      <paper-toggle-button class="fov"></paper-toggle-button>
+                      <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentification')" checked></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
                       <label flex>FoV Recognition</label>
-                      <paper-toggle-button class="fov"></paper-toggle-button>
+                      <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognition')" checked></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
                       <label flex>FoV Detection</label>
-                      <paper-toggle-button class="fov"></paper-toggle-button>
+                      <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetection')" checked></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
                       <label flex>FoV Monitor &amp; Control</label>
-                      <paper-toggle-button class="fov"></paper-toggle-button>
-                    </div>
+                      <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" checked></paper-toggle-button>
+                    </div><br>
                 </div>
             </div>
             
@@ -212,7 +212,7 @@
                     <div center horizontal layout>
                       <label flex>{Layer Name} Disabled</label>
                       <paper-toggle-button class="basemap" disabled></paper-toggle-button>
-                    </div>
+                    </div><br>
                 </div>
             </div>
             
@@ -220,29 +220,77 @@
                 <h1>Overlays</h1><br>
                 <div>
                     <div center horizontal layout>
-                      <label flex>Cameras</label>
-                      <paper-toggle-button class="overlay" onclick="switchBasemap()" checked></paper-toggle-button>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)"></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
-                      <label flex>FoV Visible</label>
-                      <paper-toggle-button class="overlay"></paper-toggle-button>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
-                      <label flex>FoV Identification</label>
-                      <paper-toggle-button class="overlay"></paper-toggle-button>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
-                      <label flex>FoV Recognition</label>
-                      <paper-toggle-button class="overlay"></paper-toggle-button>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
-                      <label flex>FoV Detection</label>
-                      <paper-toggle-button class="overlay"></paper-toggle-button>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
                     </div><br>
                     <div center horizontal layout>
-                      <label flex>FoV Monitor &amp; Control</label>
-                      <paper-toggle-button class="overlay"></paper-toggle-button>
-                    </div>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
+                    <div center horizontal layout>
+                      <label flex>Overlay Layer Name</label>
+                      <paper-toggle-button class="overlay" onClick="switchButton(overlayName)" ></paper-toggle-button>
+                    </div><br>
                 </div>
             </div>
             
@@ -306,9 +354,7 @@
         var starttime = performance.now();
         console.log(performance.now() + ", DEMO FOV CLIENT START: " + starttime + '\n');
         
-        
 //        // Map Variables
-        var map = null;
         var appContent = {
             app: {
                 title: 'Demo 2D FoV',
@@ -329,11 +375,13 @@
             search: {},
             more: {}
         };
+        
+        // MAP
+        var map = null;
 
         var endtime = performance.now();
         var exectime = endtime - starttime;
-        console.log(performance.now() + ", DEMO FOV CLIENT END: " + endtime + '\n');
-        console.log(performance.now() + ", DEMO FOV CLIENT Exec time (ms): " + exectime + '\n');
+        console.log(performance.now() + ", \n DEMO FOV CLIENT END: " + endtime + ", \n Exec time (ms): " + exectime + '\n' + '\n' + '\n' + '\n');
     </script>
     
     <!--    // poly-fov.js - Polymer FoV JS -->
