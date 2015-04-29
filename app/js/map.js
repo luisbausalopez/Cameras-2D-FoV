@@ -2387,7 +2387,7 @@ function initMap (selectedTab) {
 //            popup = popup + "<form>";    // form
 //            
 //            popup = popup + "<table><tr><td><label>ID: </label></td><td><input value='" + l.properties.id + "'></input></td></tr>";    // Camera ID
-//            popup = popup + "<tr><td><label>Type: </label></td><td><input value='" + l.properties.type + "'></input></td></tr>";    // Camera Type
+//            popup = popup + "<tr><td><label>Type: </label></td><td><input value='" + l.properties.camtype + "'></input></td></tr>";    // Camera Type
 //            popup = popup + "<tr><td><label>Brand: </label></td><td><input value='" + l.properties.brand + "'></input></td></tr>";    // Camera Brand
 //            popup = popup + "<tr><td><label>Model: </label></td><td><input value='" + l.properties.model + "'></input></td></tr>";    // Camera Model
 //            popup = popup + "<tr><td><label>Region: </label></td><td><input value='" + l.properties.region + "'></input></td></tr>";    // Camera Region

@@ -430,7 +430,7 @@ function getCreateCameraPopupTemplate () {
     camPopup = camPopup + "<form>";    // form
             
     camPopup = camPopup + "<table><tr><td><label>ID: </label></td><td><input value='{id}'></input></td></tr>";    // Camera ID
-    camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input value='{type}'></input></td></tr>";    // Camera Type
+    camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input value='{camtype}'></input></td></tr>";    // Camera Type
     camPopup = camPopup + "<tr><td><label>Brand: </label></td><td><input value='{brand}'></input></td></tr>";    // Camera Brand
     camPopup = camPopup + "<tr><td><label>Model: </label></td><td><input value='{model}'></input></td></tr>";    // Camera Model
     camPopup = camPopup + "<tr><td><label>Region: </label></td><td><input value='{region}'></input></td></tr>";    // Camera Region
