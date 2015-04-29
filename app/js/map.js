@@ -2382,6 +2382,13 @@ function initMap (selectedTab) {
             l.properties.sensorwidth = 0.00443;
             l.properties.shape = layer._latlng.lat + " " + layer._latlng.lng;
             l.properties.updatedat = date;
+            l.style = {
+                "icon": {
+                    "iconUrl": 'img/camera.png',
+                    "iconSize": [18, 18],
+                    "iconAnchor": [9, 9]
+                }
+            };
             
             // Create Camera popup
             var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
@@ -2425,7 +2432,7 @@ function initMap (selectedTab) {
 //            myMap.overlays["LH WFST CAMS"].addLayer(layer);
 //            myMap.overlays["LH WFST CAMS"].addLayer(l);
 //            l.openPopup(popupOpts);
-            var lay = new L.GeoJSON(l);
+            var lay = L.geoJson.css(l);
             myMap.overlays["LH WFST CAMS"].addLayer(lay);
             lay.openPopup(popupOpts);
             
@@ -2435,7 +2442,7 @@ function initMap (selectedTab) {
         // Do whatever else you need to. (save to db, add to map etc)
 //        var gjl = layer.GeoJSON();
 //        myMap.overlays["LH WFST CAMS"].addLayer(layer);
-        myMap.overlays["LH WFST CAMS"].addLayer(l);
+//        myMap.overlays["LH WFST CAMS"].addLayer(l);
 //        myMap.map.addLayer(layer);
     });
     myMap.map.on('draw:edited', function (e) {
