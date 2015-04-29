@@ -1271,41 +1271,43 @@ function getOverlays () {
             if (layers[i].layer.type == "betterwms") {    // if layer.type is betterwms
 //                overlays[ovl.layer.name] = L.tileLayer.betterWms(ovl.layer.url, ovl.layer.layerOptions);   // create and instantiate overlay
                 overlays[ovl.layer.name] = L.tileLayer.wms(ovl.layer.url, ovl.layer.layerOptions);   // create and instantiate overlay
-//                overlays[ovl.layer.name].options.name = ovl.layer.name;
+                
+                overlays[ovl.layer.name].options.name = ovl.layer.name;
                 if (appContent.console.outputLevel >= 2) { 
                     console.log("betterwms " + ovl.layer.name); 
                 }
                 overlays[ovl.layer.name].on("loading",function(e) {
                     if (appContent.console.outputLevel >= 3) { 
-                        console.log(e); console.log(performance.now() + ", betterwms OVERLAY " + e.target.options.name + " is loading"); 
+                        console.log('e');console.log(e); 
+                        console.log(performance.now() + ", betterwms OVERLAY " + e.target.options.name + " is loading"); 
                     }
                 });
                 overlays[ovl.layer.name].on("load",function(e) {
                     if (appContent.console.outputLevel >= 3) { 
-                        console.log(e); console.log(performance.now() + ", betterwms OVERLAY " + e.target.options.name + " has been loaded");  
+                        console.log('e');console.log(e); 
+                        console.log(performance.now() + ", betterwms OVERLAY " + e.target.options.name + " has been loaded");  
                     }
                 });
-//                layers[i].layer.layer = overlays[ovl.layer.name];
             }
             // GeoJSON LAYERS
-            else if (layers[i].layer.type == "geojson") {    // if layer.type is geojson.css
-//                overlays[ovl.layer.name] = L.geoJson.css(ovl.layer.layerOptions)   // create and instantiate overlay
+            else if (layers[i].layer.type == "geojson") {    // if layer.type is geojson
                 overlays[ovl.layer.name] = L.geoJson.css()   // create and instantiate overlay
                 overlays[ovl.layer.name].options.name = ovl.layer.name;
                 if (appContent.console.outputLevel >= 2) { 
-                    console.log("geojson" + ovl.layer.name); 
+                    console.log("geojson " + ovl.layer.name); 
                 }
                 overlays[ovl.layer.name].on("loading",function(e) {
                     if (appContent.console.outputLevel >= 3) { 
-                        console.log(performance.now() + ", geojson OVERLAY " + e.target.options.name + " is loading"); console.log(JSON.stringify(e)); 
+                        console.log('e');console.log(e); 
+                        console.log(performance.now() + ", geojson OVERLAY " + e.target.options.name + " is loading"); 
                     }
                 });
                 overlays[ovl.layer.name].on("load",function(e) {
                     if (appContent.console.outputLevel >= 3) { 
-                        console.log(performance.now() + ", geojson OVERLAY " + e.target.options.name + " has been loaded"); console.log(JSON.stringify(e)); 
+                        console.log('e');console.log(e); 
+                        console.log(performance.now() + ", geojson OVERLAY " + e.target.options.name + " has been loaded"); 
                     }
                 });
-//                layers[i].layer.layer = overlays[ovl.layer.name];
             }
             // Marker Cluster LAYERS
             else if (layers[i].layer.type == "markercluster") {    // if layer.type is marker Cluster
@@ -2092,8 +2094,6 @@ function initMap (selectedTab) {
                 myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
             }
             
-            myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
-            
             if (appContent.console.outputLevel >= 2) { console.log("case 1"); }
             break;
             
@@ -2221,6 +2221,8 @@ function initMap (selectedTab) {
             break;
     }
     
+    // Add Building Footprints overlay
+    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
     
     
 ///////////////////////////////////////

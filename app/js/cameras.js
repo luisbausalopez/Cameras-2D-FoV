@@ -543,6 +543,7 @@ function getCams3(camsUrl, camlay, fovlay) {
     
         
     map.spin(true);
+    
     // get Cameras
     $.getJSON(camsUrl, function (data) { 
         var starttime = performance.now();
@@ -617,9 +618,6 @@ function getCams3(camsUrl, camlay, fovlay) {
             console.log("mycamerasjson");console.log(JSON.stringify(mycamerasjson)); 
             console.log("mycamerasgeojson");console.log(JSON.stringify(mycamerasgeojson)); 
             console.log("myfovs");console.log(JSON.stringify(myfovs)); 
-            console.log("mycamerasjson");console.log(JSON.stringify(mycamerasjson)); 
-            console.log("mycamerasjson");console.log(JSON.stringify(mycamerasjson)); 
-            console.log('END FOR GET JSON \n'); 
         }
         if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getCams3().getJSON(), END FOR: " + endtime + ", Exec time (ms): " + totaltime + '\n'); }
         
@@ -670,6 +668,11 @@ function getCams3(camsUrl, camlay, fovlay) {
 function getWFSCameras2 (url, camLayer, fovLayers) {
     var starttime = performance.now();
     if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", getWFSCameras2(" + url + "), START: " + starttime + '\n'); }
+    if (appContent.console.outputLevel >= 3) { 
+        console.log('url');console.log(url); 
+        console.log('camLayer');console.log(camLayer); 
+        console.log('fovLayers');console.log(fovLayers); 
+    }
     
 //    var currSelectionLayer = 'Cameras_Ekkersrijt_withspecs';
 //    var sw_lat = 51.497020000000248;
@@ -690,6 +693,11 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
         monitor: fovLayers.monitor,
         visible: fovLayers.visible,
     };
+    if (appContent.console.outputLevel >= 3) { 
+        console.log('wfsrequesturl');console.log(wfsrequesturl); 
+        console.log('cameras');console.log(cameras); 
+        console.log('fovs');console.log(fovs); 
+    }
     
     function loadData(data) {
         var starttime = performance.now();
@@ -732,8 +740,11 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
         for (f in features) {
             var fobj = features[f]["Cameras_Ekkersrijt_20150319:Cameras_Ekkersrijt_withspecs"];
             if (appContent.console.outputLevel >= 4) { 
-                console.log(performance.now() + 'fobj: ');
-                console.log(fobj);
+                console.log(performance.now() + ', for f in features: ');
+                console.log('features: ');console.log(features);
+                console.log('f: ');console.log(f);
+                console.log('features[f]: ');console.log(features[f]);
+                console.log('fobj: ');console.log(fobj);
             }
 //            Cameras_Ekkersrijt_20150319:Azimuth
 //            Cameras_Ekkersrijt_20150319:Brand
@@ -805,11 +816,14 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
                 alt: geoJsonCamera.name
             };
             var cameraFeature = L.geoJson.css(geoJsonCamera, ops);
+//            var cameraFeature = L.geoJson.css(geoJsonCamera);
             
             var foclen2 = (flmax + flmin*7)/8;
+//            var camFovs = setTimeout(getFovs(id, lon, lat, rot, foclen2, sh, srv, fovs), 1500);
             var camFovs = getFovs(id, lon, lat, rot, foclen2, sh, srv, fovs);
 //            var camFovs = getFovs2(id, lon, lat, rot, foclen2, sh, srv);
             
+//            setTimeout(cameraFeature.addTo(cameras), 1500);
             cameraFeature.addTo(cameras);
 //            camFovs.identification.addTo(fovs.identification);
 //            camFovs.recognition.addTo(fovs.recognition);
@@ -818,7 +832,6 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
 //            if ( camFovs.visible != null ) { camFovs.visible.addTo(fovs.visible); }
             
             appContent.track.cams[appContent.track.cams.length] = geoJsonCamera;
-            
             
             if (appContent.console.outputLevel >= 4) { 
                 console.log(performance.now() + ", Camera details: ");
@@ -851,16 +864,15 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
                 console.log("srh: ");console.log(srh); 
             }
             if (appContent.console.outputLevel >= 3) { 
-                console.log("geoJsonCamera");console.log(JSON.stringify(geoJsonCamera)); 
+//                console.log("geoJsonCamera");console.log(JSON.stringify(geoJsonCamera)); 
+                console.log("geoJsonCamera");console.log(geoJsonCamera); 
 //                console.log("cameraFeature");console.log(JSON.stringify(cameraFeature)); 
                 console.log("cameraFeature");console.log(cameraFeature); 
-                console.log("camFovs");console.log(JSON.stringify(camFovs)); 
+//                console.log("camFovs");console.log(JSON.stringify(camFovs)); 
+                console.log("camFovs");console.log(camFovs); 
             }
             
         }   // END FOR f in features
-        
-        map.spin(false);
-        map.spin(false);
         
         var endtime = performance.now();
         var totaltime = endtime - starttime;
@@ -871,6 +883,10 @@ function getWFSCameras2 (url, camLayer, fovLayers) {
         appContent.track.elapsedtime += totaltime;
         
         if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getWFSCameras2().ajax(), END FOR: " + endtime + ", Exec time (ms): " + totaltime + '\n'); }
+        
+        map.spin(false);
+        map.spin(false);
+        
     }   // END Ajax Request - Load Data
 
         
