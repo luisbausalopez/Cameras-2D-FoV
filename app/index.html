@@ -43,7 +43,7 @@
                 totaltime: 0.0
             },
             console: {
-                outputLevel: 1 // in [0, 1, 2, 3, 4] verbose levels increasing
+                outputLevel: 4 // in [0, 1, 2, 3, 4] verbose levels increasing
             }
         };
         
@@ -69,9 +69,7 @@
     
     <!--    // LEAFLET FullScreen CSS-->
     <link rel="stylesheet" type='text/css' href="bower_components/leaflet.fullscreen/Control.FullScreen.css" />
-    
-    <!--    // LEAFLET LOADING CSS-->
-<!--    <link rel="stylesheet" type='text/css' href="js/Leaflet/Leaflet.loading-0.1.16/src/Control.Loading.css" />-->
+<!--    <link rel="stylesheet" type='text/css' href="js/Leaflet/leaflet.fullscreen-1.1.4/Control.FullScreen.css" />-->
     
     <!--    // LEAFLET COMPASS CSS-->
 <!--    <link rel="stylesheet" type='text/css' href="js/Leaflet/leaflet-compass/leaflet-compass.css" />-->
@@ -549,11 +547,9 @@
 <!--    <script type="text/javascript" src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.6/esri-leaflet.js"></script>-->
     <script type="text/javascript" src="bower_components/esri-leaflet/dist/esri-leaflet.js"></script>
     
-    <!--    // LEAFLET Fulscreen JS -->
-    <script type="text/javascript" src="bower_components/leaflet.fullscreen/Control.FullScreen.js"></script>
-    
-    <!--    // LEAFLET LOADING JS -->
-<!--    <script type="text/javascript" src="js/Leaflet/Leaflet.loading-0.1.16/src/Control.Loading.js"></script>-->
+    <!--    // LEAFLET Fullscreen JS -->
+<!--    <script type="text/javascript" src="bower_components/leaflet.fullscreen/Control.FullScreen.js"></script>-->
+    <script type="text/javascript" src="js/Leaflet/leaflet.fullscreen-1.1.4/Control.FullScreen.js"></script>
     
     <!--    // LEAFLET COMPASS JS -->
 <!--    <script type="text/javascript" src="js/Leaflet/leaflet-compass/leaflet-compass.js"></script>-->
@@ -562,8 +558,9 @@
     <script type="text/javascript" src="bower_components/leaflet.draw/dist/leaflet.draw.js"></script>
     
     <!--    // LEAFLET geojsonCSS JS -->
-    <script type="text/javascript" src="bower_components/Leaflet.geojsonCSS/leaflet.geojsoncss.min.js"></script>
+<!--    <script type="text/javascript" src="bower_components/Leaflet.geojsonCSS/leaflet.geojsoncss.min.js"></script>-->
 <!--    <script type="text/javascript" src="js/Leaflet/Leaflet.geojsonCSS/leaflet.geojsoncss.min.js"></script>-->
+    <script type="text/javascript" src="js/Leaflet/Leaflet.geojsonCSS-master/leaflet.geojsoncss.js"></script>
     
     <!--    // LEAFLET betterwms JS -->
 <!-- TT: disabled temporarily 
@@ -576,6 +573,11 @@
 <!--    <script type="text/javascript" src="js/Leaflet/sidebar-v2-0.2.1/js/leaflet-sidebar.js"></script>-->
     <script type="text/javascript" src="bower_components/sidebar-v2/js/leaflet-sidebar.min.js"></script>
     
+    <!-- LEAFLET Spinner -->
+    <script type="text/javascript" src="bower_components/spinjs/spin.js"></script>
+    <script type="text/javascript" src="bower_components/Leaflet.Spin/leaflet.spin.js"></script>
+<!--    <script type="text/javascript" src="js/Leaflet/Leaflet.Spin-master/leaflet.spin.js"></script>-->
+    
     
     <!-- leaflet extra libraries and plugins -->
 <!--    <script type="text/javascript" src="js/Leaflet/leaflet.wfs-t/leaflet.gml.js"></script>-->
@@ -584,10 +586,6 @@
 
 <!--    <script type="text/javascript" src="js/Leaflet/Leaflet.measureAreaControl/GeometryUtil.js"></script>-->
 <!--    <script type="text/javascript" src="js/Leaflet/Leaflet.measureAreaControl/L.MeasureAreaControl.min.js"></script>-->
-    
-    <!-- LEAFLET Spinner -->
-    <script type="text/javascript" src="bower_components/spinjs/spin.js"></script>
-    <script type="text/javascript" src="bower_components/Leaflet.Spin/leaflet.spin.js"></script>
     
     <!--    // CAMERAS JS -->
     <script type="text/javascript" src="js/cameras.js"></script>
@@ -607,36 +605,9 @@
         
         // MAP
         var map = null;
-//        
-////        // Map Variables
-//        var appContent = {
-//            app: {
-//                title: '',
-//                subtitle: '',
-//                description: '',
-//                meta:''
-//            },
-//            cameras: {},
-//            basemaps: {},
-//            activebasemap: null,
-//            overlays: {},
-//            featurelayers: {},
-//            controls: {},
-//            settings: {},
-//            profile: {},
-//            home: {},
-//            mainmenu: {},
-//            search: {},
-//            more: {},
-//            track: {
-//                cams: [],
-//                fovs: [],
-//                starttime: 0.0,
-//                endtime: 0.0,
-//                elapsedtime: 0.0,
-//                totaltime: 0.0
-//            }
-//        };
+        
+        
+        
         
         // APP DATA
         appContent.app.title = 'Demo 2D FoV';
