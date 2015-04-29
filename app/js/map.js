@@ -2434,9 +2434,15 @@ function initMap (selectedTab) {
 //            l.openPopup(popupOpts);
             var lay = L.geoJson.css(l);
             myMap.overlays["LH WFST CAMS"].addLayer(lay);
+            
             lay.openPopup(popupOpts);
             
-            if (appContent.console.outputLevel >= 4) { console.log(popup); }
+            if (appContent.console.outputLevel >= 4) { 
+                console.log("l");console.log(l); 
+                console.log("lay");console.log(lay); 
+                console.log("popup");console.log(popup); 
+                console.log("popupOpts");console.log(popupOpts); 
+            }
         }
 
         // Do whatever else you need to. (save to db, add to map etc)
