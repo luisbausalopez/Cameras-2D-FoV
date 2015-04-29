@@ -2425,7 +2425,7 @@ function initMap (selectedTab) {
 //            myMap.overlays["LH WFST CAMS"].addLayer(layer);
 //            myMap.overlays["LH WFST CAMS"].addLayer(l);
 //            l.openPopup(popupOpts);
-            var lay = L.GeoJSON.css(l);
+            var lay = L.GeoJSON(l);
             myMap.overlays["LH WFST CAMS"].addLayer(lay);
             lay.openPopup(popupOpts);
             
