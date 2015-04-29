@@ -2423,8 +2423,11 @@ function initMap (selectedTab) {
             };
             
 //            myMap.overlays["LH WFST CAMS"].addLayer(layer);
-            myMap.overlays["LH WFST CAMS"].addLayer(l);
-            l.openPopup(popupOpts);
+//            myMap.overlays["LH WFST CAMS"].addLayer(l);
+//            l.openPopup(popupOpts);
+            var lay = L.GeoJSON.css(l);
+            myMap.overlays["LH WFST CAMS"].addLayer(lay);
+            lay.openPopup(popupOpts);
             
             if (appContent.console.outputLevel >= 4) { console.log(popup); }
         }
