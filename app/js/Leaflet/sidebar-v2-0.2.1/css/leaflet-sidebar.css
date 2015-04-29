@@ -5,7 +5,9 @@
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  z-index: 2000; }
+/*  z-index: 2000; */
+  z-index: 200000; 
+}
   .sidebar.collapsed {
     width: 40px; }
   @media (min-width: 768px) {
@@ -13,7 +15,9 @@
       left: 10px;
       top: 10px;
       bottom: 10px;
-      transition: width 500ms; } }
+/*        EDITED BY @lbausalop  */
+/*      width: 240px;*/
+      transition: width 100ms; } }
   @media (min-width: 768px) and (max-width: 991px) {
     .sidebar {
       width: 305px; } }

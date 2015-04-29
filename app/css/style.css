@@ -8,7 +8,7 @@
 
     body {
         width: 100%;
-		height: 95%;
+		height: 100%;
         padding: 0;
         margin: 0;
     }
@@ -16,7 +16,8 @@
     html, body {
 		background-color: #E5E5E5;
         color: #333;
-		font-family: RobotoDraft, sans-serif, FontAwesome;
+        font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial, sans-serif, FontAwesome;
+/*		font-family: RobotoDraft, sans-serif, FontAwesome;*/
 /*		font-family: RobotoDraft, sans-serif, Arial, Helvetica, 'Font-Awesome';*/
 /*		font-family: 'RobotoDraft', sans-serif, 'Font-Awesome';*/
 /*		font-family: fantasy, sans-serif;*/
@@ -24,12 +25,109 @@
 	}
 
 	core-header-panel {
-		height: 10%;
-/*		height: 100px;*/
-        min-height: 90px;
+/*		height: 15%;*/
+		height: 95px;
+        min-height: 95px;
 /*		overflow: auto;*/
 		-webkit-overflow-scrolling: touch;
+        vertical-align: top;
 	}
+
+
+    core-icon {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+
+/*
+    core-icon[icon="layers"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="videocam"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="signal-wifi-0-bar"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="signal-wifi-1-bar"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="signal-wifi-2-bar"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="signal-wifi-3-bar"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+    core-icon[icon="signal-wifi-4-bar"] {
+        color: azure;
+        width: 32px;
+        height: 32px;
+    }
+*/
+
+
+    label {
+/*		background-color: #E5E5E5;*/
+        color: #03a9f4;
+        font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    paper-item.fov {
+        
+    }
+
+    paper-item.camera {
+        
+    }
+
+/*
+    paper-item {
+		background-color: azure;
+        color: #03a9f4;
+        font: 12pt 'Helvetica Neue', Arial, sans-serif;
+    }
+*/
+
+    paper-item.sidebarp {
+		background-color: white;
+        color: #333;
+        font: 10pt RobotoDraft, sans-serif;
+        text-align: justify;
+    }
+
+    paper-item.paperitembutton {
+		background-color: white;
+        color: #03a9f4;
+        font: 12pt 'Helvetica Neue', Helvetica, sans-serif;
+    }
+
+    paper-item.paperitemsubtitle {
+		background-color: azure;
+        color: #03a9f4;
+        font: 15pt 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    paper-item.paperitemtitle {
+		background: #03a9f4;
+        color: white;
+        font: 18pt RobotoDraft, sans-serif;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
 
 	paper-tabs, core-toolbar {
 		background: #03a9f4;
@@ -45,11 +143,24 @@
       box-shadow: none;
     }
 
-    #map {
-/*        height: 90%;*/
+    #themap {
+/*        margin-top: 100px;*/
+/*        padding-top: 100px;*/
+/*        top: 10%;*/
         height: 89%;
+/*        height: 89%;*/
         width: 100%;
         vertical-align: bottom;
+    }
+
+    #camerasmap {
+        height: 100%;
+        width: 100%;
+    }
+
+    #map {
+        height: 100%;
+        width: 100%;
     }
 /*
     fov-app {
@@ -61,18 +172,16 @@
 
     .sidebar {
         position: fixed;
-/*        position: static;*/
 /*        position: absolute;*/
 /*        position: inherit;*/
-/*        position: relative;*/
 /*        position: sticky;*/
-/*        left: 0;*/
+        left: 10px;
+        margin-top: 100px;
+        top: 3%;
 /*        top: 15%;*/
 /*        top: 110px;*/
-        top: 5%;
-        margin-top: 100px;
-/*        bottom: 0;*/
         bottom: 3%;
+/*        bottom: 0;*/
         max-height: 650px;
 /*        max-height: 325px;*/
         min-height: 325px;
@@ -86,6 +195,7 @@
 /*        overflow: inherit;*/
         overflow-y: auto;
         overflow-x: auto;
+        vertical-align: middle;
     }
 
 
@@ -110,7 +220,7 @@
 
     .popup {
 /*        max-height: 600px;*/
-        max-height: 400px;
+        max-height: 500px;
 /*        max-height: 40%;*/
         min-height: 250px;
 /*        height: 300px;*/
@@ -119,6 +229,7 @@
 /*        max-width: 40%;*/
         min-width: 300px;
         width: auto;
+/*        display: flex;*/
         overflow: auto;
 /*        overflow-y: auto;*/
 /*        overflow-y: scroll;*/
@@ -345,7 +456,7 @@
         height: auto;
         max-width: 500px;
         min-width: 250px;
-        width: auto;
+/*        width: auto;*/
 /*        overflow: auto;*/
         overflow: inherit;
         overflow-y: auto;
