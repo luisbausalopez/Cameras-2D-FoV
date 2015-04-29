@@ -1841,21 +1841,19 @@ function createMap (mapOptions) {
         top: '50%', // Top position relative to parent
         left: '50%' // Left position relative to parent
     };
+    
     myMap.spin(true, spinOpts);
     myMap.spin(false);
     
     map = myMap;
     
-
     var endtime = performance.now();
     var totaltime = endtime - starttime;
-    
     if (appContent.track.endtime < endtime) {
         appContent.track.endtime = endtime;
         appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
     }
     appContent.track.elapsedtime += totaltime;
-    
     if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", createMap(), START: " + starttime + ", END: " + endtime + ", Exec: " + totaltime + '\n'); }
     
     return myMap;
@@ -2055,12 +2053,6 @@ function initMap (selectedTab) {
     
     
 //    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
-    
-    
-    // Some development control variables
-    var serverLH = true;
-    var serverGD = false;
-    var fileGJ = false;
     
     // Load layers by according to tab
     switch (selectedTab) {
@@ -2275,8 +2267,7 @@ function initMap (selectedTab) {
             console.log('e.name: ');console.log(name);
         }
         
-        // DO SOMETHING HERE
-        
+        // DO SOMETHING HERE\
 //        layer.bringToBack();
     });
     
@@ -2290,8 +2281,7 @@ function initMap (selectedTab) {
             console.log('e.layer: ');console.log(layer);
         }
         
-        // DO SOMETHING HERE
-        
+        // DO SOMETHING HERE\
         if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null)) {
             if (appContent.console.outputLevel >= 3) { 
                 console.log(layer.feature.properties);
@@ -2309,7 +2299,6 @@ function initMap (selectedTab) {
         }
         
         // DO SOMETHING HERE
-        
         if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null)) {
             if (appContent.console.outputLevel >= 3) { 
                 console.log(layer.feature.properties);
@@ -2352,7 +2341,8 @@ function initMap (selectedTab) {
         
         if (layerType === 'marker') {    // Do marker specific actions
             // set default values of marker's (camera) properties
-            l.popupTemplate = cameraPopupTemplate();
+//            l.popupTemplate = cameraPopupTemplate();
+            l.popupTemplate = getCreateCameraPopupTemplate();
             l.properties.latitude = layer._latlng.lat;
             l.properties.longitude = layer._latlng.lng;
             l.properties.featuretype = "Camera";
@@ -2391,36 +2381,36 @@ function initMap (selectedTab) {
                 }
             };
             
-            // Create Camera popup
-            var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
-            
-            popup = popup + "<form>";    // form
-            
-            popup = popup + "<table><tr><td><label>ID: </label></td><td><input value='" + l.properties.id + "'></input></td></tr>";    // Camera ID
-            popup = popup + "<tr><td><label>Type: </label></td><td><input value='" + l.properties.type + "'></input></td></tr>";    // Camera Type
-            popup = popup + "<tr><td><label>Brand: </label></td><td><input value='" + l.properties.brand + "'></input></td></tr>";    // Camera Brand
-            popup = popup + "<tr><td><label>Model: </label></td><td><input value='" + l.properties.model + "'></input></td></tr>";    // Camera Model
-            popup = popup + "<tr><td><label>Region: </label></td><td><input value='" + l.properties.region + "'></input></td></tr>";    // Camera Region
-            popup = popup + "<tr><td><label>Area: </label></td><td><input value='" + l.properties.area + "'></input></td></tr>";    // Camera Area
-            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + l.properties.latitude + "'></input></td></tr>";    // Camera location - latitude 
-            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + l.properties.longitude + "'></input></td></tr>";    // Camera location - longitude
-//            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + lat + "'></input></td></tr>";    // Camera location - latitude 
-//            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + lon + "'></input></td></tr>";    // Camera location - longitude
-            popup = popup + "<tr><td><label>Rotation: </label></td><td><input value='" + l.properties.rotation + "'>dg</input></td></tr>";    // Camera location - rotation (azimuth)
-            popup = popup + "<tr><td><label>Focal length (now): </label></td><td><input value='" + l.properties.focallength + "'>mm</input></td></tr>";    // Camera specs - focal length (current)
-            popup = popup + "<tr><td><label>Focal length (max): </label></td><td><input value='" + l.properties.flmax + "'>m</input></td></tr>";    // Camera specs - focal length (max)
-            popup = popup + "<tr><td><label>Focal length (min): </label></td><td><input value='" + l.properties.flmin + "'>mm</input></td></tr>";    // Camera specs - focal length (min)
-            popup = popup + "<tr><td><label>Focal length (def): </label></td><td><input value='" + l.properties.fldef + "'>m</input></td></tr>";    // Camera specs - focal length (default)
-            popup = popup + "<tr><td><label>Sensor height: </label></td><td><input value='" + l.properties.sensorheight + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - height
-            popup = popup + "<tr><td><label>Sensor width: </label></td><td><input value='" + l.properties.sensorwidth + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - width
-            popup = popup + "<tr><td><label>Horizontal resolution: </label></td><td><input value='" + l.properties.reshor + "'>px</input></td></tr>";    // Camera specs - sensor resolution - horizontal (columns)
-            popup = popup + "<tr><td><label>Vertical resolution: </label></td><td><input value='" + l.properties.resvert + "'>px</input></td></tr></table>";    // Camera specs - sensor resolution - vertical (rows)
-            
-            popup = popup + "<button>Save</button>";    // Close form
-            popup = popup + "</form>";    // Close form
-            popup = popup + "</div>";    // Close popup div
-            
-            l.properties.popupContent = popup;
+//            // instance Create Camera popup
+//            var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
+//            
+//            popup = popup + "<form>";    // form
+//            
+//            popup = popup + "<table><tr><td><label>ID: </label></td><td><input value='" + l.properties.id + "'></input></td></tr>";    // Camera ID
+//            popup = popup + "<tr><td><label>Type: </label></td><td><input value='" + l.properties.type + "'></input></td></tr>";    // Camera Type
+//            popup = popup + "<tr><td><label>Brand: </label></td><td><input value='" + l.properties.brand + "'></input></td></tr>";    // Camera Brand
+//            popup = popup + "<tr><td><label>Model: </label></td><td><input value='" + l.properties.model + "'></input></td></tr>";    // Camera Model
+//            popup = popup + "<tr><td><label>Region: </label></td><td><input value='" + l.properties.region + "'></input></td></tr>";    // Camera Region
+//            popup = popup + "<tr><td><label>Area: </label></td><td><input value='" + l.properties.area + "'></input></td></tr>";    // Camera Area
+//            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + l.properties.latitude + "'></input></td></tr>";    // Camera location - latitude 
+//            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + l.properties.longitude + "'></input></td></tr>";    // Camera location - longitude
+////            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + lat + "'></input></td></tr>";    // Camera location - latitude 
+////            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + lon + "'></input></td></tr>";    // Camera location - longitude
+//            popup = popup + "<tr><td><label>Rotation: </label></td><td><input value='" + l.properties.rotation + "'>dg</input></td></tr>";    // Camera location - rotation (azimuth)
+//            popup = popup + "<tr><td><label>Focal length (now): </label></td><td><input value='" + l.properties.focallength + "'>mm</input></td></tr>";    // Camera specs - focal length (current)
+//            popup = popup + "<tr><td><label>Focal length (max): </label></td><td><input value='" + l.properties.flmax + "'>m</input></td></tr>";    // Camera specs - focal length (max)
+//            popup = popup + "<tr><td><label>Focal length (min): </label></td><td><input value='" + l.properties.flmin + "'>mm</input></td></tr>";    // Camera specs - focal length (min)
+//            popup = popup + "<tr><td><label>Focal length (def): </label></td><td><input value='" + l.properties.fldef + "'>m</input></td></tr>";    // Camera specs - focal length (default)
+//            popup = popup + "<tr><td><label>Sensor height: </label></td><td><input value='" + l.properties.sensorheight + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - height
+//            popup = popup + "<tr><td><label>Sensor width: </label></td><td><input value='" + l.properties.sensorwidth + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - width
+//            popup = popup + "<tr><td><label>Horizontal resolution: </label></td><td><input value='" + l.properties.reshor + "'>px</input></td></tr>";    // Camera specs - sensor resolution - horizontal (columns)
+//            popup = popup + "<tr><td><label>Vertical resolution: </label></td><td><input value='" + l.properties.resvert + "'>px</input></td></tr></table>";    // Camera specs - sensor resolution - vertical (rows)
+//            
+//            popup = popup + "<button><input type='submit' value='Save'></button>";    // Close form
+//            popup = popup + "</form>";    // Close form
+//            popup = popup + "</div>";    // Close popup div
+//            
+//            l.properties.popupContent = popup;
             
             var popupOpts = {
                 closeButton: false,
@@ -2434,9 +2424,18 @@ function initMap (selectedTab) {
 //            myMap.overlays["LH WFST CAMS"].addLayer(l);
 //            l.openPopup(popupOpts);
             var lay = L.geoJson.css(l);
-            myMap.overlays["LH WFST CAMS"].addLayer(lay);
+//            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
+//            var lay = L.geoJson.css(l, popupOpts);
+//            myMap.overlays["LH WFST CAMS"].addLayer(lay);
+            lay.addTo(myMap.overlays["LH WFST CAMS"]);
             
-            lay.openPopup(popupOpts);
+//            var popup2 = lay.getPopup();
+//            console.log(popup2);
+            
+//            lay.unbindPopup();
+////            lay.bindPopup(popup, popupOpts);
+//            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
+            lay.openPopup();
             
             if (appContent.console.outputLevel >= 4) { 
                 console.log("l");console.log(l); 

@@ -414,6 +414,65 @@ function createGeoJsonCamera (id, name, camtype, cammodel, cambrand, camregion, 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //////////////                           //////////////
+//////////////   getCreateCameraPopupTemplate()   //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  getCreateCameraPopupTemplate() - Returns a popup to createa a camera
+function getCreateCameraPopupTemplate () {
+    // some variables for logging, tracking and debug
+    var starttime = performance.now();
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getCreateCameraPopupTemplate(), START: " + starttime + '\n'); }
+    
+    // Create Camera popup template
+    var camPopup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>{id}</b></h3>";    // Popup header
+    
+    camPopup = camPopup + "<form>";    // form
+            
+    camPopup = camPopup + "<table><tr><td><label>ID: </label></td><td><input value='{id}'></input></td></tr>";    // Camera ID
+    camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input value='{type}'></input></td></tr>";    // Camera Type
+    camPopup = camPopup + "<tr><td><label>Brand: </label></td><td><input value='{brand}'></input></td></tr>";    // Camera Brand
+    camPopup = camPopup + "<tr><td><label>Model: </label></td><td><input value='{model}'></input></td></tr>";    // Camera Model
+    camPopup = camPopup + "<tr><td><label>Region: </label></td><td><input value='{region}'></input></td></tr>";    // Camera Region
+    camPopup = camPopup + "<tr><td><label>Area: </label></td><td><input value='{area}'></input></td></tr>";    // Camera Area
+    camPopup = camPopup + "<tr><td><label>Latitude: </label></td><td><input value='{latitude}'></input></td></tr>";    // Camera location - latitude 
+    camPopup = camPopup + "<tr><td><label>Longitude: </label></td><td><input value='{longitude}'></input></td></tr>";    // Camera location - longitude
+    camPopup = camPopup + "<tr><td><label>Rotation: </label></td><td><input value='{rotation}'>dg</input></td></tr>";    // Camera location - rotation (azimuth)
+    camPopup = camPopup + "<tr><td><label>Focal length (now): </label></td><td><input value='{focallength}'>m</input></td></tr>";    // Camera specs - focal length (current)
+    camPopup = camPopup + "<tr><td><label>Focal length (max): </label></td><td><input value='{flmax}'>m</input></td></tr>";    // Camera specs - focal length (max)
+    camPopup = camPopup + "<tr><td><label>Focal length (min): </label></td><td><input value='{flmin}'>m</input></td></tr>";    // Camera specs - focal length (min)
+    camPopup = camPopup + "<tr><td><label>Focal length (def): </label></td><td><input value='{fldef}'>m</input></td></tr>";    // Camera specs - focal length (default)
+    camPopup = camPopup + "<tr><td><label>Sensor height: </label></td><td><input value='{sensorheight}'>m</input></td></tr>";    // Camera specs - sensor dimensions - height
+    camPopup = camPopup + "<tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}'>m</input></td></tr>";    // Camera specs - sensor dimensions - width
+    camPopup = camPopup + "<tr><td><label>Horizontal resolution: </label></td><td><input value='{reshor}'>px</input></td></tr>";    // Camera specs - sensor resolution - horizontal (columns)
+    camPopup = camPopup + "<tr><td><label>Vertical resolution: </label></td><td><input value='{resvert}'>px</input></td></tr></table>";    // Camera specs - sensor resolution - vertical (rows)
+            
+    camPopup = camPopup + "<button><input type='submit' value='Save'></button>";    // Close form
+    camPopup = camPopup + "</form>";    // Close form
+    camPopup = camPopup + "</div>";    // Close popup div
+//    camPopup = camPopup + "<tr><td><label>Vertical resolution: </label></td><td><input value='{resvert}'>px</input></td></tr></table></div>";    // Camera specs - sensor resolution - vertical (rows)
+    
+    // some variables for logging, tracking and debug
+    var endtime = performance.now();
+    var totaltime = endtime - starttime;
+    if (appContent.track.endtime < endtime) {
+        appContent.track.endtime = endtime;
+        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+    }
+    appContent.track.elapsedtime += totaltime;
+    if (appContent.console.outputLevel >= 3) { console.log("camPopup");console.log(camPopup); }
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getCreateCameraPopupTemplate(), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
+    
+    return camPopup;
+}        // END getCreateCameraPopupTemplate()
+
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
 //////////////   cameraPopupTemplate()   //////////////
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
