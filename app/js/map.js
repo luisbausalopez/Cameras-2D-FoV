@@ -2337,8 +2337,7 @@ function initMap (selectedTab) {
         var layer = e.layer;
         var l = layer.toGeoJSON();
         var date = new Date();
-        date = date.getDate().toString();
-//        var date = new Date().getDate();
+        date = date.getTime().toString();
         
         if (appContent.console.outputLevel >= 3) { 
             console.log(performance.now() + ", map event, draw:created" + '\n');
