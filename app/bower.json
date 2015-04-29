@@ -1,0 +1,27 @@
+{
+  "name": "Cameras-2D-FoV",
+  "version": "0.0.0",
+  "homepage": "https://github.com/luisbausalopez/Cameras-2D-FoV",
+  "description": "Cameras 2D field of view",
+  "authors": [
+    "Luis"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Leaflet.Spin": "https://github.com/makinacorpus/Leaflet.Spin.git",
+    "Leaflet.geojsonCSS": "~0.0.1",
+    "esri-leaflet": "~1.0.0-rc.6",
+    "leaflet.draw": "~0.2.4",
+    "leaflet.fullscreen": "~1.1.4",
+    "leaflet.markercluster": "~0.4.0",
+    "leaflet": "~0.7.3",
+    "spinjs": "~2.0.2"
+  }
+}

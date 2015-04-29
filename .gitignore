@@ -1,5 +1,5 @@
 #Added by Tom
-bower_components
+app/bower_components
 
 #################
 ## Eclipse
@@ -223,11 +223,4 @@ old/
 app/backup/
 app/removed_components/
 app/logs/
-app/*bower.json
-app/*.bower.json
-app/*/bower.json
-app/*/.bower.json
-app/*/*/bower.json
-app/*/*/.bower.json
-app/*/*/*/bower.json
-app/*/*/*/.bower.json
+app/bower_components/
