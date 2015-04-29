@@ -2381,7 +2381,7 @@ function initMap (selectedTab) {
             l.properties.sensorheight = 0.00369;
             l.properties.sensorwidth = 0.00443;
             l.properties.shape = layer._latlng.lat + " " + layer._latlng.lng;
-            l.properties.updatedat = new Date.getDate();
+            l.properties.updatedat = date;
             
             // Create Camera popup
             var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
