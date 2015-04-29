@@ -1,9 +1,0 @@
-{
-  "name": "Leaflet.geojsonCSS",
-  "version": "0.0.1",
-  "main": ["leaflet.geojsoncss.js"],
-  "ignore": [],
-  "dependencies": {
-    "leaflet": ">=0.7"
-  }
-}
