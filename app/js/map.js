@@ -570,12 +570,12 @@ var layers = {
 //        type: 'basemap', 
 //        category: 'Basemaps', 
 //        layer: { 
-//            name: 'Darak Grey (no labels)',
+//            name: 'Dark Grey (no labels)',
 //            type: "tilelayer",
 //            url: 'http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
 //            visible: false,
 //            layerOptions: {
-//                name: 'Darak Grey (no labels)',
+//                name: 'Dark Grey (no labels)',
 //                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 //                maxZoom: 25,
 //                minZoom: 1
@@ -939,12 +939,12 @@ var layers = {
                 zoomToBoundsOnClick: true,     // default true
                 removeOutsideVisibleBounds: true,   // true for enhanced performance
                 animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 13,    // default disabled
+                disableClusteringAtZoom: 12,    // default disabled
                 maxClusterRadius: 100, // Default 80
                 spiderfyDistanceMultiplier: 100, // default 1
                 polygonOptions: {
                     color: 'yellow',
-                    weight: 15,
+                    weight: 10,
                     opacity: 0.9,
                     fillOpacity: 0.6
                 },
@@ -1052,7 +1052,7 @@ var layers = {
             name: 'Geodan WFST CAMS',
             type: "markercluster",
 //            url: 'http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
-            url: '/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
+            url: 'http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
             visible: true,
             layerOptions: {
                 name: 'Geodan WFST CAMS',
@@ -1387,7 +1387,7 @@ function getOverlays () {
     overlays["LH WFST CAMS FoV M&C"] = cameraslayerswfst.monitor;
     overlays["LH WFST CAMS FoV Visible"] = cameraslayerswfst.visible;    
 
-    var cameraslayerswfstg = getCamerasWFSTgeodan(overlays);     // cameras from WFST service at Geodan
+    var cameraslayerswfstg = getCamerasWFSTgeodan2(overlays);     // cameras from WFST service at Geodan
     overlays["Geodan WFST CAMS"] = cameraslayerswfstg.cameras;
     overlays["Geodan WFST CAMS FoV Identification"] = cameraslayerswfstg.identification;
     overlays["Geodan WFST CAMS FoV Recognition"] = cameraslayerswfstg.recognition;
@@ -1580,15 +1580,13 @@ function getInitBaselayer (baselayers) {
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-// getWFSTCameras() - get cameras and their FoVs and adds them to the map
-function getCamerasWFSTgeodan(overlays) {
+// getCamerasWFSTgeodan2() - get cameras and their FoVs and adds them to the map
+function getCamerasWFSTgeodan2(overlays) {
     var starttime = performance.now();
-    console.log(performance.now() + ", getCamerasWFSTgeodan(), START: " + starttime + '\n');
+    console.log(performance.now() + ", getCamerasWFSTgeodan2(), START: " + starttime + '\n');
     
-//    var url = "http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    var url = "/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    
-//    var url = "/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+//    var url = "http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150511/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt";
+    var url = "http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150511/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt";
     
     var layers = getCameraLayersWFSTG(overlays);
     
@@ -1602,7 +1600,68 @@ function getCamerasWFSTgeodan(overlays) {
     };
     
 //    var partialresult = getCams3(jsoncameras, cameras, fovs);
-    var partialresult = getWFSCameras2(url, cameras, fovs);
+    var partialresult = getWFSCamerasGeodan2(url, cameras, fovs);
+    
+    var result = {
+        cameras: partialresult.cameras,
+        identification: partialresult.identification,
+        recognition: partialresult.recognition,
+        detection: partialresult.detection,
+        monitor: partialresult.monitor,
+        visible: partialresult.visible
+    };
+
+    var endtime = performance.now();
+    var totaltime = endtime - starttime;
+    
+    if (appContent.track.endtime < endtime) {
+        appContent.track.endtime = endtime;
+        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+    }
+    appContent.track.elapsedtime += totaltime;
+    
+    if (appContent.console.outputLevel >= 3) { 
+        console.log("partialresult");console.log(partialresult); 
+        console.log("result");console.log(result); 
+    }
+    console.log(performance.now() + ", getCamerasWFSTgeodan2(), END: " + endtime + ", Exec: " + totaltime + '\n');
+    
+    return result;
+}       // END getCamerasWFSTgeodan2()
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////   getCamerasWFSTgeodan()  //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+// getWFSTCameras() - get cameras and their FoVs and adds them to the map
+function getCamerasWFSTgeodan(overlays) {
+    var starttime = performance.now();
+    console.log(performance.now() + ", getCamerasWFSTgeodan(), START: " + starttime + '\n');
+    
+//    var url = "http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+    var url = "http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+    
+//    var url = "http://localhost/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+    
+    var layers = getCameraLayersWFSTG(overlays);
+    
+    var cameras = layers.cameras;
+    var fovs = {
+        identification: layers.identification,
+        recognition: layers.recognition,
+        detection: layers.detection,
+        monitor: layers.monitor,
+        visible: layers.visible
+    };
+    
+//    var partialresult = getCams3(jsoncameras, cameras, fovs);
+    var partialresult = getWFSCamerasGeodan(url, cameras, fovs);
     
     var result = {
         cameras: partialresult.cameras,
@@ -1763,7 +1822,7 @@ function getCameras(overlays) {
 function getMapOptions (basemap) {
 
     // eventually these will have to be loaded from a config file
-    var ekkersrijt = [51.50, 5.475],  // Ekkersrijt LatLng
+    var ekkersrijt = [51.500, 5.470],  // Ekkersrijt LatLng
         mapInitialZoom = 15,
         mapMinZoom = 3,
         mapMaxZoom = 25,
@@ -2221,6 +2280,14 @@ function initMap (selectedTab) {
 ////////  MAP EVENT LISTENERS  ////////
 ///////////////////////////////////////
     
+    ////  CLICK
+    myMap.map.on('click', function(e){
+        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, click" + '\n'); }
+//        alert(e.latlng);
+//        confirm(e.latlng);
+//        console.log(e.latlng);
+    });
+    
     ////  FULL SCREEN
     myMap.map.on('enterFullscreen', function(){
         if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, enterFullscreen" + '\n'); }
@@ -2239,7 +2306,7 @@ function initMap (selectedTab) {
         }
         
         // DO SOMETHING HERE
-        map.spin(true);
+        myMap.map.spin(true);
 //        myMap.map.spin(true);
     });
     myMap.map.on('zoomend', function (e) {
@@ -2251,7 +2318,7 @@ function initMap (selectedTab) {
         }
         
         // DO SOMETHING HERE
-        map.spin(false);
+        myMap.map.spin(false);
 //        myMap.map.spin(false);
     });
     
@@ -2260,8 +2327,8 @@ function initMap (selectedTab) {
         var layer = e.layer;
         var name = e.name;
         
-        if (appContent.console.outputLevel >= 2) { 
-            console.log(performance.now() + ", map event, baselayerchange" + '\n');
+        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, baselayerchange" + '\n'); }
+        if (appContent.console.outputLevel >= 4) { 
             console.log('e: ');console.log(e);
             console.log('e.layer: ');console.log(layer);
             console.log('e.name: ');console.log(name);
@@ -2279,13 +2346,21 @@ function initMap (selectedTab) {
             console.log(performance.now() + ", map event, layeradd" + '\n');
             console.log('e: ');console.log(e);
             console.log('e.layer: ');console.log(layer);
+            console.log('e.target: ');console.log(e.target);
         }
         
         // DO SOMETHING HERE\
-        if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null)) {
+        if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null) ) {
             if (appContent.console.outputLevel >= 3) { 
                 console.log(layer.feature.properties);
                 console.log(layer.feature.properties.featuretype);
+            }
+            
+            if ( layer.feature.properties.featuretype == "Camera" ) {  
+                if (appContent.console.outputLevel >= 1) { console.log("Camera " + layer.feature.properties.id + " layer added"); }
+            }
+            else if ( layer.feature.properties.featuretype == "FoV" ) {  
+                if (appContent.console.outputLevel >= 1) { console.log(layer.feature.properties.fovtype + " FoV layer added for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2299,10 +2374,16 @@ function initMap (selectedTab) {
         }
         
         // DO SOMETHING HERE
-        if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null)) {
+        if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype != null) ) {
             if (appContent.console.outputLevel >= 3) { 
                 console.log(layer.feature.properties);
                 console.log(layer.feature.properties.featuretype);
+            }
+            if ( layer.feature.properties.featuretype == "Camera" ) {  
+                if (appContent.console.outputLevel >= 1) { console.log("Camera " + layer.feature.properties.id + " layer removed"); }
+            }
+            else if ( layer.feature.properties.featuretype == "FoV" ) {  
+                if (appContent.console.outputLevel >= 1) { console.log(layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2311,14 +2392,15 @@ function initMap (selectedTab) {
     myMap.map.whenReady( function(e){
         var mapready = performance.now() - starttime;
         
-        if (appContent.console.outputLevel >= 2) { 
+        if (appContent.console.outputLevel >= 1) { 
             console.log(performance.now() + ", map event, map.whenReady" + '\n');
-            console.log('e: ');console.log(e);
             console.log("MAP READY: " + performance.now() + ", Exec time (ms): " + mapready + '\n');
+        }
+        if (appContent.console.outputLevel >= 3) { 
+            console.log('e: ');console.log(e);
         }
         
         // DO SOMETHING HERE
-        
 //        myMap.map.spin(false);
     });
     
@@ -2326,25 +2408,24 @@ function initMap (selectedTab) {
     myMap.map.on('draw:created', function (e) {
         var layerType = e.layerType;
         var layer = e.layer;
+        
+        var coords = layer.getLatLng();
         var l = layer.toGeoJSON();
         var date = new Date();
         date = date.getTime().toString();
         
-        if (appContent.console.outputLevel >= 3) { 
+//        if (appContent.console.outputLevel >= 3) { 
+        if (appContent.console.outputLevel >= 0) { 
             console.log(performance.now() + ", map event, draw:created" + '\n');
             console.log('e: ');console.log(e);
             console.log('e.layer: ');console.log(layer);
             console.log('e.layer.toGeoJSON(): ');console.log(l);
+            console.log('date: ');console.log(date);
         }
         
         // DO SOMETHING HERE
-        
         if (layerType === 'marker') {    // Do marker specific actions
             // set default values of marker's (camera) properties
-//            l.popupTemplate = cameraPopupTemplate();
-            l.popupTemplate = getCreateCameraPopupTemplate();
-            l.properties.latitude = layer._latlng.lat;
-            l.properties.longitude = layer._latlng.lng;
             l.properties.featuretype = "Camera";
             l.properties.area = "Ekkersrijt";
             l.properties.brand = "Axis";
@@ -2360,8 +2441,8 @@ function initMap (selectedTab) {
             l.properties.flmin = 0.0041;
             l.properties.focallength = 0.0041;
             l.properties.id = "EKS NN-NNN";
-            l.properties.latitude = 51.497373;
-            l.properties.longitude = 5.491316;
+            l.properties.latitude = coords.lat;
+            l.properties.longitude = coords.lng;
             l.properties.model = "232+";
             l.properties.name = "";
             l.properties.objectid = "";
@@ -2371,7 +2452,7 @@ function initMap (selectedTab) {
             l.properties.rotation = 199;
             l.properties.sensorheight = 0.00369;
             l.properties.sensorwidth = 0.00443;
-            l.properties.shape = layer._latlng.lat + " " + layer._latlng.lng;
+            l.properties.shape = coords.lat + " " + coords.lng;
             l.properties.updatedat = date;
             l.style = {
                 "icon": {
@@ -2380,37 +2461,9 @@ function initMap (selectedTab) {
                     "iconAnchor": [9, 9]
                 }
             };
-            
-//            // instance Create Camera popup
-//            var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
-//            
-//            popup = popup + "<form>";    // form
-//            
-//            popup = popup + "<table><tr><td><label>ID: </label></td><td><input value='" + l.properties.id + "'></input></td></tr>";    // Camera ID
-//            popup = popup + "<tr><td><label>Type: </label></td><td><input value='" + l.properties.camtype + "'></input></td></tr>";    // Camera Type
-//            popup = popup + "<tr><td><label>Brand: </label></td><td><input value='" + l.properties.brand + "'></input></td></tr>";    // Camera Brand
-//            popup = popup + "<tr><td><label>Model: </label></td><td><input value='" + l.properties.model + "'></input></td></tr>";    // Camera Model
-//            popup = popup + "<tr><td><label>Region: </label></td><td><input value='" + l.properties.region + "'></input></td></tr>";    // Camera Region
-//            popup = popup + "<tr><td><label>Area: </label></td><td><input value='" + l.properties.area + "'></input></td></tr>";    // Camera Area
-//            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + l.properties.latitude + "'></input></td></tr>";    // Camera location - latitude 
-//            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + l.properties.longitude + "'></input></td></tr>";    // Camera location - longitude
-////            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + lat + "'></input></td></tr>";    // Camera location - latitude 
-////            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + lon + "'></input></td></tr>";    // Camera location - longitude
-//            popup = popup + "<tr><td><label>Rotation: </label></td><td><input value='" + l.properties.rotation + "'>dg</input></td></tr>";    // Camera location - rotation (azimuth)
-//            popup = popup + "<tr><td><label>Focal length (now): </label></td><td><input value='" + l.properties.focallength + "'>mm</input></td></tr>";    // Camera specs - focal length (current)
-//            popup = popup + "<tr><td><label>Focal length (max): </label></td><td><input value='" + l.properties.flmax + "'>m</input></td></tr>";    // Camera specs - focal length (max)
-//            popup = popup + "<tr><td><label>Focal length (min): </label></td><td><input value='" + l.properties.flmin + "'>mm</input></td></tr>";    // Camera specs - focal length (min)
-//            popup = popup + "<tr><td><label>Focal length (def): </label></td><td><input value='" + l.properties.fldef + "'>m</input></td></tr>";    // Camera specs - focal length (default)
-//            popup = popup + "<tr><td><label>Sensor height: </label></td><td><input value='" + l.properties.sensorheight + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - height
-//            popup = popup + "<tr><td><label>Sensor width: </label></td><td><input value='" + l.properties.sensorwidth + "'>m</input></td></tr>";    // Camera specs - sensor dimensions - width
-//            popup = popup + "<tr><td><label>Horizontal resolution: </label></td><td><input value='" + l.properties.reshor + "'>px</input></td></tr>";    // Camera specs - sensor resolution - horizontal (columns)
-//            popup = popup + "<tr><td><label>Vertical resolution: </label></td><td><input value='" + l.properties.resvert + "'>px</input></td></tr></table>";    // Camera specs - sensor resolution - vertical (rows)
-//            
-//            popup = popup + "<button><input type='submit' value='Save'></button>";    // Close form
-//            popup = popup + "</form>";    // Close form
-//            popup = popup + "</div>";    // Close popup div
-//            
-//            l.properties.popupContent = popup;
+//            l.popupTemplate = cameraPopupTemplate();
+//            l.popupTemplate = getCreateCameraPopupTemplate();
+            var createCameraPopupTemplate = getCreateCameraPopupTemplate();
             
             var popupOpts = {
                 closeButton: false,
@@ -2426,6 +2479,18 @@ function initMap (selectedTab) {
             var lay = L.geoJson.css(l);
 //            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
 //            var lay = L.geoJson.css(l, popupOpts);
+            
+            
+            
+            appContent.editing.feature.feature = l;
+            appContent.editing.feature.coordinates = coords;
+            appContent.editing.feature.layer = lay;
+            appContent.editing.feature.layer2 = layer;
+            console.log('lay');console.log(lay);
+            appContent.editing.feature.properties = l.properties;
+            
+            appContent.editing.layer = myMap.overlays["LH WFST CAMS"];
+            
 //            myMap.overlays["LH WFST CAMS"].addLayer(lay);
             lay.addTo(myMap.overlays["LH WFST CAMS"]);
             
@@ -2435,12 +2500,16 @@ function initMap (selectedTab) {
 //            lay.unbindPopup();
 ////            lay.bindPopup(popup, popupOpts);
 //            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
+            lay.bindPopup(L.Util.template(createCameraPopupTemplate, appContent.editing.feature.properties), popupOpts);
             lay.openPopup();
             
-            if (appContent.console.outputLevel >= 4) { 
+            appContent.editing.feature.layer = lay;
+
+//            if (appContent.console.outputLevel >= 4) { 
+            if (appContent.console.outputLevel >= 0) { 
                 console.log("l");console.log(l); 
                 console.log("lay");console.log(lay); 
-                console.log("popup");console.log(popup); 
+//                console.log("popup");console.log(popup); 
                 console.log("popupOpts");console.log(popupOpts); 
             }
         }
@@ -2490,7 +2559,8 @@ function initMap (selectedTab) {
     myMap.map.on('draw:drawstart', function (e) {
         var layerType = e.layerType;
         
-        if (appContent.console.outputLevel >= 3) {
+//        if (appContent.console.outputLevel >= 3) {
+        if (appContent.console.outputLevel >= 0) {
             console.log(performance.now() + ", map event, draw:drawstart" + '\n');
             console.log('e: ');console.log(e);
             console.log('e.layerType: ');console.log(layerType);
@@ -2500,14 +2570,16 @@ function initMap (selectedTab) {
         
         if (layerType === 'marker') {
             // Do marker specific actions
+            if (appContent.console.outputLevel >= 3) {console.log('marker');}
+            
         }
         
     });
     myMap.map.on('draw:drawstop', function (e) {
-        
         var layerType = e.layerType;
         
-        if (appContent.console.outputLevel >= 3) {
+//        if (appContent.console.outputLevel >= 3) {
+        if (appContent.console.outputLevel >= 0) {
             console.log(performance.now() + ", map event, draw:drawstop" + '\n');
             console.log('e: ');console.log(e);
             console.log('e.layerType: ');console.log(layerType);
@@ -2516,51 +2588,9 @@ function initMap (selectedTab) {
         // DO SOMETHING HERE
         
         if (layerType === 'marker') {
-//            var lat = e.layer.geometry.coordinates[0];
-//            var lon = e.layer.geometry.coordinates[1];
-//            var ltln = e.layer.geometry.coordinates.coordsToLatLng();
-//            console.log(ltln);
-//
-//            // Create Camera popup
-//            var popup = "<div class='popup'><h3 style='background-color:lightblue; text-align:center;'><b>New Camera</b></h3>";    // Popup header
-//            
-//            popup = popup + "<form>";    // form
-//            
-//            popup = popup + "<table><tr><td><label>ID: </label></td><td><input value='EKS XX-XXXX-XXXX'></input></td></tr>";    // Camera ID
-//            popup = popup + "<tr><td><label>Type: </label></td><td><input value='PTZ'></input></td></tr>";    // Camera Type
-//            popup = popup + "<tr><td><label>Brand: </label></td><td><input value='Axis'></input></td></tr>";    // Camera Brand
-//            popup = popup + "<tr><td><label>Model: </label></td><td><input value='232+'></input></td></tr>";    // Camera Model
-//            popup = popup + "<tr><td><label>Region: </label></td><td><input value='Eindhoven'></input></td></tr>";    // Camera Region
-//            popup = popup + "<tr><td><label>Area: </label></td><td><input value='Ekkersrijt'></input></td></tr>";    // Camera Area
-//            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='0'></input></td></tr>";    // Camera location - latitude 
-//            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='0'></input></td></tr>";    // Camera location - longitude
-////            popup = popup + "<tr><td><label>Latitude: </label></td><td><input value='" + lat + "'></input></td></tr>";    // Camera location - latitude 
-////            popup = popup + "<tr><td><label>Longitude: </label></td><td><input value='" + lon + "'></input></td></tr>";    // Camera location - longitude
-//            popup = popup + "<tr><td><label>Rotation: </label></td><td><input value='90'>dg</input></td></tr>";    // Camera location - rotation (azimuth)
-//            popup = popup + "<tr><td><label>Focal length (now): </label></td><td><input value='0.0238'>mm</input></td></tr>";    // Camera specs - focal length (current)
-//            popup = popup + "<tr><td><label>Focal length (max): </label></td><td><input value='0.0738'>m</input></td></tr>";    // Camera specs - focal length (max)
-//            popup = popup + "<tr><td><label>Focal length (min): </label></td><td><input value='0.0041'>mm</input></td></tr>";    // Camera specs - focal length (min)
-//            popup = popup + "<tr><td><label>Focal length (def): </label></td><td><input value='0.0150'>m</input></td></tr>";    // Camera specs - focal length (default)
-//            popup = popup + "<tr><td><label>Sensor height: </label></td><td><input value='0.00369'>m</input></td></tr>";    // Camera specs - sensor dimensions - height
-//            popup = popup + "<tr><td><label>Sensor width: </label></td><td><input value='0.00443'>m</input></td></tr>";    // Camera specs - sensor dimensions - width
-//            popup = popup + "<tr><td><label>Horizontal resolution: </label></td><td><input value='1920'>px</input></td></tr>";    // Camera specs - sensor resolution - horizontal (columns)
-//            popup = popup + "<tr><td><label>Vertical resolution: </label></td><td><input value='1080'>px</input></td></tr></table>";    // Camera specs - sensor resolution - vertical (rows)
-//            
-//            popup = popup + "<button>Save</button>";    // Close form
-//            popup = popup + "</form>";    // Close form
-//            popup = popup + "</div>";    // Close popup div
-//            console.log(popup);
-//            
-//            var popupOpts = {
-//                closeButton: false,
-//                keepInView: true,
-//                autoPan: true,
-//                closeOnClick: false,
-//                className: 'createcamerapopup'
-//            };
-//            console.log(popupOpts);
-//            myMap.map.openPopup(popup, ltln, popupOpts);
-//            var mapPopup = myMap.map.openPopup(popup, ltln, popupOpts);
+            // Do marker specific actions
+            if (appContent.console.outputLevel >= 3) {console.log('marker');}
+            
         }
         
     });

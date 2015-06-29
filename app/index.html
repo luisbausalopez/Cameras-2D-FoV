@@ -41,14 +41,26 @@
                 totaltime: 0.0
             },
             console: {
-                outputLevel: 4 // in [0, 1, 2, 3, 4] verbose levels increasing
+                logCameras: true,
+                logFovs: true,
+                outputLevel: 1 // in [0, 1, 2, 3, 4] verbose levels increasing
+            },
+            editing: {
+                feature: {
+                    feature: null,
+                    coordinates: null,
+                    layer: null,
+                    properties: {}
+                },
+                layer: null,
+                
             }
         };
         
         // Some development control variables
-        var serverLH = true;
-        var serverGD = false;
-        var fileGJ = true;
+        var serverLH = false;
+        var serverGD = true;
+        var fileGJ = false;
         
     </script>
     
@@ -136,15 +148,168 @@
     <!--    // JQUERY -->
 <!--    <script type="text/javascript" src="js/jquery-1.9.1/jquery.min.js"></script>-->
 <!--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    
+    <!--    // JQUERY UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
+    
+<!--
+    <script>
+    
+      $(function() {
+        var dialog, form,
+
+          // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+          emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+          name = $( "#name" ),
+          email = $( "#email" ),
+          password = $( "#password" ),
+          allFields = $( [] ).add( name ).add( email ).add( password ),
+          tips = $( ".validateTips" );
+
+        function updateTips( t ) {
+          tips
+            .text( t )
+            .addClass( "ui-state-highlight" );
+          setTimeout(function() {
+            tips.removeClass( "ui-state-highlight", 1500 );
+          }, 500 );
+        }
+
+        function checkLength( o, n, min, max ) {
+          if ( o.val().length > max || o.val().length < min ) {
+            o.addClass( "ui-state-error" );
+            updateTips( "Length of " + n + " must be between " +
+              min + " and " + max + "." );
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        function checkRegexp( o, regexp, n ) {
+          if ( !( regexp.test( o.val() ) ) ) {
+            o.addClass( "ui-state-error" );
+            updateTips( n );
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        function addUser() {
+          var valid = true;
+          allFields.removeClass( "ui-state-error" );
+
+          valid = valid && checkLength( name, "username", 3, 16 );
+          valid = valid && checkLength( email, "email", 6, 80 );
+          valid = valid && checkLength( password, "password", 5, 16 );
+
+          valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
+          valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
+          valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+
+          if ( valid ) {
+            $( "#users tbody" ).append( "<tr>" +
+              "<td>" + name.val() + "</td>" +
+              "<td>" + email.val() + "</td>" +
+              "<td>" + password.val() + "</td>" +
+            "</tr>" );
+            dialog.dialog( "close" );
+          }
+          return valid;
+        }
+
+        dialog = $( "#dialog-form" ).dialog({
+          autoOpen: false,
+          height: 300,
+          width: 350,
+          modal: true,
+          buttons: {
+            "Create an account": addUser,
+            Cancel: function() {
+              dialog.dialog( "close" );
+            }
+          },
+          close: function() {
+            form[ 0 ].reset();
+            allFields.removeClass( "ui-state-error" );
+          }
+        });
+
+        form = dialog.find( "form" ).on( "submit", function( event ) {
+          event.preventDefault();
+          addUser();
+        });
+
+        $( "#create-user" ).button().on( "click", function() {
+          dialog.dialog( "open" );
+        });
+      });
+    
+    </script>
+-->
     
 </head>
 
 <body id='body' fullbleed layout vertical>
     
-<!--    <paper-spinner class="blue" active></paper-spinner>-->
+<!--
+    <div id="dialog-form" title="Create new camera">
+        <p class="validateTips">All fields are required.</p>
+
+        <form>
+            <fieldset>
+                <label for="creatcamid">ID</label>
+                <input type="text" name="creatcamid" id="creatcamid" value="CCC-XXXX-XXXX" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamtype">Type</label>
+                <input type="text" name="creatcamtype" id="creatcamtype" value="PTZ" class="text ui-widget-content ui-corner-all">
+                <select size="4" name="creatcamtype" id="creatcamtype" required="required">
+                  <option value="PTZ" selected="selected">PTZ</option>
+                  <option value="Fixed">Fixed</option>
+                  <option value="Fixed zoom">Fixed Zoom</option>
+                  <option value="PNR">PNR</option>
+                </select>
+                <label for="creatcambrand">Brand</label>
+                <input type="text" name="creatcambrand" id="creatcambrand" value="Axis" class="text ui-widget-content ui-corner-all">
+                <label for="creatcammodel">Model</label>
+                <input type="text" name="creatcammodel" id="creatcammodel" value="232+" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamregion">Region</label>
+                <input type="text" name="creatcamregion" id="creatcamregion" value="Eindhoven" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamarea">Area</label>
+                <input type="text" name="creatcamarea" id="creatcamarea" value="Ekkersrijt" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamlat">Latitude</label>
+                <input type="number" name="creatcamlat" id="creatcamlat" value="51.50" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamlon">Longitude</label>
+                <input type="number" name="creatcamlon" id="creatcamlon" value="5.45" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamrot">Azimuth (rotation)</label>
+                <input type="number" name="creatcamrot" id="creatcamrot" value="90" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamfl">Focal Length (current)</label>
+                <input type="number" name="creatcamfl" id="creatcamfl" value="0.0138" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamfldef">Focal Length (default)</label>
+                <input type="number" name="creatcamfldef" id="creatcamfldef" value="0.0041" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamflmax">Focal Length (max)</label>
+                <input type="number" name="creatcamflmax" id="creatcamflmax" value="0.0738" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamflmin">Focal Length (min)</label>
+                <input type="number" name="creatcamflmin" id="creatcamflmin" value="0.0041" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamsh">Sensor height</label>
+                <input type="number" name="creatcamsh" id="creatcamsh" value="0.00369" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamsw">Sensor width</label>
+                <input type="number" name="creatcamsw" id="creatcamsw" value="0.00443" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamrv">Vertical resolution</label>
+                <input type="number" name="creatcamrv" id="creatcamrv" value="576" class="text ui-widget-content ui-corner-all">
+                <label for="creatcamrh">Horizontal resolution</label>
+                <input type="number" name="creatcamrh" id="creatcamrh" value="704" class="text ui-widget-content ui-corner-all">
+
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+-->
+    
     
     <core-header-panel flex>
         <core-toolbar class="medium-tall">
@@ -192,6 +357,74 @@
 <!--        <div id="map"></div>-->
     </core-header-panel>
     
+    <paper-action-dialog backdrop autoCloseDisabled layered="false" heading="Create camera">
+        
+        <paper-input-decorator label="Camera ID" floatingLabel error="Camera ID is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Camera Type" floatingLabel error="Camera Type is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Camera Brand" floatingLabel error="Camera Brand is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Camera Model" floatingLabel error="Camera Model is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Camera Region" floatingLabel>
+            <input is="core-input">
+        </paper-input-decorator>        
+        <paper-input-decorator label="Camera Area" floatingLabel>
+            <input is="core-input">
+        </paper-input-decorator>        
+        <paper-input-decorator label="Latitide (decimal deg)" floatingLabel error="Camera ID is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Longitude (decimal deg)" floatingLabel error="Camera ID is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Rotation (Azimuth) (deg)" floatingLabel error="Camera Rotation is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Inclination (Tilt) (deg)" floatingLabel error="Camera Inclination is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Height from ground (m)" floatingLabel error="Camera Height is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Focal length (current) (m)" floatingLabel error="Focal length (current) is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Focal length (default) (m)" floatingLabel error="Focal length (default) is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Focal length (max) (m)" floatingLabel error="Focal length (max) is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Focal length (min) (m)" floatingLabel error="Focal length (min) is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Sensor size width (m)" floatingLabel error="Sensor size width is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Sensor size height (m)" floatingLabel error="Sensor size height is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Sensor resolution vertical (px)" floatingLabel error="Sensor resolution vertical is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Sensor resolution horizontal (px)" floatingLabel error="Sensor resolution horizontal is required!" autoValidate>
+            <input is="core-input" required>
+        </paper-input-decorator>        
+        <paper-input-decorator label="Comments" floatingLabel>
+            <paper-autogrow-textarea>
+                <textarea></textarea>
+            </paper-autogrow-textarea
+        </paper-input-decorator>
+
+        <paper-button id="cancelsavecamera">Cancel</paper-button>
+        <paper-button id="acceptsavecamera" affirmative>Save</paper-button>
+    </paper-action-dialog>
     
 <!--    
         MAP

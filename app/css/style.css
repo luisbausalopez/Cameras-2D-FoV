@@ -24,6 +24,10 @@
 /*		font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;*/
 	}
 
+    .hidden {
+        display: none;
+    }
+
 	core-header-panel {
 /*		height: 15%;*/
 		height: 95px;
