@@ -105,6 +105,11 @@
 <!--    <link rel="stylesheet" href="js/Leaflet/sidebar-v2-0.2.1/css/leaflet-sidebar.min.css" />-->
     <link rel="stylesheet" type='text/css' href="bower_components/sidebar-v2/css/leaflet-sidebar.css" />
     
+    <!--    // LEAFLET Coordinates CSS-->
+    <link rel="stylesheet" type='text/css' href="js/Leaflet/Leaflet.Coordinates-0.1.4/dist/Leaflet.Coordinates-0.1.4.css" />
+    
+    
+    
     <!--    // Custom CSS Styles -->
     <link rel="stylesheet" type='text/css' href="css/style.css"/>
     
@@ -311,7 +316,7 @@
 -->
     
     
-    <core-header-panel flex>
+    <core-header-panel>
         <core-toolbar class="medium-tall">
             
             <paper-icon-button id="mainmenu" icon="menu" onClick="mainMenuClick()"></paper-icon-button>
@@ -357,7 +362,7 @@
 <!--        <div id="map"></div>-->
     </core-header-panel>
     
-    <paper-action-dialog backdrop autoCloseDisabled layered="false" heading="Create camera">
+    <paper-action-dialog backdrop autoCloseDisabled layered="false" heading="Create camera" hidden>
         
         <paper-input-decorator label="Camera ID" floatingLabel error="Camera ID is required!" autoValidate>
             <input is="core-input" required>
@@ -432,7 +437,7 @@
 <!--    <div id="map"></div> -->
     <div id="themap">
     <div id="camerasmap">
-        <div id="map" class="sidebar-map"></div>
+        <div id="map" class="sidebar-map" flex></div>
     
         <div id="sidebar" class="sidebar collapsed">
 
@@ -481,8 +486,9 @@
 
                 <div class="sidebar-pane" id="cameras">
                     <paper-item class="paperitemtitle" noink><strong>Cameras</strong></paper-item>
+<!--
                     <div flex>
-                        <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility </em></paper-item>
+                        <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility</em> in localhost</paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
                           <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" checked></paper-toggle-button>
                           <div style="width:10px"></div>
@@ -510,6 +516,41 @@
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
                           <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Monitor &amp; Control</label>
+                        </paper-item>
+                    </div>
+-->
+                    
+                    <div flex>
+                        <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility</em> at Geodan</paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamerag')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>Cameras</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisibleg')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Visible</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentificationg')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Identification</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognitiong')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Recognition</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetectiong')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Detection</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitorg')" checked></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Monitor &amp; Control</label>
                         </paper-item>
@@ -547,12 +588,12 @@
                     <paper-item class="paperitemtitle"><strong>Overlays</strong></paper-item>
                     <div>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="overlay" id="buttonoverlaypand" onClick="switchButton('buttonoverlaypand')" checked></paper-toggle-button>
+                          <paper-toggle-button class="overlay" id="buttonoverlaypand" onClick="switchButton('buttonoverlaypand')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>Building footprints (Pand)</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="overlay" id="buttonoverlayterrain" onClick="switchButton('buttonoverlayterrain')"></paper-toggle-button>
+                          <paper-toggle-button class="overlay" id="buttonoverlayterrain" onClick="switchButton('buttonoverlayterrain')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>Terrain height (AHN1)</label>
                         </paper-item>
@@ -622,32 +663,32 @@
     <!--                    <paper-item class="paperitemsubtitle"><em>Cameras WFS-T Geodan Intranet</em></paper-item>-->
                         <paper-item class="paperitemsubtitle"><em>Cameras GeoJSON</em></paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncameragi" onClick="switchButton('buttoncameragi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="camera" id="buttoncameragi" onClick="switchButton('buttoncameragi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>Cameras</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisiblegi" onClick="switchButton('buttonfovvisiblegi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovvisiblegi" onClick="switchButton('buttonfovvisiblegi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Visible</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentificationgi" onClick="switchButton('buttonfovidentificationgi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovidentificationgi" onClick="switchButton('buttonfovidentificationgi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Identification</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognitiongi" onClick="switchButton('buttonfovrecognitiongi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovrecognitiongi" onClick="switchButton('buttonfovrecognitiongi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Recognition</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetectiongi" onClick="switchButton('buttonfovdetectiongi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovdetectiongi" onClick="switchButton('buttonfovdetectiongi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Detection</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitorgi" onClick="switchButton('buttonfovmonitorgi')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovmonitorgi" onClick="switchButton('buttonfovmonitorgi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Monitor &amp; Control</label>
                         </paper-item>
@@ -657,32 +698,32 @@
                     <div flex>
                         <paper-item class="paperitemsubtitle" noink><em>Cameras WFS-T Localhost</em></paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" checked></paper-toggle-button>
+                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>Cameras</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisible')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisible')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Visible</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentification')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentification')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Identification</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognition')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognition')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Recognition</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetection')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetection')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Detection</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Monitor &amp; Control</label>
                         </paper-item>
@@ -815,7 +856,9 @@
     <script type="text/javascript" src="bower_components/Leaflet.Spin/leaflet.spin.js"></script>
 <!--    <script type="text/javascript" src="js/Leaflet/Leaflet.Spin-master/leaflet.spin.js"></script>-->
     
-    
+    <!--    // LEAFLET Coordinates CSS-->
+    <script type="text/javascript" src="js/Leaflet/Leaflet.Coordinates-0.1.4/dist/Leaflet.Coordinates-0.1.4.min.js"></script>
+            
     <!-- leaflet extra libraries and plugins -->
 <!--    <script type="text/javascript" src="js/Leaflet/leaflet.wfs-t/leaflet.gml.js"></script>-->
 <!--    <script type="text/javascript" src="js/Leaflet/leaflet.wfs-t/leaflet.wfst.js"></script>-->
