@@ -1825,7 +1825,7 @@ function getMapOptions (basemap) {
     var ekkersrijt = [51.500, 5.470],  // Ekkersrijt LatLng
         mapInitialZoom = 15,
         mapMinZoom = 3,
-        mapMaxZoom = 25,
+        mapMaxZoom = 23,
 //        mapZoomControl = true,
         mapZoomControl = false,
 //        mapCrs = L.CRS.EPSG4326,
@@ -1973,9 +1973,24 @@ function initMap (selectedTab) {
     myMap.mapControls.attribution = L.control.attribution(attributionControlOptions);
     myMap.map.addControl( myMap.mapControls.attribution );      // add attribution
     
+    // Mouse Coordinates
+    var mouseCoordinatesControlOptions = {
+        position: "bottomright", //optional default "bootomright"
+        decimals: 6, //optional default 4
+        decimalSeperator: ".", //optional default "."
+        labelTemplateLat: "Latitude: {y}", //optional default "Lat: {y}"
+        labelTemplateLng: "Longitude: {x}", //optional default "Lng: {x}"
+        enableUserInput: false, //optional default true
+        useDMS: false, //optional default false
+        useLatLngOrder: true, //ordering of labels, default false-> lng-lat
+        markerType: L.marker, //optional default L.marker
+        markerProps: {} //optional default {}
+    };
+    myMap.mapControls.mouseCoordinatesControl = new L.Control.Coordinates(mouseCoordinatesControlOptions);
+    myMap.map.addControl( myMap.mapControls.mouseCoordinatesControl );
+    
     // Scale
     var scaleOptions = {
-//        position: 'bottomleft',     // The position of the control
         position: 'bottomright',     // The position of the control
         maxWidth: 150,     // Def: 100 - Maximum width in pixels
         metric: true,     // metric scale line (m/km)
@@ -2084,7 +2099,10 @@ function initMap (selectedTab) {
             }
         },
         edit: {
-            featureGroup: myMap.overlays["LH WFST CAMS"],
+//            featureGroup: myMap.overlays["LH WFST CAMS"]
+            featureGroup: myMap.overlays["Geodan WFST CAMS"]
+//            featureGroup: appContent.cameras.cameras
+//            ,
 //            edit: {
 //                selectedPathOptions: {
 //                    maintainColor: true
@@ -2104,16 +2122,16 @@ function initMap (selectedTab) {
         collapsed: true,
         autoZIndex: true
     };
-    myMap.mapControls.layercontrol = L.control.layers(myMap.basemaps, myMap.overlays, layerControlOptions).addTo(myMap.map);
+    myMap.mapControls.layercontrol = new L.Control.Layers(myMap.basemaps, myMap.overlays, layerControlOptions).addTo(myMap.map);
     
     // Sidebar Control
-    myMap.mapControls.sidebar = new L.control.sidebar('sidebar');
+    myMap.mapControls.sidebar = new L.Control.Sidebar('sidebar');
     myMap.map.addControl( myMap.mapControls.sidebar );      // add sidebar
     
     
 //    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
     
-    // Load layers by according to tab
+    // Load layers according to tab
     switch (selectedTab) {
         case 1:
 //            overlays["LH WFS-T Ekkersrijt Cameras"].addTo(map);
@@ -2273,7 +2291,7 @@ function initMap (selectedTab) {
     }
     
     // Add Building Footprints overlay
-    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
+//    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
     
     
 ///////////////////////////////////////
@@ -2307,7 +2325,6 @@ function initMap (selectedTab) {
         
         // DO SOMETHING HERE
         myMap.map.spin(true);
-//        myMap.map.spin(true);
     });
     myMap.map.on('zoomend', function (e) {
         var zoom = myMap.map.getZoom();
@@ -2319,7 +2336,6 @@ function initMap (selectedTab) {
         
         // DO SOMETHING HERE
         myMap.map.spin(false);
-//        myMap.map.spin(false);
     });
     
     // BASELAYER CHANGES
@@ -2364,6 +2380,7 @@ function initMap (selectedTab) {
             }
         }
     });
+    
     myMap.map.on('layerremove', function(e) {
         var layer = e.layer;
         
@@ -2379,8 +2396,11 @@ function initMap (selectedTab) {
                 console.log(layer.feature.properties);
                 console.log(layer.feature.properties.featuretype);
             }
+            // If layer is camera
             if ( layer.feature.properties.featuretype == "Camera" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log("Camera " + layer.feature.properties.id + " layer removed"); }
+                if (appContent.console.outputLevel >= 1) { 
+                    console.log("Camera " + layer.feature.properties.id + " layer removed");
+                }
             }
             else if ( layer.feature.properties.featuretype == "FoV" ) {  
                 if (appContent.console.outputLevel >= 1) { console.log(layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
@@ -2520,6 +2540,7 @@ function initMap (selectedTab) {
 //        myMap.overlays["LH WFST CAMS"].addLayer(l);
 //        myMap.map.addLayer(layer);
     });
+    
     myMap.map.on('draw:edited', function (e) {
         var layers = e.layers;
         
@@ -2537,6 +2558,7 @@ function initMap (selectedTab) {
 //            layer.save();
         });
     });
+    
     myMap.map.on('draw:deleted', function (e) {
         var layers = e.layers;
         
