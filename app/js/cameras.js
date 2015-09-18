@@ -68,6 +68,35 @@ function createRequestUrl(longitude, latitude, rotation, focallength, sensorwidt
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //  getFovs - performs a request to the 2D FoV service and adds the response FoV polygons to the map
+function calculatePolyArea (latLngs) {
+    var pointsCount = latLngs.length,
+        area = 0.0,
+        d2r = L.LatLng.DEG_TO_RAD,
+        p1, p2;
+    if (pointsCount > 2) {
+        for (var i = 0; i < pointsCount; i++) {
+            p1 = latLngs[i];
+            p2 = latLngs[(i + 1) % pointsCount];
+            area += ((p2.lng - p1.lng) * d2r) *
+                    (2 + Math.sin(p1.lat * d2r) + Math.sin(p2.lat * d2r));
+        }
+        area = area * 6378137.0 * 6378137.0 / 2.0;
+    }
+    return Math.abs(area);
+}
+
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////         getFovs()         //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  getFovs - performs a request to the 2D FoV service and adds the response FoV polygons to the map
 function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical, layers) {
     var starttime = performance.now();
     if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", addFov(" + cameraid + "), START: " + starttime + '\n'); }
@@ -142,13 +171,14 @@ function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwid
             getFovPopup(cameraid, longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical, "Visible")
         ];
         var fovpopuptemplate = fovPopupTemplate();
+
         
         // Enrich FoV features with camera specifications
         for (var i = 0; i < fovFeatures.length; i++) {
             if ( (data.features[i] != null) && (fovFeatures[i] != null) ) { 
 //                fovFeatures[i].popupTemplate = fovpopups[i];
                 fovFeatures[i].popupTemplate = fovpopuptemplate;
-                fovFeatures[i].properties.popupContent = fovpopups[i]; 
+//                fovFeatures[i].properties.popupContent = fovpopups[i]; 
                 fovFeatures[i].crs = 4326;
                 fovFeatures[i].geometry.crs = 4326;
                 fovFeatures[i].properties.crs = 4326;
@@ -181,6 +211,7 @@ function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwid
                         fovFeatures[i].properties.fovtype = "Visible";
                         break;
                 }   // END SWITCH
+                fovFeatures[i].properties.polyarea = L.GeometryUtil.geodesicArea(L.GeoJSON.coordsToLatLngs(fovFeatures[i].geometry.coordinates, 1)).toFixed(2);
             }   // END IF
         }   // END FOR
 
@@ -307,6 +338,7 @@ function fovPopupTemplate () {
     fovPopup = fovPopup + "<tr><td><label>Rotation: </label></td><td><input value='{rotation}' disabled>dg</input></td></tr>";    // Camera location - rotation (azimuth)
     fovPopup = fovPopup + "<tr><td><label>Current Focal length: </label></td><td><input value='{focallength}' disabled>m</input></td></tr>";    // Current focal length
     fovPopup = fovPopup + "<tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}' disabled>m</input></td></tr>";    // Sensor width
+    fovPopup = fovPopup + "<tr><td><label>Area: </label></td><td><input value='{polyarea}' disabled>m&sup2:</input></td></tr>";    // Area
     fovPopup = fovPopup + "<tr><td><label>Vertical resolution: </label></td><td><input value='{resolutionvert}' disabled>px</input></td></tr></table></div>";    // Sensor resolution vertical (rows)
     
     // some variables for logging, tracking and debug
@@ -783,7 +815,7 @@ function createCameraSave () {
     if (appContent.console.outputLevel >= 3) { console.log("camera");console.log(camera); }
     if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", createCameraSave(), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
     
-}
+}   //  END CreateCameraSave()
 
 
 
@@ -792,11 +824,11 @@ function createCameraSave () {
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //////////////                           //////////////
-//////////////   cameraPopupTemplate2()   //////////////
+//////////////   cameraPopupTemplate2()  //////////////
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-//  cameraPopupTemplate2() - Returns a popup with the camera attributes 
+//  cameraPopupTemplate2() - Returns a popup template with the camera attributes and buttons to edit the attributes
 function cameraPopupTemplate2 () {
     // some variables for logging, tracking and debug
     var starttime = performance.now();
@@ -804,7 +836,7 @@ function cameraPopupTemplate2 () {
     
     // Create Camera popup template
     var camPopup = "<div class='popup'>";    // Open Popup Template div
-    camPopup = camPopup + "<h3 style='background-color:lightblue; text-align:center;'>DITSS Camera <b>{id}</b></h3>";    // Popup header
+    camPopup = camPopup + "<h3 style='background-color:lightblue; text-align:center;'><i>DITSS Camera</i> <b>{id}</b></h3>";    // Popup header
     camPopup = camPopup + "<table>";    // Open Popup Template table
     camPopup = camPopup + "<tr><td><label>ID: </label></td><td><input id='editcamid' name='camid' value='{id}' maxlength='255' disabled></input></td></tr>";    // Camera description - ID
     camPopup = camPopup + "<tr><td><label>Camera type: </label></td><td><input id='editcamtype' name='camtype' value='{camtype}' maxlength='255' disabled></input></td></tr>";    // Camera description - Type
@@ -1293,12 +1325,15 @@ function getWFSCamerasGeodan2 (url, camLayer, fovLayers) {
             var foclen2 = (flmax + flmin*7)/8;
             var foclen3 = (flmax + flmin*5)/6;
             var foclen4 = (flmax + flmin*8)/9;
+            var foclen5 = Math.random() * (flmax - flmin) + flmin; //random focal length
             var rot2 = Math.floor(Math.random() * (360 - 0)) + 0; //random rotation 0-360
             
-            var camFovs = getFovs(id, lon, lat, rot, fldef, sh, srv, fovs);
+//            var camFovs = getFovs(id, lon, lat, rot, fldef, sh, srv, fovs);
+            var camFovs = getFovs(id, lon, lat, rot, foclen, sh, srv, fovs);
 //            var camFovs = getFovs(id, lon, lat, rot, foclen2, sh, srv, fovs);
 //            var camFovs = getFovs(id, lon, lat, rot, foclen3, sh, srv, fovs);
 //            var camFovs = getFovs(id, lon, lat, rot, foclen4, sh, srv, fovs);
+//            var camFovs = getFovs(id, lon, lat, rot, foclen5, sh, srv, fovs);
 //            var camFovs = getFovs(id, lon, lat, rot2, foclen4, sh, srv, fovs);
 //            var camFovs = getFovs2(id, lon, lat, rot, foclen2, sh, srv);
             
