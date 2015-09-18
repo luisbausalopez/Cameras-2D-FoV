@@ -810,7 +810,7 @@
     function removeFovLayersWithCameraId (camid) {
         var resultlayer = null;
         map.eachLayer( function (layer) { 
-            if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype == "FoV") && (layer.feature.properties.camid == camid) ) { 
+            if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype == "FoV") && (layer.feature.properties.cameraid == camid) ) { 
                 console.log(layer);
                 map.removeLayer(layer);
 //                layer.remove();
