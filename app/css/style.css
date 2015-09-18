@@ -30,8 +30,8 @@
 
 	core-header-panel {
 /*		height: 15%;*/
-		height: 95px;
-        min-height: 95px;
+        height: 95px;
+/*        min-height: 95px;*/
 /*		overflow: auto;*/
 		-webkit-overflow-scrolling: touch;
         vertical-align: top;
@@ -151,8 +151,9 @@
 /*        margin-top: 100px;*/
 /*        padding-top: 100px;*/
 /*        top: 10%;*/
-        height: 89%;
+        min-height: 500px;
 /*        height: 89%;*/
+        height: 87%;
         width: 100%;
         vertical-align: bottom;
     }
@@ -181,10 +182,10 @@
 /*        position: sticky;*/
         left: 10px;
         margin-top: 100px;
-        top: 3%;
+        top: 5%;
 /*        top: 15%;*/
 /*        top: 110px;*/
-        bottom: 3%;
+        bottom: 5%;
 /*        bottom: 0;*/
         max-height: 650px;
 /*        max-height: 325px;*/
