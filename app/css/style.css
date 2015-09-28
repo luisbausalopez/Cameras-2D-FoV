@@ -105,6 +105,15 @@
     }
 */
 
+    paper-button.newcamerabutton {
+		background-color: white;
+        color: #333;
+        width: 50px;
+        height: 28px;
+        font: 15pt RobotoDraft, sans-serif;
+        text-align: center;
+    }
+
     paper-item.sidebarp {
 		background-color: white;
         color: #333;

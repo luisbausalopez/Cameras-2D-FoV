@@ -12,7 +12,7 @@
         var starttime = performance.now();
         console.log(performance.now() + ", DEMO FOV CLIENT START: " + starttime + '\n');
         
-//        // Map Variables
+//        // App and Map Variables
         var appContent = {
             app: {
                 title: '',
@@ -56,6 +56,7 @@
                 
             }
         };
+        appContent.track.starttime = appContent.track.endtime = starttime;
         
         // Some development control variables
         var serverLH = false;
@@ -64,14 +65,12 @@
         
     </script>
     
-    
 	<title>POLYMER 2D FOV SERVICE</title>
     
     <meta name="author" content="Luis Bausá López">
     <meta name="description" content="Cameras 2D FoV service demo client">
     <meta name="keywords" content="Cameras, CCTV, FoV, coverage, VU Amsterdam, Geodan, DITSS">
 
-    
 	<!-- Import some fonts -->
         <!-- Fonts - Roboto -->
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto'>
@@ -108,11 +107,8 @@
     <!--    // LEAFLET Coordinates CSS-->
     <link rel="stylesheet" type='text/css' href="js/Leaflet/Leaflet.Coordinates-0.1.4/dist/Leaflet.Coordinates-0.1.4.css" />
     
-    
-    
     <!--    // Custom CSS Styles -->
     <link rel="stylesheet" type='text/css' href="css/style.css"/>
-    
     
 	<!-- Import Polymer core -->
 	<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
@@ -159,163 +155,11 @@
     <!--    // JQUERY UI -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-    
-<!--
-    <script>
-    
-      $(function() {
-        var dialog, form,
-
-          // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
-          emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-          name = $( "#name" ),
-          email = $( "#email" ),
-          password = $( "#password" ),
-          allFields = $( [] ).add( name ).add( email ).add( password ),
-          tips = $( ".validateTips" );
-
-        function updateTips( t ) {
-          tips
-            .text( t )
-            .addClass( "ui-state-highlight" );
-          setTimeout(function() {
-            tips.removeClass( "ui-state-highlight", 1500 );
-          }, 500 );
-        }
-
-        function checkLength( o, n, min, max ) {
-          if ( o.val().length > max || o.val().length < min ) {
-            o.addClass( "ui-state-error" );
-            updateTips( "Length of " + n + " must be between " +
-              min + " and " + max + "." );
-            return false;
-          } else {
-            return true;
-          }
-        }
-
-        function checkRegexp( o, regexp, n ) {
-          if ( !( regexp.test( o.val() ) ) ) {
-            o.addClass( "ui-state-error" );
-            updateTips( n );
-            return false;
-          } else {
-            return true;
-          }
-        }
-
-        function addUser() {
-          var valid = true;
-          allFields.removeClass( "ui-state-error" );
-
-          valid = valid && checkLength( name, "username", 3, 16 );
-          valid = valid && checkLength( email, "email", 6, 80 );
-          valid = valid && checkLength( password, "password", 5, 16 );
-
-          valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
-          valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
-          valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-
-          if ( valid ) {
-            $( "#users tbody" ).append( "<tr>" +
-              "<td>" + name.val() + "</td>" +
-              "<td>" + email.val() + "</td>" +
-              "<td>" + password.val() + "</td>" +
-            "</tr>" );
-            dialog.dialog( "close" );
-          }
-          return valid;
-        }
-
-        dialog = $( "#dialog-form" ).dialog({
-          autoOpen: false,
-          height: 300,
-          width: 350,
-          modal: true,
-          buttons: {
-            "Create an account": addUser,
-            Cancel: function() {
-              dialog.dialog( "close" );
-            }
-          },
-          close: function() {
-            form[ 0 ].reset();
-            allFields.removeClass( "ui-state-error" );
-          }
-        });
-
-        form = dialog.find( "form" ).on( "submit", function( event ) {
-          event.preventDefault();
-          addUser();
-        });
-
-        $( "#create-user" ).button().on( "click", function() {
-          dialog.dialog( "open" );
-        });
-      });
-    
-    </script>
--->
     
 </head>
 
 <body id='body' fullbleed layout vertical>
-    
-<!--
-    <div id="dialog-form" title="Create new camera">
-        <p class="validateTips">All fields are required.</p>
 
-        <form>
-            <fieldset>
-                <label for="creatcamid">ID</label>
-                <input type="text" name="creatcamid" id="creatcamid" value="CCC-XXXX-XXXX" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamtype">Type</label>
-                <input type="text" name="creatcamtype" id="creatcamtype" value="PTZ" class="text ui-widget-content ui-corner-all">
-                <select size="4" name="creatcamtype" id="creatcamtype" required="required">
-                  <option value="PTZ" selected="selected">PTZ</option>
-                  <option value="Fixed">Fixed</option>
-                  <option value="Fixed zoom">Fixed Zoom</option>
-                  <option value="PNR">PNR</option>
-                </select>
-                <label for="creatcambrand">Brand</label>
-                <input type="text" name="creatcambrand" id="creatcambrand" value="Axis" class="text ui-widget-content ui-corner-all">
-                <label for="creatcammodel">Model</label>
-                <input type="text" name="creatcammodel" id="creatcammodel" value="232+" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamregion">Region</label>
-                <input type="text" name="creatcamregion" id="creatcamregion" value="Eindhoven" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamarea">Area</label>
-                <input type="text" name="creatcamarea" id="creatcamarea" value="Ekkersrijt" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamlat">Latitude</label>
-                <input type="number" name="creatcamlat" id="creatcamlat" value="51.50" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamlon">Longitude</label>
-                <input type="number" name="creatcamlon" id="creatcamlon" value="5.45" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamrot">Azimuth (rotation)</label>
-                <input type="number" name="creatcamrot" id="creatcamrot" value="90" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamfl">Focal Length (current)</label>
-                <input type="number" name="creatcamfl" id="creatcamfl" value="0.0138" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamfldef">Focal Length (default)</label>
-                <input type="number" name="creatcamfldef" id="creatcamfldef" value="0.0041" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamflmax">Focal Length (max)</label>
-                <input type="number" name="creatcamflmax" id="creatcamflmax" value="0.0738" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamflmin">Focal Length (min)</label>
-                <input type="number" name="creatcamflmin" id="creatcamflmin" value="0.0041" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamsh">Sensor height</label>
-                <input type="number" name="creatcamsh" id="creatcamsh" value="0.00369" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamsw">Sensor width</label>
-                <input type="number" name="creatcamsw" id="creatcamsw" value="0.00443" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamrv">Vertical resolution</label>
-                <input type="number" name="creatcamrv" id="creatcamrv" value="576" class="text ui-widget-content ui-corner-all">
-                <label for="creatcamrh">Horizontal resolution</label>
-                <input type="number" name="creatcamrh" id="creatcamrh" value="704" class="text ui-widget-content ui-corner-all">
-
-                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-            </fieldset>
-        </form>
-    </div>
--->
-    
-    
     <core-header-panel>
         <core-toolbar class="medium-tall">
             
@@ -362,74 +206,6 @@
 <!--        <div id="map"></div>-->
     </core-header-panel>
     
-    <paper-action-dialog backdrop autoCloseDisabled layered="false" heading="Create camera" hidden>
-        
-        <paper-input-decorator label="Camera ID" floatingLabel error="Camera ID is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Camera Type" floatingLabel error="Camera Type is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Camera Brand" floatingLabel error="Camera Brand is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Camera Model" floatingLabel error="Camera Model is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Camera Region" floatingLabel>
-            <input is="core-input">
-        </paper-input-decorator>        
-        <paper-input-decorator label="Camera Area" floatingLabel>
-            <input is="core-input">
-        </paper-input-decorator>        
-        <paper-input-decorator label="Latitide (decimal deg)" floatingLabel error="Camera ID is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Longitude (decimal deg)" floatingLabel error="Camera ID is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Rotation (Azimuth) (deg)" floatingLabel error="Camera Rotation is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Inclination (Tilt) (deg)" floatingLabel error="Camera Inclination is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Height from ground (m)" floatingLabel error="Camera Height is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Focal length (current) (m)" floatingLabel error="Focal length (current) is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Focal length (default) (m)" floatingLabel error="Focal length (default) is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Focal length (max) (m)" floatingLabel error="Focal length (max) is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Focal length (min) (m)" floatingLabel error="Focal length (min) is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Sensor size width (m)" floatingLabel error="Sensor size width is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Sensor size height (m)" floatingLabel error="Sensor size height is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Sensor resolution vertical (px)" floatingLabel error="Sensor resolution vertical is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Sensor resolution horizontal (px)" floatingLabel error="Sensor resolution horizontal is required!" autoValidate>
-            <input is="core-input" required>
-        </paper-input-decorator>        
-        <paper-input-decorator label="Comments" floatingLabel>
-            <paper-autogrow-textarea>
-                <textarea></textarea>
-            </paper-autogrow-textarea
-        </paper-input-decorator>
-
-        <paper-button id="cancelsavecamera">Cancel</paper-button>
-        <paper-button id="acceptsavecamera" affirmative>Save</paper-button>
-    </paper-action-dialog>
     
 <!--    
         MAP
@@ -443,13 +219,16 @@
 
             <ul class="sidebar-tabs" role="tablist">
                 <li title="Home"><a href="#home" role="tab"><i class="fa fa-info"></i></a></li>
-    <!--            <li title="Profile"><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>-->
-                <li title="Cameras and FoVs layers"><a href="#cameras" role="tab"><i class="fa fa-video-camera"></i></a></li>
-    <!--            <li title="Basemaps"><a href="#basemaps" role="tab"><i class="fa fa-photo"></i></a></li>-->
-                <li title="Overlays"><a href="#overlays" role="tab"><i class="fa fa-th-list"></i></a></li>
+                <li title="Surveillance Cameras"><a href="#cameras" role="tab"><i class="fa fa-video-camera"></i></a></li>
+                <li title="Add Camera"><a href="#addcamera" role="tab"><i class="fa fa-plus-circle"></i></a></li>
                 <li title="Feature layers"><a href="#featurelayers" role="tab"><i class="fa fa-map-marker"></i></a></li>
-    <!--            <li title="Settings"><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>-->
-    <!--            <li title="Map controls"><a href="#controls" role="tab"><i class="fa fa-sashboard"></i></a></li>-->
+                <li title="Overlays"><a href="#overlays" role="tab"><i class="fa fa-th-list"></i></a></li>
+<!--                <li title="Map controls"><a href="#controls" role="tab"><i class="fa fa-dashboard"></i></a></li>-->
+<!--
+                <li title="Basemaps"><a href="#basemaps" role="tab"><i class="fa fa-photo"></i></a></li>
+                <li title="Profile"><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
+                <li title="Settings"><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+-->
             </ul>
 
             <div class="sidebar-content active">
@@ -460,32 +239,41 @@
                     <paper-item class="sidebarp" noink><p>Demo client for the Cameras 2D FoV service. This prototype app is a coverage map of surveilled areas. The cameras are the <b>DITSS</b> surveillance cameras and the area of study is the <i>Ekkersrijt industrial area</i>, located north of Eindhoven (NL).</p></paper-item>
                 </div>
 
-                <div class="sidebar-pane" id="profile">
-                    <paper-item class="paperitemtitle" noink><strong>Profile</strong></paper-item>
-                    <div center horizontal layout>
-                        <paper-input-decorator class="username" label="User Name" floatingLabel error="input is required!" autoValidate>
-                          <input is="core-input" required>
-                        </paper-input-decorator>
-                        <div style="width:10px"></div>
-                    </div>
-                    <div center horizontal layout>
-                        <paper-input-decorator class="emailaddress" label="Email address" floatingLabel error="email address is required" autoValidate>
-                          <input is="core-input">
-                        </paper-input-decorator>
-                        <div style="width:10px"></div>
-                    </div>
-                    <div center horizontal layout>
-                        <paper-input-decorator class="description" label="Description" floatingLabel>
-                          <paper-autogrow-textarea>
-                            <textarea></textarea>
-                          </paper-autogrow-textarea>
-                        </paper-input-decorator>
-                        <div style="width:10px"></div>
-                    </div>
-                </div>
-
                 <div class="sidebar-pane" id="cameras">
                     <paper-item class="paperitemtitle" noink><strong>Cameras</strong></paper-item>
+                    <div flex>
+                        <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility</em></paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamerag')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>Cameras</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisibleg')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Visible</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentificationg')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Identification</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognitiong')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Recognition</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetectiong')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Detection</label>
+                        </paper-item>
+                        <paper-item class="paperitembutton" center horizontal layout noink>
+                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitorg')" checked></paper-toggle-button>
+                          <div style="width:10px"></div>
+                          <label flex>FoV Monitor &amp; Control</label>
+                        </paper-item>
+                    </div>
 <!--
                     <div flex>
                         <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility</em> in localhost</paper-item>
@@ -521,46 +309,12 @@
                         </paper-item>
                     </div>
 -->
-                    
-                    <div flex>
-                        <paper-item class="paperitemsubtitle" noink><em>Map layers: Surveillance Cameras, coverage and visibility</em> at Geodan</paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamerag')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>Cameras</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisibleg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Visible</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentificationg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Identification</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognitiong')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Recognition</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetectiong')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Detection</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitorg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Monitor &amp; Control</label>
-                        </paper-item>
-                    </div>
-
                 </div>
 
+<!--
                 <div class="sidebar-pane" id="basemaps">
                     <paper-item class="paperitemtitle" noink><strong>Basemaps</strong></paper-item>
-                    <div>
+                    <div flex>
                         <div center horizontal layout>
                           <label flex>Light Grey</label>
                           <paper-toggle-button class="basemap" checked></paper-toggle-button>
@@ -583,10 +337,11 @@
                         </div><br>
                     </div>
                 </div>
+-->
 
                 <div class="sidebar-pane" id="overlays">
                     <paper-item class="paperitemtitle"><strong>Overlays</strong></paper-item>
-                    <div>
+                    <div flex>
                         <paper-item class="paperitembutton" center horizontal layout noink>
                           <paper-toggle-button class="overlay" id="buttonoverlaypand" onClick="switchButton('buttonoverlaypand')" ></paper-toggle-button>
                           <div style="width:10px"></div>
@@ -597,104 +352,18 @@
                           <div style="width:10px"></div>
                           <label flex>Terrain height (AHN1)</label>
                         </paper-item>
-
+<!--
                         <paper-item class="paperitembutton" center horizontal layout noink>
                           <paper-toggle-button class="overlay" id="buttonoverlay_" onClick="switchButton('buttonoverlay_')" disabled></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>_</label>
                         </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="overlay" id="buttonoverlay_" onClick="switchButton('buttonoverlay_')" disabled></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>_</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="overlay" id="buttonoverlay_" onClick="switchButton('buttonoverlay_')" disabled></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>_</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="overlay" id="buttonoverlay_" onClick="switchButton('buttonoverlay_')" disabled></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>_</label>
-                        </paper-item>
-
+-->
                     </div>
                 </div>
-
-                <div class="sidebar-pane" id="settings"><h1>Settings</h1></div>
+                
                 <div class="sidebar-pane" id="featurelayers">
                     <paper-item class="paperitemtitle"><strong>Feature Layers</strong></paper-item>
-                    <div flex>
-                        <paper-item class="paperitemsubtitle"><em>Cameras WFS-T Geodan</em></paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncamerag" onClick="switchButton('buttoncamerag')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>Cameras</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisibleg" onClick="switchButton('buttonfovvisibleg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Visible</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentificationg" onClick="switchButton('buttonfovidentificationg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Identification</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognitiong" onClick="switchButton('buttonfovrecognitiong')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Recognition</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetectiong" onClick="switchButton('buttonfovdetectiong')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Detection</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitorg" onClick="switchButton('buttonfovmonitorg')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Monitor &amp; Control</label>
-                        </paper-item>
-                    </div><br>
-
-                    <div flex>
-    <!--                    <paper-item class="paperitemsubtitle"><em>Cameras WFS-T Geodan Intranet</em></paper-item>-->
-                        <paper-item class="paperitemsubtitle"><em>Cameras GeoJSON</em></paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncameragi" onClick="switchButton('buttoncameragi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>Cameras</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisiblegi" onClick="switchButton('buttonfovvisiblegi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Visible</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentificationgi" onClick="switchButton('buttonfovidentificationgi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Identification</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognitiongi" onClick="switchButton('buttonfovrecognitiongi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Recognition</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetectiongi" onClick="switchButton('buttonfovdetectiongi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Detection</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitorgi" onClick="switchButton('buttonfovmonitorgi')" ></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Monitor &amp; Control</label>
-                        </paper-item>
-                    </div><br>
-
-
                     <div flex>
                         <paper-item class="paperitemsubtitle" noink><em>Cameras WFS-T Localhost</em></paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
@@ -727,84 +396,158 @@
                           <div style="width:10px"></div>
                           <label flex>FoV Monitor &amp; Control</label>
                         </paper-item>
-                    </div>
-
-    <!--
-
+                    </div>                    
+<!--
                     <div flex>
-                        <paper-item class="paperitemsubtitle" noink><em>SOURCE</em></paper-item>
+                        <paper-item class="paperitemsubtitle"><em>Cameras GeoJSON</em></paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" checked></paper-toggle-button>
+                          <paper-toggle-button class="camera" id="buttoncameragi" onClick="switchButton('buttoncameragi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>Cameras</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisible')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovvisiblegi" onClick="switchButton('buttonfovvisiblegi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Visible</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentification')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovidentificationgi" onClick="switchButton('buttonfovidentificationgi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Identification</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognition')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovrecognitiongi" onClick="switchButton('buttonfovrecognitiongi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Recognition</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetection')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovdetectiongi" onClick="switchButton('buttonfovdetectiongi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Detection</label>
                         </paper-item>
                         <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" checked></paper-toggle-button>
+                          <paper-toggle-button class="fov" id="buttonfovmonitorgi" onClick="switchButton('buttonfovmonitorgi')" ></paper-toggle-button>
                           <div style="width:10px"></div>
                           <label flex>FoV Monitor &amp; Control</label>
                         </paper-item>
-                    </div>
-
-
-                    <div flex>
-                        <paper-item class="paperitemsubtitle" noink><em>SOURCE</em></paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="camera" id="buttoncamera" onClick="switchButton('buttoncamera')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>Cameras</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovvisible" onClick="switchButton('buttonfovvisible')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Visible</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovidentification" onClick="switchButton('buttonfovidentification')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Identification</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovrecognition" onClick="switchButton('buttonfovrecognition')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Recognition</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovdetection" onClick="switchButton('buttonfovdetection')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Detection</label>
-                        </paper-item>
-                        <paper-item class="paperitembutton" center horizontal layout noink>
-                          <paper-toggle-button class="fov" id="buttonfovmonitor" onClick="switchButton('buttonfovmonitor')" checked></paper-toggle-button>
-                          <div style="width:10px"></div>
-                          <label flex>FoV Monitor &amp; Control</label>
-                        </paper-item>
-                    </div>
-    -->
-
+                    </div><br>
+-->
                 </div>
-                <div class="sidebar-pane" id="controls"><h1>Map Controls</h1></div>
-            </div>
-        </div>                                                                                                          
+                
+                <div class="sidebar-pane" id="addcamera">
+                    <paper-item class="paperitemtitle"><strong>Add new camera</strong></paper-item>
+                    <div flex>
+                        <paper-input-decorator label="Camera ID" floatingLabel error="Camera ID is required!" autoValidate>
+                            <input is="core-input" id="newcameraid" value="EKSXX-XXXX" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Camera Type" floatingLabel error="Camera Type is required!" autoValidate>
+                            <input is="core-input" id="newcameratype" value="PTZ" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Camera Brand" floatingLabel error="Camera Brand is required!" autoValidate>
+                            <input is="core-input" id="newcamerabrand" value="Axis" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Camera Model" floatingLabel error="Camera Model is required!" autoValidate>
+                            <input is="core-input" id="newcameramodel" value="232+" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Camera Region" floatingLabel>
+                            <input is="core-input" id="newcameraregion" value="Eindhoven" >
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Camera Area" floatingLabel>
+                            <input is="core-input" id="newcameraarea" value="Ekkersrijt" >
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Latitude (decimal deg)" floatingLabel error="Camera Latitude is required!" autoValidate>
+                            <input is="core-input" id="newcameralat" value="51.500000" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Longitude (decimal deg)" floatingLabel error="Camera Longitude is required!" autoValidate>
+                            <input is="core-input" id="newcameralon" value="5.470000" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Rotation (Azimuth) (deg)" floatingLabel error="Camera Rotation is required!" autoValidate>
+                            <input is="core-input" id="newcamerarot" value="180" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Inclination (Tilt) (deg)" floatingLabel error="Camera Inclination is required!" autoValidate>
+                            <input is="core-input" id="newcameratilt" value="0" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Height from ground (m)" floatingLabel error="Camera Height is required!" autoValidate>
+                            <input is="core-input" id="newcameraheight" value="3" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Focal length (current) (m)" floatingLabel error="Focal length (current) is required!" autoValidate>
+                            <input is="core-input" id="newcameraflc" value="0.0082" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Focal length (default) (m)" floatingLabel error="Focal length (default) is required!" autoValidate>
+                            <input is="core-input" id="newcamerafld" value="0.0041" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Focal length (max) (m)" floatingLabel error="Focal length (max) is required!" autoValidate>
+                            <input is="core-input" id="newcameraflmax" value="0.0738" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Focal length (min) (m)" floatingLabel error="Focal length (min) is required!" autoValidate>
+                            <input is="core-input" id="newcameraflmin" value="0.0041" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Sensor size width (m)" floatingLabel error="Sensor size width is required!" autoValidate>
+                            <input is="core-input" id="newcamerassw" value="0.00443" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Sensor size height (m)" floatingLabel error="Sensor size height is required!" autoValidate>
+                            <input is="core-input" id="newcamerassh" value="0.00369" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Sensor resolution vertical (px)" floatingLabel error="Sensor resolution vertical is required!" autoValidate>
+                            <input is="core-input" id="newcamerasrv" value="576" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Sensor resolution horizontal (px)" floatingLabel error="Sensor resolution horizontal is required!" autoValidate>
+                            <input is="core-input" id="newcamerasrh" value="704" required>
+                        </paper-input-decorator>        
+                        <paper-input-decorator label="Comments" floatingLabel>
+                            <paper-autogrow-textarea>
+                                <textarea id="newcameracomments">New Camera added via OGC WFS-T service using the Polymer 2D FoV Client.</textarea>
+                            </paper-autogrow-textarea>
+                        </paper-input-decorator>
+
+                        <paper-button id="cancelsavecamera" onClick="restoreNewCameraFormValues()" class="newcamerabutton" >Cancel</paper-button>
+                        <paper-button id="acceptsavecamera" onClick="saveNewCamera()" class="newcamerabutton" affirmative ><strong>SAVE</strong></paper-button>
+                    </div>
+                </div> <!-- END NEW CAMERA SIDEBAR PANE -->
+                
+                <div class="sidebar-pane" id="controls">
+                    <paper-item class="paperitemtitle"><strong>Camera Data</strong></paper-item>
+                    <div flex>
+                        <div id="sidebarCameraData"></div>
+                    </div>
+                </div>
+
+<!--
+                <div class="sidebar-pane" id="settings">
+                    <paper-item class="paperitemtitle"><strong>Settings</strong></paper-item>
+                </div>
+-->
+
+<!--
+                <div class="sidebar-pane" id="profile">
+                    <paper-item class="paperitemtitle" noink><strong>Profile</strong></paper-item>
+                    <div flex>
+                        <div center horizontal layout>
+                            <paper-input-decorator class="username" label="User Name" floatingLabel error="input is required!" autoValidate>
+                              <input is="core-input" required>
+                            </paper-input-decorator>
+                            <div style="width:10px"></div>
+                        </div>
+                        <div center horizontal layout>
+                            <paper-input-decorator class="emailaddress" label="Email address" floatingLabel error="email address is required" autoValidate>
+                              <input is="core-input">
+                            </paper-input-decorator>
+                            <div style="width:10px"></div>
+                        </div>
+                        <div center horizontal layout>
+                            <paper-input-decorator class="description" label="Description" floatingLabel>
+                              <paper-autogrow-textarea>
+                                <textarea></textarea>
+                              </paper-autogrow-textarea>
+                            </paper-input-decorator>
+                            <div style="width:10px"></div>
+                        </div>
+                    </div>
+                </div>
+-->
+                
+            </div> <!-- END SIDEBAR CONTENT -->
+        </div> <!-- END SIDEBAR -->                                                                                              
     
     </div> <!-- END CAMERASMAP -->
     </div> <!-- END THEMAP -->
@@ -872,28 +615,21 @@
     
     <!--    // MAP JS -->
     <script type="text/javascript" src="js/map.js"></script>
+    
+    <!--    // poly-fov.js - Polymer FoV JS -->
+    <script type="text/javascript" src="js/poly-fov.js"></script>
 
-
-    
-    
-    
     <script>    // Leaflet map and Cameras JavaScript
-//        var starttime = performance.now();
-//        console.log(performance.now() + ", DEMO FOV CLIENT START: " + starttime + '\n');
-        
-        
-        
         // MAP
         var map = null;
         
-        
-        
-        
-        // APP DATA
-        appContent.app.title = 'Demo 2D FoV';
-        appContent.app.subtitle = 'DITSS Surveillance Cameras - Coverage Map - Ekkersrijt area';
-        appContent.app.description = 'Demo client for the Cameras 2D FoV service. This prototype app is a coverage map of surveilled areas. The cameras are the DITSS surveillance cameras and the area of study is the Ekkersrijt industrial area, located north of Eindhoven (NL).';
-        appContent.track.starttime = appContent.track.endtime = starttime;
+        // Load APP Data and Config
+        var config = loadConfig();
+//        applyConfig(config);
+//        
+//        appContent.app.title = config.app.data.title;
+//        appContent.app.subtitle = config.app.data.subtitle;
+//        appContent.app.description = config.app.data.description;
         
 
         var endtime = performance.now();
@@ -906,9 +642,6 @@
         
         console.log(performance.now() + ", \n DEMO FOV CLIENT END: " + endtime + ", \n Exec time (ms): " + exectime + '\n' + '\n' + '\n' + '\n');
     </script>
-    
-    <!--    // poly-fov.js - Polymer FoV JS -->
-    <script type="text/javascript" src="js/poly-fov.js"></script>
 
 </body>
 

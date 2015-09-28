@@ -12,6 +12,19 @@
 
 
 
+//  # PROXY Web Services
+//  ProxyPass /service/ngr/     http://geodata.nationaalgeoregister.nl/
+
+//  ProxyPass /service/localhostarcgis/     http://localhost:6080/arcgis/
+
+//  ProxyPass /service/cams/    http://wingis/camera/api/
+
+//  ProxyPass /service/multipos/    http://arcgisdemo.geodan.nl/arcgis/rest/services/multipos/
+
+//  ProxyPass /service/geodanarcgis/    http://arcgis.geodan.nl:6080/arcgis/
+
+
+
 
 
 ///////////////////////////////////////////////////////
@@ -22,48 +35,49 @@
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 var layers = {
-    // DITSS Cameras: Ekkersrijt 
-    "DITSS_Cameras_Ekkersrijt": {
-        "type": "overlay", 
-        "category": "Cameras", 
-        "layer": {
-            "type":"betterwms",
-            "visible":false,
-            "name":"Cameras Ekkersrijt WMS",
-            "url":"/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WMSServer",
-            "layerOptions": {
-                "name":"Cameras Ekkersrijt WMS",
-                "maxZoom": 25,
-                "minZoom":2,
-                "layers":0,
-                "format":"image/png",
-                "transparent":true,
-                "opacity":0.8
-            }
-        }
-    }
-    // DITSS Cameras: All 
-    , "DITSS_Surveillance_Cameras": {
-        "type": "overlay", 
-        "category": "Cameras", 
-        "layer": {
-            "type":"betterwms",
-            "visible":false,
-            "name":"DITSS Surveillance Cameras WMS",
-            "url":"/service/geodanarcgis/services/multipos/DITSS_Surveillance_Cameras/MapServer/WmsServer",
-            "layerOptions": {
-                "name":"DITSS Surveillance Cameras WMS",
-                "maxZoom": 25,
-                "minZoom":2,
-                "layers":0,
-                "format":"image/png",
-                "transparent":true,
-                "opacity":0.8
-            }
-        }
-    }
+//    // DITSS Cameras: Ekkersrijt 
+//    "DITSS_Cameras_Ekkersrijt": {
+//        "type": "overlay", 
+//        "category": "Cameras", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":false,
+//            "name":"Cameras Ekkersrijt WMS",
+//            "url":"/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WMSServer",
+//            "layerOptions": {
+//                "name":"Cameras Ekkersrijt WMS",
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":0,
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
+//    // DITSS Cameras: All 
+//    , "DITSS_Surveillance_Cameras": {
+//        "type": "overlay", 
+//        "category": "Cameras", 
+//        "layer": {
+//            "type":"betterwms",
+//            "visible":false,
+//            "name":"DITSS Surveillance Cameras WMS",
+//            "url":"/service/geodanarcgis/services/multipos/DITSS_Surveillance_Cameras/MapServer/WmsServer",
+//            "layerOptions": {
+//                "name":"DITSS Surveillance Cameras WMS",
+//                "maxZoom": 25,
+//                "minZoom":2,
+//                "layers":0,
+//                "format":"image/png",
+//                "transparent":true,
+//                "opacity":0.8
+//            }
+//        }
+//    }
     // PDOK AHN1: Terrain Height 
-    , "AHN1_hoogtes": {
+//    , 
+    "AHN1_hoogtes": {
         "type": "overlay", 
         "category": "Terrain", 
         "layer": {
@@ -512,10 +526,460 @@ var layers = {
 //            }
 //        }
 //    }
+//};
+//
+//// FEATURE LAYERS
+//var featurelayers = {
+//    // GeoJSON Feature Layer geojson
+//    , geojson: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'geojson',
+//            type: "geojson",
+//            url: '',
+//            visible: false,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // MarkerCluster Feature Layer markercluster
+//    , markercluster: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'markercluster',
+//            type: "markercluster",
+//            url: '',
+//            visible: false,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // Esri Feature Layer esrifeaturelayer
+//    , esrifeaturelayer: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'esrifeaturelayer',
+//            type: "esrifeaturelayer",
+//            url: '',
+//            visible: false,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // Esri Feature Layer Cams Ekk FS
+//    , camsekkfslh: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'Cams Ekk FS LH',
+//            type: "esrifeaturelayer",
+//            url: '/service/localhostarcgis/rest/services/Cameras/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
+//            visible: false,
+//            layerOptions: {
+////                attribution: '',
+//                name: 'Cams Ekk FS LH',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // Esri Feature Layer Cams Ekk FS
+//    , camsekkfsgeodan: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'Cams Ekk FS Geodan',
+//            type: "esrifeaturelayer",
+//            url: '/service/geodanarcgis/rest/services/multipos/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
+//            visible: false,
+//            layerOptions: {
+//                name: 'Cams Ekk FS Geodan',
+////                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // MarkerCluster Feature Layer GeoJSON Ekkersrijt Cameras
+//    , camsekkgeojsonmk: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON Ekkersrijt Cameras',
+////            name: 'GeoJSON Ekkersrijt Cameras 2',
+//            type: "markercluster",
+//            url: './data/cameras_ekkersrijt.json',
+//            visible: true,
+//            layerOptions: {
+//                name: 'GeoJSON Ekkersrijt Cameras',
+//                spiderfyOnMaxZoom: true,    // default true
+//                showCoverageOnHover: true,     // default true
+//                zoomToBoundsOnClick: true,     // default true
+//                removeOutsideVisibleBounds: true,   // true for enhanced performance
+//                animateAddingMarkers: true,    // default true
+//                disableClusteringAtZoom: 13,    // default disabled
+//                maxClusterRadius: 100, // Default 80
+//                spiderfyDistanceMultiplier: 100, // default 1
+//                polygonOptions: {
+//                    color: 'yellow',
+//                    weight: 15,
+//                    opacity: 0.9,
+//                    fillOpacity: 0.6
+//                },
+////                iconCreateFunction: function(cluster) {
+////                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+////                },
+//                singleMarkerMode: false,     // default false
+////                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // GeoJSON Feature Layer GeoJSON FoV Identification
+//    , geojsonfovidentification: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON FoV Identification',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // GeoJSON Feature Layer GeoJSON FoV Recognition
+//    , geojsonfovrecognition: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON FoV Recognition',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // GeoJSON Feature Layer GeoJSON FoV Detection
+//    , geojsonfovdetection: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON FoV Detection',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // GeoJSON Feature Layer GeoJSON FoV Monitor
+//    , geojsonfovmonitor: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON FoV Monitor',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
+//    // GeoJSON Feature Layer GeoJSON FoV Visible
+//    , geojsonfovvisible: {
+//        type: 'overlay', 
+//        category: 'Feature Layers', 
+//        layer: { 
+//            name: 'GeoJSON FoV Visible',
+//            type: "geojson",
+//            url: '',
+//            visible: true,
+//            layerOptions: {
+//                name: 'GeoJSON FoV Visible',
+//                attribution: '',
+//                maxZoom: 25,
+//                minZoom: 1
+//            }
+//        }
+//    }
     
-    // BASEMAPS
+    // MarkerCluster WFST Feature Layer GeoJSON Ekkersrijt Cameras
+    , wfstcamsekkgeojsonmk: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS',
+            type: "markercluster",
+            url: '/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS',
+                spiderfyOnMaxZoom: true,    // default true
+                showCoverageOnHover: true,     // default true
+                zoomToBoundsOnClick: true,     // default true
+                removeOutsideVisibleBounds: true,   // true for enhanced performance
+                animateAddingMarkers: true,    // default true
+                disableClusteringAtZoom: 12,    // default disabled
+                maxClusterRadius: 100, // Default 80
+                spiderfyDistanceMultiplier: 100, // default 1
+                polygonOptions: {
+                    color: 'yellow',
+                    weight: 10,
+                    opacity: 0.9,
+                    fillOpacity: 0.6
+                },
+//                iconCreateFunction: function(cluster) {
+//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+//                },
+                singleMarkerMode: false,     // default false
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Identification
+    , wfstgeojsonfovidentification: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Identification',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Identification',
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Recognition
+    , wfstgeojsonfovrecognition: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Recognition',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Recognition',
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Detection
+    , wfstgeojsonfovdetection: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Detection',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Detection',
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON FWFST eature Layer GeoJSON FoV Monitor
+    , wfstgeojsonfovmonitor: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV M&C',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV M&C',
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Visible
+    , wfstgeojsonfovvisible: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'LH WFST CAMS FoV Visible',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'LH WFST CAMS FoV Visible',
+                attribution: 'DITSS Cameras at Localhost',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    
+    // MarkerCluster WFST Feature Layer GeoJSON Ekkersrijt Cameras
+    , geodanwfstcamsekkgeojsonmk: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS',
+            type: "markercluster",
+//            url: 'http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
+            url: 'http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS',
+                spiderfyOnMaxZoom: true,    // default true
+                showCoverageOnHover: true,     // default true
+                zoomToBoundsOnClick: true,     // default true
+                removeOutsideVisibleBounds: true,   // true for enhanced performance
+                animateAddingMarkers: true,    // default true
+                disableClusteringAtZoom: 12,    // default disabled
+                maxClusterRadius: 100, // Default 80
+                spiderfyDistanceMultiplier: 100, // default 1
+                polygonOptions: {
+                    color: 'yellow',
+                    weight: 10,
+                    opacity: 0.9,
+                    fillOpacity: 0.5
+                },
+//                iconCreateFunction: function(cluster) {
+//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
+//                },
+                singleMarkerMode: false,     // default false
+                attribution: 'DITSS, VU, Geodan, Luis Bausá López',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Identification
+    , geodanwfstgeojsonfovidentification: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS FoV Identification',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS FoV Identification',
+                attribution: 'DITSS Cameras at Geodan',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Recognition
+    , geodanwfstgeojsonfovrecognition: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS FoV Recognition',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS FoV Recognition',
+                attribution: 'DITSS Cameras at Geodan',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Detection
+    , geodanwfstgeojsonfovdetection: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS FoV Detection',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS FoV Detection',
+                attribution: 'DITSS Cameras at Geodan',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON FWFST eature Layer GeoJSON FoV Monitor
+    , geodanwfstgeojsonfovmonitor: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS FoV M&C',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS FoV M&C',
+                attribution: 'DITSS Cameras at Geodan',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    // GeoJSON WFST Feature Layer GeoJSON FoV Visible
+    , geodanwfstgeojsonfovvisible: {
+        type: 'overlay', 
+        category: 'Feature Layers', 
+        layer: { 
+            name: 'Geodan WFST CAMS FoV Visible',
+            type: "geojson",
+            url: '',
+            visible: true,
+            layerOptions: {
+                name: 'Geodan WFST CAMS FoV Visible',
+                attribution: 'DITSS Cameras at Geodan',
+                maxZoom: 25,
+                minZoom: 1
+            }
+        }
+    }
+    
+    
+};
+
+// BASEMAPS
+var baselayers = {
     // Basemap CartoDB Light Grey 
-    , lightgrey: {
+    lightgrey: {
         type: 'basemap', 
         category: 'Basemaps', 
         layer: { 
@@ -701,8 +1165,6 @@ var layers = {
             }
         }
     }
-    
-    
     // Basemap Esri World
     , esriworld: {
         type: 'basemap', 
@@ -720,465 +1182,7 @@ var layers = {
             }
         }
     }
-    
-    
-//    // FEATURE LAYERS
-//    // GeoJSON Feature Layer geojson
-//    , geojson: {
-//        type: 'overlay', 
-//        category: 'Feature Layers', 
-//        layer: { 
-//            name: 'geojson',
-//            type: "geojson",
-//            url: '',
-//            visible: false,
-//            layerOptions: {
-//                attribution: '',
-//                maxZoom: 25,
-//                minZoom: 1
-//            }
-//        }
-//    }
-//    // MarkerCluster Feature Layer markercluster
-//    , markercluster: {
-//        type: 'overlay', 
-//        category: 'Feature Layers', 
-//        layer: { 
-//            name: 'markercluster',
-//            type: "markercluster",
-//            url: '',
-//            visible: false,
-//            layerOptions: {
-//                attribution: '',
-//                maxZoom: 25,
-//                minZoom: 1
-//            }
-//        }
-//    }
-//    // Esri Feature Layer esrifeaturelayer
-//    , esrifeaturelayer: {
-//        type: 'overlay', 
-//        category: 'Feature Layers', 
-//        layer: { 
-//            name: 'esrifeaturelayer',
-//            type: "esrifeaturelayer",
-//            url: '',
-//            visible: false,
-//            layerOptions: {
-//                attribution: '',
-//                maxZoom: 25,
-//                minZoom: 1
-//            }
-//        }
-//    }
-    // Esri Feature Layer Cams Ekk FS
-    , camsekkfslh: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Cams Ekk FS LH',
-            type: "esrifeaturelayer",
-            url: '/service/localhostarcgis/rest/services/Cameras/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
-            visible: false,
-            layerOptions: {
-//                attribution: '',
-                name: 'Cams Ekk FS LH',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // Esri Feature Layer Cams Ekk FS
-    , camsekkfsgeodan: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Cams Ekk FS Geodan',
-            type: "esrifeaturelayer",
-            url: '/service/geodanarcgis/rest/services/multipos/Cameras_Ekkersrijt_20150319/FeatureServer/0/',
-            visible: false,
-            layerOptions: {
-                name: 'Cams Ekk FS Geodan',
-//                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // MarkerCluster Feature Layer GeoJSON Ekkersrijt Cameras
-    , camsekkgeojsonmk: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON Ekkersrijt Cameras',
-//            name: 'GeoJSON Ekkersrijt Cameras 2',
-            type: "markercluster",
-            url: './data/cameras_ekkersrijt.json',
-            visible: true,
-            layerOptions: {
-                name: 'GeoJSON Ekkersrijt Cameras',
-                spiderfyOnMaxZoom: true,    // default true
-                showCoverageOnHover: true,     // default true
-                zoomToBoundsOnClick: true,     // default true
-                removeOutsideVisibleBounds: true,   // true for enhanced performance
-                animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 13,    // default disabled
-                maxClusterRadius: 100, // Default 80
-                spiderfyDistanceMultiplier: 100, // default 1
-                polygonOptions: {
-                    color: 'yellow',
-                    weight: 15,
-                    opacity: 0.9,
-                    fillOpacity: 0.6
-                },
-//                iconCreateFunction: function(cluster) {
-//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
-//                },
-                singleMarkerMode: false,     // default false
-//                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON Feature Layer GeoJSON FoV Identification
-    , geojsonfovidentification: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON FoV Identification',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON Feature Layer GeoJSON FoV Recognition
-    , geojsonfovrecognition: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON FoV Recognition',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON Feature Layer GeoJSON FoV Detection
-    , geojsonfovdetection: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON FoV Detection',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON Feature Layer GeoJSON FoV Monitor
-    , geojsonfovmonitor: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON FoV Monitor',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON Feature Layer GeoJSON FoV Visible
-    , geojsonfovvisible: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'GeoJSON FoV Visible',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'GeoJSON FoV Visible',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    
-    // MarkerCluster WFST Feature Layer GeoJSON Ekkersrijt Cameras
-    , wfstcamsekkgeojsonmk: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS',
-            type: "markercluster",
-            url: '/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS',
-                spiderfyOnMaxZoom: true,    // default true
-                showCoverageOnHover: true,     // default true
-                zoomToBoundsOnClick: true,     // default true
-                removeOutsideVisibleBounds: true,   // true for enhanced performance
-                animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 12,    // default disabled
-                maxClusterRadius: 100, // Default 80
-                spiderfyDistanceMultiplier: 100, // default 1
-                polygonOptions: {
-                    color: 'yellow',
-                    weight: 10,
-                    opacity: 0.9,
-                    fillOpacity: 0.6
-                },
-//                iconCreateFunction: function(cluster) {
-//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
-//                },
-                singleMarkerMode: false,     // default false
-//                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Identification
-    , wfstgeojsonfovidentification: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS FoV Identification',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS FoV Identification',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Recognition
-    , wfstgeojsonfovrecognition: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS FoV Recognition',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS FoV Recognition',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Detection
-    , wfstgeojsonfovdetection: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS FoV Detection',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS FoV Detection',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON FWFST eature Layer GeoJSON FoV Monitor
-    , wfstgeojsonfovmonitor: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS FoV M&C',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS FoV M&C',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Visible
-    , wfstgeojsonfovvisible: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'LH WFST CAMS FoV Visible',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'LH WFST CAMS FoV Visible',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    
-    // MarkerCluster WFST Feature Layer GeoJSON Ekkersrijt Cameras
-    , geodanwfstcamsekkgeojsonmk: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS',
-            type: "markercluster",
-//            url: 'http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
-            url: 'http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS',
-                spiderfyOnMaxZoom: true,    // default true
-                showCoverageOnHover: true,     // default true
-                zoomToBoundsOnClick: true,     // default true
-                removeOutsideVisibleBounds: true,   // true for enhanced performance
-                animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 13,    // default disabled
-                maxClusterRadius: 100, // Default 80
-                spiderfyDistanceMultiplier: 100, // default 1
-                polygonOptions: {
-                    color: 'yellow',
-                    weight: 15,
-                    opacity: 0.9,
-                    fillOpacity: 0.6
-                },
-//                iconCreateFunction: function(cluster) {
-//                    return new L.DivIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });
-//                },
-                singleMarkerMode: false,     // default false
-//                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Identification
-    , geodanwfstgeojsonfovidentification: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS FoV Identification',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS FoV Identification',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Recognition
-    , geodanwfstgeojsonfovrecognition: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS FoV Recognition',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS FoV Recognition',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Detection
-    , geodanwfstgeojsonfovdetection: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS FoV Detection',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS FoV Detection',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON FWFST eature Layer GeoJSON FoV Monitor
-    , geodanwfstgeojsonfovmonitor: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS FoV M&C',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS FoV M&C',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    // GeoJSON WFST Feature Layer GeoJSON FoV Visible
-    , geodanwfstgeojsonfovvisible: {
-        type: 'overlay', 
-        category: 'Feature Layers', 
-        layer: { 
-            name: 'Geodan WFST CAMS FoV Visible',
-            type: "geojson",
-            url: '',
-            visible: true,
-            layerOptions: {
-                name: 'Geodan WFST CAMS FoV Visible',
-                attribution: '',
-                maxZoom: 25,
-                minZoom: 1
-            }
-        }
-    }
-    
-    
 };
-
-//  # PROXY Web Services
-//  ProxyPass /service/ngr/     http://geodata.nationaalgeoregister.nl/
-
-//  ProxyPass /service/localhostarcgis/     http://localhost:6080/arcgis/
-
-//  ProxyPass /service/cams/    http://wingis/camera/api/
-//  ProxyPass /service/multipos/    http://arcgisdemo.geodan.nl/arcgis/rest/services/multipos/
-//  ProxyPass /service/geodanarcgis/    http://arcgis.geodan.nl:6080/arcgis/
-
-
 
 
 
@@ -1198,9 +1202,9 @@ function getBasemapLayers () {
     var basemaps = {};
     
     // load basemaps
-    for (i in layers) {
-        if (layers[i].type == "basemap") {
-            var bm = layers[i];
+    for (i in baselayers) {
+        if (baselayers[i].type == "basemap") {
+            var bm = baselayers[i];
             if (bm.layer.type == "tilelayer") {
                 basemaps[bm.layer.name] = L.tileLayer(bm.layer.url, bm.layer.layerOptions);
                 basemaps[bm.layer.name].on("loading",function(e) { 
@@ -1227,7 +1231,7 @@ function getBasemapLayers () {
                     }
                 });
             }
-            layers[i].layer.layer = basemaps[bm.layer.name];
+            baselayers[i].layer.layer = basemaps[bm.layer.name];
         }   // END IF LAYER IS BASEMAP
     }   // END FOR I IN LAYERS
     
@@ -1288,7 +1292,7 @@ function getOverlays () {
                         console.log(performance.now() + ", betterwms OVERLAY " + e.target.options.name + " has been loaded");  
                     }
                 });
-            }
+            }   // END if betterwms
             // GeoJSON LAYERS
             else if (layers[i].layer.type == "geojson") {    // if layer.type is geojson
                 overlays[ovl.layer.name] = L.geoJson.css()   // create and instantiate overlay
@@ -1308,7 +1312,7 @@ function getOverlays () {
                         console.log(performance.now() + ", geojson OVERLAY " + e.target.options.name + " has been loaded"); 
                     }
                 });
-            }
+            }   // END if geojson
             // Marker Cluster LAYERS
             else if (layers[i].layer.type == "markercluster") {    // if layer.type is marker Cluster
                 overlays[ovl.layer.name] = L.markerClusterGroup(ovl.layer.layerOptions);   // create and instantiate overlay
@@ -1328,7 +1332,7 @@ function getOverlays () {
                     }
                 });
 //                layers[i].layer.layer = overlays[ovl.layer.name];
-            }
+            }   // END if markercluster
             // Esri Feature LAYERS
             else if (layers[i].layer.type == "esrifeaturelayer") {    // if layer.type is Esri Feature Layer
 //                var icon = L.Icon({
@@ -1363,21 +1367,20 @@ function getOverlays () {
                         console.log(e);
                     }
                 });
-//                layers[i].layer.layer = overlays[ovl.layer.name];
-            }
+            }   // END if esrifeaturelayer
             
             layers[i].layer.layer = overlays[ovl.layer.name];
             
         }   // END IF layer IS Overlay
     }   // END FOR i in layers
 
-    var cameraslayers = getCameras(overlays);     // cameras from json file
-    overlays["GeoJSON Ekkersrijt Cameras"] = cameraslayers.cameras;
-    overlays["GeoJSON FoV Identification"] = cameraslayers.identification;
-    overlays["GeoJSON FoV Recognition"] = cameraslayers.recognition;
-    overlays["GeoJSON FoV Detection"] = cameraslayers.detection;
-    overlays["GeoJSON FoV Monitor"] = cameraslayers.monitor;
-    overlays["GeoJSON FoV Visible"] = cameraslayers.visible;    
+//    var cameraslayers = getCameras(overlays);     // cameras from json file
+//    overlays["GeoJSON Ekkersrijt Cameras"] = cameraslayers.cameras;
+//    overlays["GeoJSON FoV Identification"] = cameraslayers.identification;
+//    overlays["GeoJSON FoV Recognition"] = cameraslayers.recognition;
+//    overlays["GeoJSON FoV Detection"] = cameraslayers.detection;
+//    overlays["GeoJSON FoV Monitor"] = cameraslayers.monitor;
+//    overlays["GeoJSON FoV Visible"] = cameraslayers.visible;    
 
     var cameraslayerswfst = getCamerasWFST(overlays);     // cameras from WFST service
     overlays["LH WFST CAMS"] = cameraslayerswfst.cameras;
@@ -1415,67 +1418,67 @@ function getOverlays () {
 
 
 
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////////////                           //////////////
-//////////////    getCameraLayers2()     //////////////
-//////////////                           //////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-////  getCameraLayers2() - 
-function getCameraLayers2(overlays) {
-    var starttime = performance.now();
-    console.log(performance.now() + ", getCameraLayers(), START: " + starttime + '\n');
-      
-    // Create Cameras and FoV Layers
-    var result = {
-        cameras:        overlays["GeoJSON Ekkersrijt Cameras"],     // cameras
-        identification: overlays["GeoJSON FoV Identification"],     // Identification
-        recognition:    overlays["GeoJSON FoV Recognition"],        // Recognition
-        detection:      overlays["GeoJSON FoV Detection"],          // Detection
-        monitor:        overlays["GeoJSON FoV Monitor"],            // Monitor & Control
-        visible:        overlays["GeoJSON FoV Visible"]             // Visible
-    }; 
-    
-    var endtime = performance.now();
-    var totaltime = endtime - starttime;
-    
-    if (appContent.track.endtime < endtime) {
-        appContent.track.endtime = endtime;
-        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
-    }
-    appContent.track.elapsedtime += totaltime;
-    
-    
-    if (appContent.console.outputLevel >= 3) { 
-        console.log("result");console.log(result); 
-    }
-    console.log(performance.now() + ", getCameraLayers(), END: " + endtime + ", Exec: " + totaltime + '\n');
-    
-    return result;
-}   // END getCameraLayers2()
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////    getCameraLayers2()     //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//////  getCameraLayers2() - 
+//function getCameraLayers2(overlays) {
+//    var starttime = performance.now();
+//    console.log(performance.now() + ", getCameraLayers(), START: " + starttime + '\n');
+//      
+//    // Create Cameras and FoV Layers
+//    var result = {
+//        cameras:        overlays["GeoJSON Ekkersrijt Cameras"],     // cameras
+//        identification: overlays["GeoJSON FoV Identification"],     // Identification
+//        recognition:    overlays["GeoJSON FoV Recognition"],        // Recognition
+//        detection:      overlays["GeoJSON FoV Detection"],          // Detection
+//        monitor:        overlays["GeoJSON FoV Monitor"],            // Monitor & Control
+//        visible:        overlays["GeoJSON FoV Visible"]             // Visible
+//    }; 
+//    
+//    var endtime = performance.now();
+//    var totaltime = endtime - starttime;
+//    
+//    if (appContent.track.endtime < endtime) {
+//        appContent.track.endtime = endtime;
+//        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+//    }
+//    appContent.track.elapsedtime += totaltime;
+//    
+//    
+//    if (appContent.console.outputLevel >= 3) { 
+//        console.log("result");console.log(result); 
+//    }
+//    console.log(performance.now() + ", getCameraLayers(), END: " + endtime + ", Exec: " + totaltime + '\n');
+//    
+//    return result;
+//}   // END getCameraLayers2()
 
 
 
 
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////////////                           //////////////
-//////////////    getCameraLayers3()     //////////////
-//////////////                           //////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-////  getCameraLayers3() - 
-function getCameraLayers3 (overlays) { 
-    return {
-        cameras:        overlays["GeoJSON Ekkersrijt Cameras"],     // cameras
-        identification: overlays["GeoJSON FoV Identification"],     // Identification
-        recognition:    overlays["GeoJSON FoV Recognition"],        // Recognition
-        detection:      overlays["GeoJSON FoV Detection"],          // Detection
-        monitor:        overlays["GeoJSON FoV Monitor"],            // Monitor & Control
-        visible:        overlays["GeoJSON FoV Visible"]             // Visible
-    };
-}   // END getCameraLayers3()
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////    getCameraLayers3()     //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//////  getCameraLayers3() - 
+//function getCameraLayers3 (overlays) { 
+//    return {
+//        cameras:        overlays["GeoJSON Ekkersrijt Cameras"],     // cameras
+//        identification: overlays["GeoJSON FoV Identification"],     // Identification
+//        recognition:    overlays["GeoJSON FoV Recognition"],        // Recognition
+//        detection:      overlays["GeoJSON FoV Detection"],          // Detection
+//        monitor:        overlays["GeoJSON FoV Monitor"],            // Monitor & Control
+//        visible:        overlays["GeoJSON FoV Visible"]             // Visible
+//    };
+//}   // END getCameraLayers3()
 
 
 
@@ -1576,11 +1579,11 @@ function getInitBaselayer (baselayers) {
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //////////////                           //////////////
-//////////////   getCamerasWFSTgeodan()  //////////////
+//////////////  getCamerasWFSTgeodan2()  //////////////
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-// getCamerasWFSTgeodan2() - get cameras and their FoVs and adds them to the map
+// getCamerasWFSTgeodan2() - get cameras from Geodan via WFST and their FoVs and adds them to the map
 function getCamerasWFSTgeodan2(overlays) {
     var starttime = performance.now();
     console.log(performance.now() + ", getCamerasWFSTgeodan2(), START: " + starttime + '\n');
@@ -1632,63 +1635,63 @@ function getCamerasWFSTgeodan2(overlays) {
 
 
 
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////////////                           //////////////
-//////////////   getCamerasWFSTgeodan()  //////////////
-//////////////                           //////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-// getWFSTCameras() - get cameras and their FoVs and adds them to the map
-function getCamerasWFSTgeodan(overlays) {
-    var starttime = performance.now();
-    console.log(performance.now() + ", getCamerasWFSTgeodan(), START: " + starttime + '\n');
-    
-//    var url = "http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    var url = "http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    
-//    var url = "http://localhost/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
-    
-    var layers = getCameraLayersWFSTG(overlays);
-    
-    var cameras = layers.cameras;
-    var fovs = {
-        identification: layers.identification,
-        recognition: layers.recognition,
-        detection: layers.detection,
-        monitor: layers.monitor,
-        visible: layers.visible
-    };
-    
-//    var partialresult = getCams3(jsoncameras, cameras, fovs);
-    var partialresult = getWFSCamerasGeodan(url, cameras, fovs);
-    
-    var result = {
-        cameras: partialresult.cameras,
-        identification: partialresult.identification,
-        recognition: partialresult.recognition,
-        detection: partialresult.detection,
-        monitor: partialresult.monitor,
-        visible: partialresult.visible
-    };
-
-    var endtime = performance.now();
-    var totaltime = endtime - starttime;
-    
-    if (appContent.track.endtime < endtime) {
-        appContent.track.endtime = endtime;
-        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
-    }
-    appContent.track.elapsedtime += totaltime;
-    
-    if (appContent.console.outputLevel >= 3) { 
-        console.log("partialresult");console.log(partialresult); 
-        console.log("result");console.log(result); 
-    }
-    console.log(performance.now() + ", getCamerasWFSTgeodan(), END: " + endtime + ", Exec: " + totaltime + '\n');
-    
-    return result;
-}       // END getCamerasWFSTgeodan()
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////   getCamerasWFSTgeodan()  //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//// getWFSTCameras() - get cameras and their FoVs and adds them to the map
+//function getCamerasWFSTgeodan(overlays) {
+//    var starttime = performance.now();
+//    console.log(performance.now() + ", getCamerasWFSTgeodan(), START: " + starttime + '\n');
+//    
+////    var url = "http://arcgis.geodan.nl:6080/arcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+//    var url = "http://localhost/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+//    
+////    var url = "http://localhost/service/localhostarcgis/services/Cameras/Cameras_Ekkersrijt_20150319/MapServer/WFSServer?request=getfeature&typename=Cameras_Ekkersrijt_withspecs";
+//    
+//    var layers = getCameraLayersWFSTG(overlays);
+//    
+//    var cameras = layers.cameras;
+//    var fovs = {
+//        identification: layers.identification,
+//        recognition: layers.recognition,
+//        detection: layers.detection,
+//        monitor: layers.monitor,
+//        visible: layers.visible
+//    };
+//    
+////    var partialresult = getCams3(jsoncameras, cameras, fovs);
+//    var partialresult = getWFSCamerasGeodan(url, cameras, fovs);
+//    
+//    var result = {
+//        cameras: partialresult.cameras,
+//        identification: partialresult.identification,
+//        recognition: partialresult.recognition,
+//        detection: partialresult.detection,
+//        monitor: partialresult.monitor,
+//        visible: partialresult.visible
+//    };
+//
+//    var endtime = performance.now();
+//    var totaltime = endtime - starttime;
+//    
+//    if (appContent.track.endtime < endtime) {
+//        appContent.track.endtime = endtime;
+//        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+//    }
+//    appContent.track.elapsedtime += totaltime;
+//    
+//    if (appContent.console.outputLevel >= 3) { 
+//        console.log("partialresult");console.log(partialresult); 
+//        console.log("result");console.log(result); 
+//    }
+//    console.log(performance.now() + ", getCamerasWFSTgeodan(), END: " + endtime + ", Exec: " + totaltime + '\n');
+//    
+//    return result;
+//}       // END getCamerasWFSTgeodan()
 
 
 
@@ -1751,61 +1754,61 @@ function getCamerasWFST(overlays) {
 
 
 
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////////////                           //////////////
-//////////////        getCameras()         //////////////
-//////////////                           //////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-// getCameras() - get cameras and their FoVs and adds them to the map
-function getCameras(overlays) {
-    var starttime = performance.now();
-    if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", getCameras(), START: " + starttime + '\n'); }
-    
-    var jsoncameras = "./data/cameras_ekkersrijt.json";
-    
-//    var layers = getCameraLayers();
-//    var layers = getCameraLayers2(overlays);
-    var layers = getCameraLayers3(overlays);
-    
-    var cameras = layers.cameras;
-    var fovs = {
-        identification: layers.identification,
-        recognition: layers.recognition,
-        detection: layers.detection,
-        monitor: layers.monitor,
-        visible: layers.visible
-    };
-    
-    var partialresult = getCams3(jsoncameras, cameras, fovs);
-    
-    var result = {
-        cameras: partialresult.cameras,
-        identification: partialresult.identification,
-        recognition: partialresult.recognition,
-        detection: partialresult.detection,
-        monitor: partialresult.monitor,
-        visible: partialresult.visible
-    }
-
-    var endtime = performance.now();
-    var totaltime = endtime - starttime;
-    
-    if (appContent.track.endtime < endtime) {
-        appContent.track.endtime = endtime;
-        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
-    }
-    appContent.track.elapsedtime += totaltime;
-    
-    if (appContent.console.outputLevel >= 3) { 
-        console.log("partialresult");console.log(partialresult);
-        console.log("result");console.log(result); 
-    }
-    if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", getCameras(), START: " + starttime + ", END: " + endtime + ", Exec: " + totaltime + '\n'); }
-    
-    return result;
-}       // END getCameras()
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////        getCameras()         //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+//// getCameras() - get cameras and their FoVs and adds them to the map
+//function getCameras(overlays) {
+//    var starttime = performance.now();
+//    if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", getCameras(), START: " + starttime + '\n'); }
+//    
+//    var jsoncameras = "./data/cameras_ekkersrijt.json";
+//    
+////    var layers = getCameraLayers();
+////    var layers = getCameraLayers2(overlays);
+//    var layers = getCameraLayers3(overlays);
+//    
+//    var cameras = layers.cameras;
+//    var fovs = {
+//        identification: layers.identification,
+//        recognition: layers.recognition,
+//        detection: layers.detection,
+//        monitor: layers.monitor,
+//        visible: layers.visible
+//    };
+//    
+//    var partialresult = getCams3(jsoncameras, cameras, fovs);
+//    
+//    var result = {
+//        cameras: partialresult.cameras,
+//        identification: partialresult.identification,
+//        recognition: partialresult.recognition,
+//        detection: partialresult.detection,
+//        monitor: partialresult.monitor,
+//        visible: partialresult.visible
+//    }
+//
+//    var endtime = performance.now();
+//    var totaltime = endtime - starttime;
+//    
+//    if (appContent.track.endtime < endtime) {
+//        appContent.track.endtime = endtime;
+//        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+//    }
+//    appContent.track.elapsedtime += totaltime;
+//    
+//    if (appContent.console.outputLevel >= 3) { 
+//        console.log("partialresult");console.log(partialresult);
+//        console.log("result");console.log(result); 
+//    }
+//    if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", getCameras(), START: " + starttime + ", END: " + endtime + ", Exec: " + totaltime + '\n'); }
+//    
+//    return result;
+//}       // END getCameras()
 
 
 
@@ -1891,7 +1894,7 @@ function createMap (mapOptions) {
         direction: 1, // 1: clockwise, -1: counterclockwise
         color: '#98AFC7', // #rgb or #rrggbb or array of colors
 //        color: '#000', // #rgb or #rrggbb or array of colors
-        speed: 1, // Rounds per second
+        speed: 1.2, // Rounds per second
         trail: 100, // Afterglow percentage
         shadow: true, // Whether to render a shadow
         hwaccel: true, // Whether to use hardware acceleration
@@ -1959,7 +1962,7 @@ function initMap (selectedTab) {
     myMap.overlays = getOverlays();       // Overlay layers (WMS, FS and other)
 //    myMap.cameras = getCameraLayersWFST2(myMap.overlays);
     myMap.cameras = getCameraLayersWFSTG(myMap.overlays);
-    myMap.featurelayers = getCameraLayers3(myMap.overlays);
+//    myMap.featurelayers = getCameraLayers3(myMap.overlays);
 
 
     // Add map controls
@@ -2032,103 +2035,104 @@ function initMap (selectedTab) {
     myMap.mapControls.fullscreen = L.control.fullscreen(fullscreenControlOptions);
     myMap.map.addControl( myMap.mapControls.fullscreen );      // add fullscreen control
     
-    // Draw Control
-//    var shapeOptions = {
-//      stroke: true,	//Whether to draw stroke along the path. Set it to false to disable borders on polygons or circles.
-//      color: '#03f',  //Stroke color.
-//      weight: 5,	//Stroke width in pixels.
-//      opacity: 0.5,	//Stroke opacity.
-//      fill: true, //Whether to fill the path with color. Set it to false to disable filling on polygons or circles.
-//      fillColor: 	'',   //String - Default is same as color. Fill color.
-//      fillOpacity: 0.2,	//Fill opacity.
-//      dashArray: null,	//String - A string that defines the stroke dash pattern. Doesn't work on canvas-powered layers (e.g. Android 2).
-//      lineCap: null,	//String - A string that defines shape to be used at the end of the stroke.
-//      lineJoin: null,	//String - A string that defines shape to be used at the corners of the stroke.
-//      clickable: true,	//If false, the vector will not emit mouse events and will act as a part of the underlying map.
-//      pointerEvents: 	null,	// String - Sets the pointer-events attribute on the path if SVG backend is used.
-//      className: ""
-//    }
-    var camMarkerIcon = L.Icon.extend({
-        options: {
-            shadowUrl: null,
-            iconAnchor: new L.Point(9, 9),
-            iconSize: new L.Point(18, 18),
-            iconUrl: 'img/camera.png'
-        }
-    });
-    var drawControlOptions = {
-        position: 'topright',
-        draw: {
-            polyline: false,
-//            polyline: {
-//                allowIntersection: true,
-////                drawError: {},
-//                guidelineDistance: 20,
+//    // Draw Control
+////    var shapeOptions = {
+////      stroke: true,	//Whether to draw stroke along the path. Set it to false to disable borders on polygons or circles.
+////      color: '#03f',  //Stroke color.
+////      weight: 5,	//Stroke width in pixels.
+////      opacity: 0.5,	//Stroke opacity.
+////      fill: true, //Whether to fill the path with color. Set it to false to disable filling on polygons or circles.
+////      fillColor: 	'',   //String - Default is same as color. Fill color.
+////      fillOpacity: 0.2,	//Fill opacity.
+////      dashArray: null,	//String - A string that defines the stroke dash pattern. Doesn't work on canvas-powered layers (e.g. Android 2).
+////      lineCap: null,	//String - A string that defines shape to be used at the end of the stroke.
+////      lineJoin: null,	//String - A string that defines shape to be used at the corners of the stroke.
+////      clickable: true,	//If false, the vector will not emit mouse events and will act as a part of the underlying map.
+////      pointerEvents: 	null,	// String - Sets the pointer-events attribute on the path if SVG backend is used.
+////      className: ""
+////    }
+//    var camMarkerIcon = L.Icon.extend({
+//        options: {
+//            shadowUrl: null,
+//            iconAnchor: new L.Point(9, 9),
+//            iconSize: new L.Point(18, 18),
+//            iconUrl: 'img/camera.png'
+//        }
+//    });
+//    var drawControlOptions = {
+//        position: 'topright',
+//        draw: {
+//            polyline: false,
+////            polyline: {
+////                allowIntersection: true,
+//////                drawError: {},
+////                guidelineDistance: 20,
+//////                shapeOptions: {},
+////                metric: true,
+////                zIndexOffset: 2000,
+////                repeatMode: false
+////            },
+//            polygon: false,
+////            polygon: {
+////                allowIntersection: true,
+//////                drawError: {},
+////                guidelineDistance: 20,
+//////                shapeOptions: {},
+////                metric: true,
+////                zIndexOffset: 2000,
+////                repeatMode: false,
+////                showArea: true
+////            },
+//            rectangle: false,
+////            rectangle: {
 ////                shapeOptions: {},
-//                metric: true,
+////                repeatMode: false
+////            },
+//            circle: false,
+////            circle: {
+////                shapeOptions: {},
+////                repeatMode: false
+////            },
+////            marker: false
+//            marker: {
+////                icon: L.Icon.Default(),
+//                icon: new camMarkerIcon,
 //                zIndexOffset: 2000,
 //                repeatMode: false
-//            },
-            polygon: false,
-//            polygon: {
-//                allowIntersection: true,
-////                drawError: {},
-//                guidelineDistance: 20,
-////                shapeOptions: {},
-//                metric: true,
-//                zIndexOffset: 2000,
-//                repeatMode: false,
-//                showArea: true
-//            },
-            rectangle: false,
-//            rectangle: {
-//                shapeOptions: {},
-//                repeatMode: false
-//            },
-            circle: false,
-//            circle: {
-//                shapeOptions: {},
-//                repeatMode: false
-//            },
-//            marker: false
-            marker: {
-//                icon: L.Icon.Default(),
-                icon: new camMarkerIcon,
-                zIndexOffset: 2000,
-                repeatMode: false
-            }
-        },
-        edit: {
-//            featureGroup: myMap.overlays["LH WFST CAMS"]
-            featureGroup: myMap.overlays["Geodan WFST CAMS"]
-//            featureGroup: appContent.cameras.cameras
-//            ,
-//            edit: {
-//                selectedPathOptions: {
-//                    maintainColor: true
-////                    , opacity: 0.3
-//                }
-//            },
-//            remove: {}
-        }
-    };
-    myMap.mapControls.drawControl = new L.Control.Draw(drawControlOptions);
-    myMap.map.addControl(myMap.mapControls.drawControl);
+//            }
+//        },
+//        edit: {
+////            featureGroup: myMap.overlays["LH WFST CAMS"]
+//            featureGroup: myMap.overlays["Geodan WFST CAMS"]
+////            featureGroup: appContent.cameras.cameras
+////            ,
+////            edit: {
+////                selectedPathOptions: {
+////                    maintainColor: true
+//////                    , opacity: 0.3
+////                }
+////            },
+////            remove: {}
+//        }
+//    };
+//    myMap.mapControls.drawControl = new L.Control.Draw(drawControlOptions);
+//    myMap.map.addControl(myMap.mapControls.drawControl);
     
     // Layer Control
     var layerControlOptions = {
         position: 'topright', 
-//        position: 'topleft', 
         collapsed: true,
         autoZIndex: true
     };
     myMap.mapControls.layercontrol = new L.Control.Layers(myMap.basemaps, myMap.overlays, layerControlOptions).addTo(myMap.map);
+//    myMap.mapControls.layercontrol = new L.Control.Layers(myMap.basemaps, myMap.overlays, layerControlOptions);
+//    myMap.map.addControl(myMap.mapControls.layercontrol);
     
     // Sidebar Control
     myMap.mapControls.sidebar = new L.Control.Sidebar('sidebar');
     myMap.map.addControl( myMap.mapControls.sidebar );      // add sidebar
     
-    
+    // Add Building Footprints overlay
 //    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
     
     // Load layers according to tab
@@ -2137,7 +2141,6 @@ function initMap (selectedTab) {
 //            overlays["LH WFS-T Ekkersrijt Cameras"].addTo(map);
 //            overlays["Cameras WFS-T"].addTo(map);
 //            overlays["Cams Ekk FS LH"].addTo(map);
-            
             if (serverLH) {
                 myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["LH WFST CAMS FoV Identification"].addTo(myMap.map);
@@ -2154,14 +2157,14 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS FoV M&C"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Visible"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON FoV Monitor"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Detection"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Recognition"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Identification"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Visible"].addTo(myMap.map);
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-            }
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON FoV Monitor"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Detection"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Recognition"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Identification"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Visible"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//            }
             
             if (appContent.console.outputLevel >= 2) { console.log("case 1"); }
             break;
@@ -2173,10 +2176,9 @@ function initMap (selectedTab) {
             if (serverGD) { 
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map); 
             }
-            if (fileGJ) { 
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map); 
-            }
-            
+//            if (fileGJ) { 
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map); 
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 2"); }
             break;
             
@@ -2189,11 +2191,10 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Identification"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Identification"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Identification"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 3"); }
             break;
             
@@ -2206,11 +2207,10 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Recognition"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Recognition"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Recognition"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 4"); }
             break;
             
@@ -2223,11 +2223,10 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Detection"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Detection"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Detection"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 5"); }
             break;
             
@@ -2240,11 +2239,10 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV M&C"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Monitor"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Monitor"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 6"); }
             break;
             
@@ -2257,21 +2255,18 @@ function initMap (selectedTab) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Visible"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-                myMap.overlays["GeoJSON FoV Visible"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//                myMap.overlays["GeoJSON FoV Visible"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case 7"); }
             break;
             
         case 8:
-            
             if (appContent.console.outputLevel >= 2) { console.log("case 8"); }
             break;
             
         case 9:
-            
             if (appContent.console.outputLevel >= 2) { console.log("case 9"); }
             break;
             
@@ -2282,16 +2277,12 @@ function initMap (selectedTab) {
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
             }
-            if (fileGJ) {
-                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
-            }
-            
+//            if (fileGJ) {
+//                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
+//            }
             if (appContent.console.outputLevel >= 2) { console.log("case default"); }
             break;
     }
-    
-    // Add Building Footprints overlay
-//    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
     
     
 ///////////////////////////////////////
@@ -2373,10 +2364,10 @@ function initMap (selectedTab) {
             }
             
             if ( layer.feature.properties.featuretype == "Camera" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log("Camera " + layer.feature.properties.id + " layer added"); }
+                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", Camera " + layer.feature.properties.id + " layer added"); }
             }
             else if ( layer.feature.properties.featuretype == "FoV" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log(layer.feature.properties.fovtype + " FoV layer added for Camera " + layer.feature.properties.cameraid); }
+                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer added for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2399,11 +2390,11 @@ function initMap (selectedTab) {
             // If layer is camera
             if ( layer.feature.properties.featuretype == "Camera" ) {  
                 if (appContent.console.outputLevel >= 1) { 
-                    console.log("Camera " + layer.feature.properties.id + " layer removed");
+                    console.log(performance.now() + ", Camera " + layer.feature.properties.id + " layer removed");
                 }
             }
             else if ( layer.feature.properties.featuretype == "FoV" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log(layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
+                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2443,102 +2434,92 @@ function initMap (selectedTab) {
             console.log('date: ');console.log(date);
         }
         
-        // DO SOMETHING HERE
+//        // DO SOMETHING HERE
         if (layerType === 'marker') {    // Do marker specific actions
-            // set default values of marker's (camera) properties
-            l.properties.featuretype = "Camera";
-            l.properties.area = "Ekkersrijt";
-            l.properties.brand = "Axis";
-            l.properties.camtype = "PTZ";
-            l.properties.canpan = "1";
-            l.properties.cantilt = "1";
-            l.properties.canzoom = "1";
-            l.properties.comments = "";
-            l.properties.createdat = date;
-            l.properties.featuretype = "Camera";
-            l.properties.fldef = 0.0041;
-            l.properties.flmax = 0.0738;
-            l.properties.flmin = 0.0041;
-            l.properties.focallength = 0.0041;
-            l.properties.id = "EKS NN-NNN";
-            l.properties.latitude = coords.lat;
-            l.properties.longitude = coords.lng;
-            l.properties.model = "232+";
-            l.properties.name = "";
-            l.properties.objectid = "";
-            l.properties.region = "Eindhoven";
-            l.properties.reshor = 704;
-            l.properties.resvert = 576;
-            l.properties.rotation = 199;
-            l.properties.sensorheight = 0.00369;
-            l.properties.sensorwidth = 0.00443;
-            l.properties.shape = coords.lat + " " + coords.lng;
-            l.properties.updatedat = date;
-            l.style = {
-                "icon": {
-                    "iconUrl": 'img/camera.png',
-                    "iconSize": [18, 18],
-                    "iconAnchor": [9, 9]
-                }
-            };
-//            l.popupTemplate = cameraPopupTemplate();
-//            l.popupTemplate = getCreateCameraPopupTemplate();
-            var createCameraPopupTemplate = getCreateCameraPopupTemplate();
-            
-            var popupOpts = {
-                closeButton: false,
-                keepInView: true,
-                autoPan: true,
-                closeOnClick: false,
-                className: 'createcamerapopup'
-            };
-            
-//            myMap.overlays["LH WFST CAMS"].addLayer(layer);
-//            myMap.overlays["LH WFST CAMS"].addLayer(l);
-//            l.openPopup(popupOpts);
-            var lay = L.geoJson.css(l);
-//            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
-//            var lay = L.geoJson.css(l, popupOpts);
-            
-            
-            
-            appContent.editing.feature.feature = l;
-            appContent.editing.feature.coordinates = coords;
-            appContent.editing.feature.layer = lay;
-            appContent.editing.feature.layer2 = layer;
-            console.log('lay');console.log(lay);
-            appContent.editing.feature.properties = l.properties;
-            
-            appContent.editing.layer = myMap.overlays["LH WFST CAMS"];
-            
-//            myMap.overlays["LH WFST CAMS"].addLayer(lay);
-            lay.addTo(myMap.overlays["LH WFST CAMS"]);
-            
-//            var popup2 = lay.getPopup();
-//            console.log(popup2);
-            
-//            lay.unbindPopup();
-////            lay.bindPopup(popup, popupOpts);
-//            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
-            lay.bindPopup(L.Util.template(createCameraPopupTemplate, appContent.editing.feature.properties), popupOpts);
-            lay.openPopup();
-            
-            appContent.editing.feature.layer = lay;
+//            // set default values of marker's (camera) properties
+//            l.properties.featuretype = "Camera";
+//            l.properties.area = "Ekkersrijt";
+//            l.properties.brand = "Axis";
+//            l.properties.camtype = "PTZ";
+//            l.properties.canpan = "1";
+//            l.properties.cantilt = "1";
+//            l.properties.canzoom = "1";
+//            l.properties.comments = "";
+//            l.properties.createdat = date;
+//            l.properties.featuretype = "Camera";
+//            l.properties.fldef = 0.0041;
+//            l.properties.flmax = 0.0738;
+//            l.properties.flmin = 0.0041;
+//            l.properties.focallength = 0.0041;
+//            l.properties.id = "EKS NN-NNN";
+//            l.properties.latitude = coords.lat;
+//            l.properties.longitude = coords.lng;
+//            l.properties.model = "232+";
+//            l.properties.name = "";
+//            l.properties.objectid = "";
+//            l.properties.region = "Eindhoven";
+//            l.properties.reshor = 704;
+//            l.properties.resvert = 576;
+//            l.properties.rotation = 199;
+//            l.properties.sensorheight = 0.00369;
+//            l.properties.sensorwidth = 0.00443;
+//            l.properties.shape = coords.lat + " " + coords.lng;
+//            l.properties.updatedat = date;
+//            l.style = {
+//                "icon": {
+//                    "iconUrl": 'img/camera.png',
+//                    "iconSize": [18, 18],
+//                    "iconAnchor": [9, 9]
+//                }
+//            };
+////            l.popupTemplate = cameraPopupTemplate();
+////            l.popupTemplate = getCreateCameraPopupTemplate();
+//            var createCameraPopupTemplate = getCreateCameraPopupTemplate();
+//            
+//            var popupOpts = {
+//                closeButton: false,
+//                keepInView: true,
+//                autoPan: true,
+//                closeOnClick: false,
+//                className: 'createcamerapopup'
+//            };
+//            
+////            myMap.overlays["LH WFST CAMS"].addLayer(layer);
+////            myMap.overlays["LH WFST CAMS"].addLayer(l);
+////            l.openPopup(popupOpts);
+//            var lay = L.geoJson.css(l);
+////            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
+////            var lay = L.geoJson.css(l, popupOpts);
+//            
+//            
+//            
+//            appContent.editing.feature.feature = l;
+//            appContent.editing.feature.coordinates = coords;
+//            appContent.editing.feature.layer = lay;
+//            appContent.editing.feature.layer2 = layer;
+//            console.log('lay');console.log(lay);
+//            appContent.editing.feature.properties = l.properties;
+//            
+//            appContent.editing.layer = myMap.overlays["LH WFST CAMS"];
+//            
+////            myMap.overlays["LH WFST CAMS"].addLayer(lay);
+//            lay.addTo(myMap.overlays["LH WFST CAMS"]);
+//            
+////            var popup2 = lay.getPopup();
+////            console.log(popup2);
+//            
+////            lay.unbindPopup();
+//////            lay.bindPopup(popup, popupOpts);
+////            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
+//            lay.bindPopup(L.Util.template(createCameraPopupTemplate, appContent.editing.feature.properties), popupOpts);
+//            lay.openPopup();
+//            
+//            appContent.editing.feature.layer = lay;
 
 //            if (appContent.console.outputLevel >= 4) { 
-            if (appContent.console.outputLevel >= 0) { 
-                console.log("l");console.log(l); 
-                console.log("lay");console.log(lay); 
-//                console.log("popup");console.log(popup); 
-                console.log("popupOpts");console.log(popupOpts); 
-            }
+        
+//            }
         }
-
-        // Do whatever else you need to. (save to db, add to map etc)
-//        var gjl = layer.GeoJSON();
-//        myMap.overlays["LH WFST CAMS"].addLayer(layer);
-//        myMap.overlays["LH WFST CAMS"].addLayer(l);
-//        myMap.map.addLayer(layer);
     });
     
     myMap.map.on('draw:edited', function (e) {
@@ -2665,6 +2646,7 @@ function initMap (selectedTab) {
     });
     
 
+    //  Prepare and Return RESULT: Map, Layers and Settings
     var retMap = myMap.map;
     var retOverlays = myMap.overlays;
     var retBasemaps = myMap.basemaps;
@@ -2694,7 +2676,7 @@ function initMap (selectedTab) {
     }
     appContent.track.elapsedtime += exectime;
     
-    if (appContent.console.outputLevel >= 3) { console.log("result");console.log(result); }
+    if (appContent.console.outputLevel >= 3) { console.log(performance.now() + ", Result");console.log(result); }
     if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", initMap(), END: " + endtime + ", Exec time (ms): " + exectime + '\n'); }
     
     return result;

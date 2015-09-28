@@ -1,16 +1,164 @@
 {
-    mapInitConfig: {
-        fovServiceBaseUrl: "/service/cams/camera/fieldofviewactual?",
-        defaultMapCenter: [51.50, 5.475],   // Ekkersrijt
-        defaultMapZoom: 15,
-        maxZoom: 20,
-        camJsonUrl: "./data/cameras_ekkersrijt.json",
-        basemapUrl: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
-        basemapAttrib: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-        cameraIconUrl: './img/camera.png',
-        cameraIconSize: [18, 18],
-        title: "POLYMER 2D FOV SERVICE"
-    },
-    layers: {}
-    
+    config:{
+        app: {
+            data:{
+                title: 'Surveillance cameras coverage map',
+                subtitle: 'DITSS Surveillance Cameras - Coverage Map - Ekkersrijt area',
+                description: 'Demo client for the Cameras 2D FoV service. This prototype app is a coverage map of surveilled areas. The cameras are the DITSS surveillance cameras and the area of study is the Ekkersrijt industrial area, located north of Eindhoven (NL).',
+                author: 'Luis Bausá López',
+                institutions: 'VU Amsterdam, Geodan',
+                project: 'EC Marie Curie ITN Project Multi-POS (Multi-technology positioning professionals)',
+                keywords: ''
+            },
+            settings:{
+                
+            }
+        },
+        map:{
+            settings:{
+                mapOptions:{
+                    "center": [51.500, 5.470],
+                    "zoom": 15,
+                    "minZoom": 3,
+                    "maxZoom": 23,
+                    "zoomControl": false,
+            //        "crs": mapCrs,
+            //        "layers": mapLayers,
+                    "attributionControl": false,
+                    "fadeAnimation": true,
+                    "zoomAnimation": true,
+                    "markerZoomAnimation": true,
+                    "zoomAnimationThreshold": 2
+                },
+                spin:{
+                    enable:true,
+                    options:{
+                        lines: 12, // The number of lines to draw
+                        length: 15, // The length of each line
+                        width: 2, // The line thickness
+                        radius: 11, // The radius of the inner circle
+                        corners: 0.8, // Corner roundness (0..1)
+                        rotate: 0, // The rotation offset
+                        direction: 1, // 1: clockwise, -1: counterclockwise
+                        color: '#98AFC7', // #rgb or #rrggbb or array of colors
+                        speed: 1.2, // Rounds per second
+                        trail: 100, // Afterglow percentage
+                        shadow: true, // Whether to render a shadow
+                        hwaccel: true, // Whether to use hardware acceleration
+                        className: 'spinner', // The CSS class to assign to the spinner
+                        zIndex: 2e9, // The z-index (defaults to 2000000000)
+                        top: '50%', // Top position relative to parent
+                        left: '50%' // Left position relative to parent
+                    }
+                }
+            },
+            controls:{
+                fullscreen:{
+                    enable:true,
+                    options:{
+                        position: 'topright', // defaut topleft
+                        title: 'Switch Full Screen', // change button title, default Full Screen
+                        content: null, // change button content, can be HTML, default null
+                        forceSeparateButton: false, // force seperate button to detach from zoom buttons, default false
+                        forcePseudoFullscreen: false // force use of pseudo full screen even if full screen API is available, default false
+                    }
+                },
+                scale:{
+                    enable:true,
+                    options:{
+                        position: 'bottomright',
+                        maxWidth: 150, // Def: 100 pixels
+                        metric: true, // metric scale line (m/km)
+                        imperial: false, // imperial scale line (mi/ft)
+                        updateWhenIdle: true // If true updated on moveend, else on move
+                    }
+                },
+                attribution:{
+                    enable:true,
+                    options:{
+                        position: 'bottomright',
+                        prefix: 'Luis Bausá López - VU Amsterdam - Geodan '
+                    }
+                },
+                mouseCoordinates:{
+                    enable:true,
+                    options:{
+                        position: "bottomright", //optional, default "bootomright"
+                        decimals: 6, //optional, default 4
+                        decimalSeperator: ".", //optional. default "."
+                        labelTemplateLat: "Latitude: {y}", //optional, default "Lat: {y}"
+                        labelTemplateLng: "Longitude: {x}", //optional, default "Lng: {x}"
+                        enableUserInput: false, //optional default true
+                        useDMS: false, //optional, default false
+                        useLatLngOrder: true, //ordering of labels, default false-> lng-lat
+                        markerType: L.marker, //optional, default L.marker
+                        markerProps: {} //optional, default {}
+                    }
+                },
+                zoom:{
+                    enable:true,
+                    options:{
+                        position: 'topright',
+                        zoomInText: '+',
+                        zoomOutText: '-',
+                        zoomInTitle: 'Zoom In',
+                        zoomOutTitle: 'Zoom Out'
+                    }
+                },
+                layers:{
+                    enable:true,
+                    options:{
+                        position: 'topright', 
+                        collapsed: true,
+                        autoZIndex: true
+                    }
+                },
+                sidebar:{
+                    enable:true
+                }
+                
+            },
+            cameras:{
+                defaultCameraSource:'Geodan', // GJ file, LH, Geodan
+                fovServiceBaseUrl: "/service/cams/camera/fieldofviewactual?",
+                camJsonUrl: "./data/cameras_ekkersrijt.json",
+                camStyle:{
+                    cameraIconUrl: './img/camera.png',
+                    cameraIconSize: [18, 18],
+                },
+                fovStyles:{
+                    identification:{},
+                    recognition:{},
+                    detection:{},
+                    monitor:{},
+                    visible:{}
+                }
+            },
+            basemaps:{
+                defaultBasemap: 'Light Grey',
+                basemaps:['Light Grey','Humanitarian']
+            },
+            overlays:{
+                activeOverlays:[],
+                overlays:[]
+            },
+            featureLayers:{
+                activeFeatureLayers:[],
+                featureLayers:[]
+            }
+        },
+        debug:{
+            console:{
+                logCameras: true,
+                logFovs: true,
+                outputLevel: 1 // in [0, 1, 2, 3, 4] verbose levels increasing
+            },
+            tracking:{
+                
+            },
+            editing:{
+                
+            }
+        }
+    }
 }
