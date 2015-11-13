@@ -632,6 +632,7 @@ function getPostDataUpdate (cam, lock) {
 // Set nCameras
 function setNCameras () {
     nCameras = $('#numCameras').val();
+    console.log('nCameras is now ' + nCameras);
 }
 
 // Create the cameras
