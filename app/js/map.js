@@ -746,7 +746,7 @@ var layers = {
                 zoomToBoundsOnClick: true,     // default true
                 removeOutsideVisibleBounds: true,   // true for enhanced performance
                 animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 12,    // default disabled
+                disableClusteringAtZoom: 11,    // default disabled
                 maxClusterRadius: 100, // Default 80
                 spiderfyDistanceMultiplier: 100, // default 1
                 polygonOptions: {
@@ -868,7 +868,7 @@ var layers = {
                 zoomToBoundsOnClick: true,     // default true
                 removeOutsideVisibleBounds: true,   // true for enhanced performance
                 animateAddingMarkers: true,    // default true
-                disableClusteringAtZoom: 12,    // default disabled
+                disableClusteringAtZoom: 11,    // default disabled
                 maxClusterRadius: 100, // Default 80
                 spiderfyDistanceMultiplier: 100, // default 1
                 polygonOptions: {
@@ -1382,13 +1382,13 @@ function getOverlays () {
 //    overlays["GeoJSON FoV Monitor"] = cameraslayers.monitor;
 //    overlays["GeoJSON FoV Visible"] = cameraslayers.visible;    
 
-    var cameraslayerswfst = getCamerasWFST(overlays);     // cameras from WFST service
-    overlays["LH WFST CAMS"] = cameraslayerswfst.cameras;
-    overlays["LH WFST CAMS FoV Identification"] = cameraslayerswfst.identification;
-    overlays["LH WFST CAMS FoV Recognition"] = cameraslayerswfst.recognition;
-    overlays["LH WFST CAMS FoV Detection"] = cameraslayerswfst.detection;
-    overlays["LH WFST CAMS FoV M&C"] = cameraslayerswfst.monitor;
-    overlays["LH WFST CAMS FoV Visible"] = cameraslayerswfst.visible;    
+//    var cameraslayerswfst = getCamerasWFST(overlays);     // cameras from WFST service
+//    overlays["LH WFST CAMS"] = cameraslayerswfst.cameras;
+//    overlays["LH WFST CAMS FoV Identification"] = cameraslayerswfst.identification;
+//    overlays["LH WFST CAMS FoV Recognition"] = cameraslayerswfst.recognition;
+//    overlays["LH WFST CAMS FoV Detection"] = cameraslayerswfst.detection;
+//    overlays["LH WFST CAMS FoV M&C"] = cameraslayerswfst.monitor;
+//    overlays["LH WFST CAMS FoV Visible"] = cameraslayerswfst.visible;    
 
     var cameraslayerswfstg = getCamerasWFSTgeodan2(overlays);     // cameras from WFST service at Geodan
     overlays["Geodan WFST CAMS"] = cameraslayerswfstg.cameras;
@@ -1904,7 +1904,7 @@ function createMap (mapOptions) {
         left: '50%' // Left position relative to parent
     };
     
-    myMap.spin(true, spinOpts);
+    setTimeout(myMap.spin(true, spinOpts),200);
     myMap.spin(false);
     
     map = myMap;
@@ -1966,12 +1966,46 @@ function initMap (selectedTab) {
 
 
     // Add map controls
+    var myLayers = L.layerGroup([
+		myMap.cameras.cameras,
+		myMap.cameras.identification,
+		myMap.cameras.recognition,
+		myMap.cameras.detection,
+		myMap.cameras.monitor,
+		myMap.cameras.visible
+	]);
+    // Search
+    var searchControlOptions = {
+        position: 'topright',
+        layer: myMap.cameras.cameras, 
+//        layer: L.layerGroup([
+//            myMap.cameras.cameras,
+//            myMap.cameras.identification,
+//            myMap.cameras.recognition,
+//            myMap.cameras.detection,
+//            myMap.cameras.monitor,
+//            myMap.cameras.visible]), 
+//        propertyName: 'id', 
+        propertyName: 'name', 
+        circleLocation: true
+//        circleLocation: false
+    };
+    myMap.mapControls.search = L.control.search(searchControlOptions);
+    myMap.mapControls.search.on('search_locationfound', function(e) { 
+		if(e.layer._popup) e.layer.openPopup();
+	});
+//    myMap.mapControls.search.on('search_collapsed', function(e) {
+//		searchControlOptions.layer.eachLayer(function(layer) {	
+//		});
+//    });
+    myMap.map.addControl( myMap.mapControls.search );      // add Search control to map
     
     // Attribution
     var attributionControlOptions = {
+        position: 'bottomleft',
 //        position: 'topleft',
-        position: 'bottomright',
-        prefix: 'Luis Bausá López - VU Amsterdam - Geodan '
+//        position: 'bottomright',
+        prefix: 'Luis Bausá López - VU Amsterdam - Geodan - Multi-POS - '
     };
     myMap.mapControls.attribution = L.control.attribution(attributionControlOptions);
     myMap.map.addControl( myMap.mapControls.attribution );      // add attribution
@@ -2138,17 +2172,18 @@ function initMap (selectedTab) {
     // Load layers according to tab
     switch (selectedTab) {
         case 1:
+    myMap.overlays["Building footprints (Pand)"].addTo(myMap.map);
 //            overlays["LH WFS-T Ekkersrijt Cameras"].addTo(map);
 //            overlays["Cameras WFS-T"].addTo(map);
 //            overlays["Cams Ekk FS LH"].addTo(map);
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Identification"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Recognition"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Detection"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV M&C"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Visible"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Identification"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Recognition"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Detection"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV M&C"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Visible"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Identification"].addTo(myMap.map);
@@ -2166,27 +2201,27 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //            }
             
-            if (appContent.console.outputLevel >= 2) { console.log("case 1"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 1 - All"); }
             break;
             
         case 2:
-            if (serverLH) { 
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map); 
-            }
+//            if (serverLH) { 
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map); 
+//            }
             if (serverGD) { 
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map); 
             }
 //            if (fileGJ) { 
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map); 
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 2"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 2 - Cameras"); }
             break;
             
         case 3:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Identification"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Identification"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Identification"].addTo(myMap.map);
@@ -2195,14 +2230,14 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //                myMap.overlays["GeoJSON FoV Identification"].addTo(myMap.map);
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 3"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 3 - Identification"); }
             break;
             
         case 4:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Recognition"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Recognition"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Recognition"].addTo(myMap.map);
@@ -2211,14 +2246,14 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //                myMap.overlays["GeoJSON FoV Recognition"].addTo(myMap.map);
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 4"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 4 - Recognition"); }
             break;
             
         case 5:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Detection"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Detection"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Detection"].addTo(myMap.map);
@@ -2227,14 +2262,14 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //                myMap.overlays["GeoJSON FoV Detection"].addTo(myMap.map);
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 5"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 5 - Detection"); }
             break;
             
         case 6:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV M&C"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV M&C"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV M&C"].addTo(myMap.map);
@@ -2243,14 +2278,14 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //                myMap.overlays["GeoJSON FoV Monitor"].addTo(myMap.map);
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 6"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 6 - M&C"); }
             break;
             
         case 7:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-                myMap.overlays["LH WFST CAMS FoV Visible"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//                myMap.overlays["LH WFST CAMS FoV Visible"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
                 myMap.overlays["Geodan WFST CAMS FoV Visible"].addTo(myMap.map);
@@ -2259,21 +2294,21 @@ function initMap (selectedTab) {
 //                myMap.overlays["GeoJSON Ekkersrijt Cameras"].addTo(myMap.map);
 //                myMap.overlays["GeoJSON FoV Visible"].addTo(myMap.map);
 //            }
-            if (appContent.console.outputLevel >= 2) { console.log("case 7"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 7 - Visible"); }
             break;
             
         case 8:
-            if (appContent.console.outputLevel >= 2) { console.log("case 8"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 8 - xx"); }
             break;
             
         case 9:
-            if (appContent.console.outputLevel >= 2) { console.log("case 9"); }
+            if (appContent.console.outputLevel >= 2) { console.log("case 9 - xx"); }
             break;
             
         default:
-            if (serverLH) {
-                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
-            }
+//            if (serverLH) {
+//                myMap.overlays["LH WFST CAMS"].addTo(myMap.map);
+//            }
             if (serverGD) {
                 myMap.overlays["Geodan WFST CAMS"].addTo(myMap.map);
             }
@@ -2297,21 +2332,33 @@ function initMap (selectedTab) {
 //        console.log(e.latlng);
     });
     
+    ////  MOVE
+    myMap.map.on('moveend', function(e){
+        if (appContent.console.outputLevel >= 1) { 
+            console.log(performance.now() + ", map event, moveend" + '\n');
+            var center = myMap.map.getCenter(); 
+            console.log('Map Center: {lat:' + center.lat + ', lon:' + center.lng + '}');
+        }
+    });
+    
     ////  FULL SCREEN
     myMap.map.on('enterFullscreen', function(){
-        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, enterFullscreen" + '\n'); }
+        if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", map event, enterFullscreen" + '\n'); }
     });
     myMap.map.on('exitFullscreen', function(){
-        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, exitFullscreen" + '\n'); }
+        if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", map event, exitFullscreen" + '\n'); }
     });
     
     // ZOOM
     myMap.map.on('zoomstart', function (e) {
         var zoom = myMap.map.getZoom();
-        if (appContent.console.outputLevel >= 2) { 
+        if (appContent.console.outputLevel >= 1) { 
             console.log(performance.now() + ", map event, zoomstart" + '\n');
+            console.log('map.zoom: ' + zoom);
+//            console.log('map.zoom: ');console.log(zoom);
+        }
+        if (appContent.console.outputLevel >= 2) { 
             console.log('e: ');console.log(e);
-            console.log('map.zoom: ');console.log(zoom);
         }
         
         // DO SOMETHING HERE
@@ -2319,13 +2366,16 @@ function initMap (selectedTab) {
     });
     myMap.map.on('zoomend', function (e) {
         var zoom = myMap.map.getZoom();
-        if (appContent.console.outputLevel >= 2) { 
+        if (appContent.console.outputLevel >= 1) { 
             console.log(performance.now() + ", map event, zoomend" + '\n');
+            console.log('map.zoom: ' + zoom);
+        }
+        if (appContent.console.outputLevel >= 2) { 
             console.log('e: ');console.log(e);
-            console.log('map.zoom: ');console.log(zoom);
         }
         
         // DO SOMETHING HERE
+        myMap.map.spin(false);
         myMap.map.spin(false);
     });
     
@@ -2334,11 +2384,15 @@ function initMap (selectedTab) {
         var layer = e.layer;
         var name = e.name;
         
-        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", map event, baselayerchange" + '\n'); }
+        if (appContent.console.outputLevel >= 1) { 
+            console.log(performance.now() + ", map event, baselayerchange" + '\n'); 
+        }
+        if (appContent.console.outputLevel >= 2) { 
+            console.log('e.name: ');console.log(name);
+        }
         if (appContent.console.outputLevel >= 4) { 
             console.log('e: ');console.log(e);
             console.log('e.layer: ');console.log(layer);
-            console.log('e.name: ');console.log(name);
         }
         
         // DO SOMETHING HERE\
@@ -2364,10 +2418,10 @@ function initMap (selectedTab) {
             }
             
             if ( layer.feature.properties.featuretype == "Camera" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", Camera " + layer.feature.properties.id + " layer added"); }
+                if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", Camera " + layer.feature.properties.id + " layer added"); }
             }
             else if ( layer.feature.properties.featuretype == "FoV" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer added for Camera " + layer.feature.properties.cameraid); }
+                if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer added for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2389,12 +2443,12 @@ function initMap (selectedTab) {
             }
             // If layer is camera
             if ( layer.feature.properties.featuretype == "Camera" ) {  
-                if (appContent.console.outputLevel >= 1) { 
+                if (appContent.console.outputLevel >= 2) { 
                     console.log(performance.now() + ", Camera " + layer.feature.properties.id + " layer removed");
                 }
             }
             else if ( layer.feature.properties.featuretype == "FoV" ) {  
-                if (appContent.console.outputLevel >= 1) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
+                if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", " + layer.feature.properties.fovtype + " FoV layer removed for Camera " + layer.feature.properties.cameraid); }
             }
         }
     });
@@ -2415,236 +2469,236 @@ function initMap (selectedTab) {
 //        myMap.map.spin(false);
     });
     
-    // DRAW CONTROL
-    myMap.map.on('draw:created', function (e) {
-        var layerType = e.layerType;
-        var layer = e.layer;
-        
-        var coords = layer.getLatLng();
-        var l = layer.toGeoJSON();
-        var date = new Date();
-        date = date.getTime().toString();
-        
+//    // DRAW CONTROL
+//    myMap.map.on('draw:created', function (e) {
+//        var layerType = e.layerType;
+//        var layer = e.layer;
+//        
+//        var coords = layer.getLatLng();
+//        var l = layer.toGeoJSON();
+//        var date = new Date();
+//        date = date.getTime().toString();
+//        
+////        if (appContent.console.outputLevel >= 3) { 
+//        if (appContent.console.outputLevel >= 0) { 
+//            console.log(performance.now() + ", map event, draw:created" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.layer: ');console.log(layer);
+//            console.log('e.layer.toGeoJSON(): ');console.log(l);
+//            console.log('date: ');console.log(date);
+//        }
+//        
+////        // DO SOMETHING HERE
+//        if (layerType === 'marker') {    // Do marker specific actions
+////            // set default values of marker's (camera) properties
+////            l.properties.featuretype = "Camera";
+////            l.properties.area = "Ekkersrijt";
+////            l.properties.brand = "Axis";
+////            l.properties.camtype = "PTZ";
+////            l.properties.canpan = "1";
+////            l.properties.cantilt = "1";
+////            l.properties.canzoom = "1";
+////            l.properties.comments = "";
+////            l.properties.createdat = date;
+////            l.properties.featuretype = "Camera";
+////            l.properties.fldef = 0.0041;
+////            l.properties.flmax = 0.0738;
+////            l.properties.flmin = 0.0041;
+////            l.properties.focallength = 0.0041;
+////            l.properties.id = "EKS NN-NNN";
+////            l.properties.latitude = coords.lat;
+////            l.properties.longitude = coords.lng;
+////            l.properties.model = "232+";
+////            l.properties.name = "";
+////            l.properties.objectid = "";
+////            l.properties.region = "Eindhoven";
+////            l.properties.reshor = 704;
+////            l.properties.resvert = 576;
+////            l.properties.rotation = 199;
+////            l.properties.sensorheight = 0.00369;
+////            l.properties.sensorwidth = 0.00443;
+////            l.properties.shape = coords.lat + " " + coords.lng;
+////            l.properties.updatedat = date;
+////            l.style = {
+////                "icon": {
+////                    "iconUrl": 'img/camera.png',
+////                    "iconSize": [18, 18],
+////                    "iconAnchor": [9, 9]
+////                }
+////            };
+//////            l.popupTemplate = cameraPopupTemplate();
+//////            l.popupTemplate = getCreateCameraPopupTemplate();
+////            var createCameraPopupTemplate = getCreateCameraPopupTemplate();
+////            
+////            var popupOpts = {
+////                closeButton: false,
+////                keepInView: true,
+////                autoPan: true,
+////                closeOnClick: false,
+////                className: 'createcamerapopup'
+////            };
+////            
+//////            myMap.overlays["LH WFST CAMS"].addLayer(layer);
+//////            myMap.overlays["LH WFST CAMS"].addLayer(l);
+//////            l.openPopup(popupOpts);
+////            var lay = L.geoJson.css(l);
+//////            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
+//////            var lay = L.geoJson.css(l, popupOpts);
+////            
+////            
+////            
+////            appContent.editing.feature.feature = l;
+////            appContent.editing.feature.coordinates = coords;
+////            appContent.editing.feature.layer = lay;
+////            appContent.editing.feature.layer2 = layer;
+////            console.log('lay');console.log(lay);
+////            appContent.editing.feature.properties = l.properties;
+////            
+////            appContent.editing.layer = myMap.overlays["LH WFST CAMS"];
+////            
+//////            myMap.overlays["LH WFST CAMS"].addLayer(lay);
+////            lay.addTo(myMap.overlays["LH WFST CAMS"]);
+////            
+//////            var popup2 = lay.getPopup();
+//////            console.log(popup2);
+////            
+//////            lay.unbindPopup();
+////////            lay.bindPopup(popup, popupOpts);
+//////            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
+////            lay.bindPopup(L.Util.template(createCameraPopupTemplate, appContent.editing.feature.properties), popupOpts);
+////            lay.openPopup();
+////            
+////            appContent.editing.feature.layer = lay;
+//
+////            if (appContent.console.outputLevel >= 4) { 
+//        
+////            }
+//        }
+//    });
+//    
+//    myMap.map.on('draw:edited', function (e) {
+//        var layers = e.layers;
+//        
 //        if (appContent.console.outputLevel >= 3) { 
-        if (appContent.console.outputLevel >= 0) { 
-            console.log(performance.now() + ", map event, draw:created" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.layer: ');console.log(layer);
-            console.log('e.layer.toGeoJSON(): ');console.log(l);
-            console.log('date: ');console.log(date);
-        }
-        
+//            console.log(performance.now() + ", map event, draw:edited" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.layers: ');console.log(layers);
+//        }
+//        
 //        // DO SOMETHING HERE
-        if (layerType === 'marker') {    // Do marker specific actions
-//            // set default values of marker's (camera) properties
-//            l.properties.featuretype = "Camera";
-//            l.properties.area = "Ekkersrijt";
-//            l.properties.brand = "Axis";
-//            l.properties.camtype = "PTZ";
-//            l.properties.canpan = "1";
-//            l.properties.cantilt = "1";
-//            l.properties.canzoom = "1";
-//            l.properties.comments = "";
-//            l.properties.createdat = date;
-//            l.properties.featuretype = "Camera";
-//            l.properties.fldef = 0.0041;
-//            l.properties.flmax = 0.0738;
-//            l.properties.flmin = 0.0041;
-//            l.properties.focallength = 0.0041;
-//            l.properties.id = "EKS NN-NNN";
-//            l.properties.latitude = coords.lat;
-//            l.properties.longitude = coords.lng;
-//            l.properties.model = "232+";
-//            l.properties.name = "";
-//            l.properties.objectid = "";
-//            l.properties.region = "Eindhoven";
-//            l.properties.reshor = 704;
-//            l.properties.resvert = 576;
-//            l.properties.rotation = 199;
-//            l.properties.sensorheight = 0.00369;
-//            l.properties.sensorwidth = 0.00443;
-//            l.properties.shape = coords.lat + " " + coords.lng;
-//            l.properties.updatedat = date;
-//            l.style = {
-//                "icon": {
-//                    "iconUrl": 'img/camera.png',
-//                    "iconSize": [18, 18],
-//                    "iconAnchor": [9, 9]
-//                }
-//            };
-////            l.popupTemplate = cameraPopupTemplate();
-////            l.popupTemplate = getCreateCameraPopupTemplate();
-//            var createCameraPopupTemplate = getCreateCameraPopupTemplate();
+//        
+//        layers.eachLayer(function (layer) {
+//            //do something with the layer
+//            if (appContent.console.outputLevel >= 3) { console.log(layer); }
+////            layer.save();
+//        });
+//    });
+//    
+//    myMap.map.on('draw:deleted', function (e) {
+//        var layers = e.layers;
+//        
+//        if (appContent.console.outputLevel >= 3) { 
+//            console.log(performance.now() + ", map event, draw:deleted" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.layers: ');console.log(layers);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//        layers.eachLayer(function (layer) {
+//            //do something with the layer
+//            if (appContent.console.outputLevel >= 3) { console.log(layer); }
+////            layer.remove();
+////            myMap.overlays["LH WFST CAMS"].removeLayer(layer);
+//        });
+//        myMap.overlays["LH WFST CAMS"].removeLayers(layers);
+//    });
+//    myMap.map.on('draw:drawstart', function (e) {
+//        var layerType = e.layerType;
+//        
+////        if (appContent.console.outputLevel >= 3) {
+//        if (appContent.console.outputLevel >= 0) {
+//            console.log(performance.now() + ", map event, draw:drawstart" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.layerType: ');console.log(layerType);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//        if (layerType === 'marker') {
+//            // Do marker specific actions
+//            if (appContent.console.outputLevel >= 3) {console.log('marker');}
 //            
-//            var popupOpts = {
-//                closeButton: false,
-//                keepInView: true,
-//                autoPan: true,
-//                closeOnClick: false,
-//                className: 'createcamerapopup'
-//            };
+//        }
+//        
+//    });
+//    myMap.map.on('draw:drawstop', function (e) {
+//        var layerType = e.layerType;
+//        
+////        if (appContent.console.outputLevel >= 3) {
+//        if (appContent.console.outputLevel >= 0) {
+//            console.log(performance.now() + ", map event, draw:drawstop" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.layerType: ');console.log(layerType);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//        if (layerType === 'marker') {
+//            // Do marker specific actions
+//            if (appContent.console.outputLevel >= 3) {console.log('marker');}
 //            
-////            myMap.overlays["LH WFST CAMS"].addLayer(layer);
-////            myMap.overlays["LH WFST CAMS"].addLayer(l);
-////            l.openPopup(popupOpts);
-//            var lay = L.geoJson.css(l);
-////            var lay = L.geoJson.css(l, { popupOpts: popupOpts });
-////            var lay = L.geoJson.css(l, popupOpts);
-//            
-//            
-//            
-//            appContent.editing.feature.feature = l;
-//            appContent.editing.feature.coordinates = coords;
-//            appContent.editing.feature.layer = lay;
-//            appContent.editing.feature.layer2 = layer;
-//            console.log('lay');console.log(lay);
-//            appContent.editing.feature.properties = l.properties;
-//            
-//            appContent.editing.layer = myMap.overlays["LH WFST CAMS"];
-//            
-////            myMap.overlays["LH WFST CAMS"].addLayer(lay);
-//            lay.addTo(myMap.overlays["LH WFST CAMS"]);
-//            
-////            var popup2 = lay.getPopup();
-////            console.log(popup2);
-//            
-////            lay.unbindPopup();
-//////            lay.bindPopup(popup, popupOpts);
-////            lay.bindPopup(getCreateCameraPopupTemplate(), popupOpts);
-//            lay.bindPopup(L.Util.template(createCameraPopupTemplate, appContent.editing.feature.properties), popupOpts);
-//            lay.openPopup();
-//            
-//            appContent.editing.feature.layer = lay;
-
-//            if (appContent.console.outputLevel >= 4) { 
-        
-//            }
-        }
-    });
-    
-    myMap.map.on('draw:edited', function (e) {
-        var layers = e.layers;
-        
-        if (appContent.console.outputLevel >= 3) { 
-            console.log(performance.now() + ", map event, draw:edited" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.layers: ');console.log(layers);
-        }
-        
-        // DO SOMETHING HERE
-        
-        layers.eachLayer(function (layer) {
-            //do something with the layer
-            if (appContent.console.outputLevel >= 3) { console.log(layer); }
-//            layer.save();
-        });
-    });
-    
-    myMap.map.on('draw:deleted', function (e) {
-        var layers = e.layers;
-        
-        if (appContent.console.outputLevel >= 3) { 
-            console.log(performance.now() + ", map event, draw:deleted" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.layers: ');console.log(layers);
-        }
-        
-        // DO SOMETHING HERE
-        
-        layers.eachLayer(function (layer) {
-            //do something with the layer
-            if (appContent.console.outputLevel >= 3) { console.log(layer); }
-//            layer.remove();
-//            myMap.overlays["LH WFST CAMS"].removeLayer(layer);
-        });
-        myMap.overlays["LH WFST CAMS"].removeLayers(layers);
-    });
-    myMap.map.on('draw:drawstart', function (e) {
-        var layerType = e.layerType;
-        
+//        }
+//        
+//    });
+//    myMap.map.on('draw:editstart', function (e) {
+//        var handler = e.handler;
+//        
 //        if (appContent.console.outputLevel >= 3) {
-        if (appContent.console.outputLevel >= 0) {
-            console.log(performance.now() + ", map event, draw:drawstart" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.layerType: ');console.log(layerType);
-        }
-        
-        // DO SOMETHING HERE
-        
-        if (layerType === 'marker') {
-            // Do marker specific actions
-            if (appContent.console.outputLevel >= 3) {console.log('marker');}
-            
-        }
-        
-    });
-    myMap.map.on('draw:drawstop', function (e) {
-        var layerType = e.layerType;
-        
+//            console.log(performance.now() + ", map event, draw:editstart" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.handler: ');console.log(handler);
+//        }
+//        
+//        // DO SOMETHING HERE
+//    });
+//    myMap.map.on('draw:editstop', function (e) {
+//        var handler = e.handler;
+//        
 //        if (appContent.console.outputLevel >= 3) {
-        if (appContent.console.outputLevel >= 0) {
-            console.log(performance.now() + ", map event, draw:drawstop" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.layerType: ');console.log(layerType);
-        }
-        
-        // DO SOMETHING HERE
-        
-        if (layerType === 'marker') {
-            // Do marker specific actions
-            if (appContent.console.outputLevel >= 3) {console.log('marker');}
-            
-        }
-        
-    });
-    myMap.map.on('draw:editstart', function (e) {
-        var handler = e.handler;
-        
-        if (appContent.console.outputLevel >= 3) {
-            console.log(performance.now() + ", map event, draw:editstart" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.handler: ');console.log(handler);
-        }
-        
-        // DO SOMETHING HERE
-    });
-    myMap.map.on('draw:editstop', function (e) {
-        var handler = e.handler;
-        
-        if (appContent.console.outputLevel >= 3) {
-            console.log(performance.now() + ", map event, draw:editstop" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.handler: ');console.log(handler);
-        }
-        
-        // DO SOMETHING HERE
-        
-    });
-    myMap.map.on('draw:deletestart', function (e) {
-        var handler = e.handler;
-        
-        if (appContent.console.outputLevel >= 3) {
-            console.log(performance.now() + ", map event, draw:deletestart" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.handler: ');console.log(handler);
-        }
-        
-        // DO SOMETHING HERE
-        
-    });
-    myMap.map.on('draw:deletestop', function (e) {
-        var handler = e.handler;
-        
-        if (appContent.console.outputLevel >= 3) { 
-            console.log(performance.now() + ", map event, draw:deletestop" + '\n');
-            console.log('e: ');console.log(e);
-            console.log('e.handler: ');console.log(handler);
-        }
-        
-        // DO SOMETHING HERE
-        
-    });
-    
+//            console.log(performance.now() + ", map event, draw:editstop" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.handler: ');console.log(handler);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//    });
+//    myMap.map.on('draw:deletestart', function (e) {
+//        var handler = e.handler;
+//        
+//        if (appContent.console.outputLevel >= 3) {
+//            console.log(performance.now() + ", map event, draw:deletestart" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.handler: ');console.log(handler);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//    });
+//    myMap.map.on('draw:deletestop', function (e) {
+//        var handler = e.handler;
+//        
+//        if (appContent.console.outputLevel >= 3) { 
+//            console.log(performance.now() + ", map event, draw:deletestop" + '\n');
+//            console.log('e: ');console.log(e);
+//            console.log('e.handler: ');console.log(handler);
+//        }
+//        
+//        // DO SOMETHING HERE
+//        
+//    });
+//    
 
     //  Prepare and Return RESULT: Map, Layers and Settings
     var retMap = myMap.map;

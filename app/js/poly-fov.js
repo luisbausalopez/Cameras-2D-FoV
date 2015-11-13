@@ -7,15 +7,56 @@
 //////      
 //////      (C)Luis Bausá López, Amsterdam 2013-2016
 //////      
-//////      EU MC Multi-POS
+//////      EU MC Multi-POS (www.multi-pos.eu)
 //////      VU Amsterdam
-//////      
+//////      Geodan
 //////      
 //////      
 //////   
 //////   
 ///////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////        xml2JSON()         //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  xml2JSON() - Returns JSON object from XML object
+function xml2JSON(xml) {
+    var obj = {};
+    if (xml.nodeType == 1) {
+        if (xml.attributes.length > 0) {
+            obj["@attributes"] = {};
+            for (var j = 0; j < xml.attributes.length; j++) {
+                var attribute = xml.attributes.item(j);
+                obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+            }
+        }
+    } else if (xml.nodeType == 3) { obj = xml.nodeValue; }
+    if (xml.hasChildNodes()) {
+        for (var i = 0; i < xml.childNodes.length; i++) {
+            var item = xml.childNodes.item(i);
+            var nodeName = item.nodeName;
+            if (typeof (obj[nodeName]) == "undefined") {
+                obj[nodeName] = xml2JSON(item);
+            } else {
+                if (typeof (obj[nodeName].push) == "undefined") {
+                    var old = obj[nodeName];
+                    obj[nodeName] = [];
+                    obj[nodeName].push(old);
+                }
+                obj[nodeName].push(xml2JSON(item));
+            }
+        }
+    }
+    return obj;
+}
 
 
 
@@ -56,7 +97,7 @@ function findCamLayerById (camid) {
     var resultlayer = null;
     map.eachLayer( function (layer) { 
         if ( (layer.feature != null) && (layer.feature.properties != null) && (layer.feature.properties.featuretype == "Camera") && (layer.feature.properties.id == camid) ) { 
-            console.log(layer);
+//            console.log(layer);
             resultlayer = layer;
             return layer;
         }
@@ -183,9 +224,11 @@ function removeCamera() {
     console.log(performance.now() + ", removeCamera( " + buttonName + " ), START: " + starttime + '\n');
 
     var camId = appContent.editinfeature.editcamid;
+    var camOid = appContent.editinfeature.editcamoid;
 
     removeCameraLayerWithId(camId);
     removeFovLayersWithCameraId(camId);
+    deleteCameraWFS(camOid);
 
     appContent.editinfeature = null;
 
@@ -241,6 +284,129 @@ function saveEditedCamera() {
     var starttime = performance.now();
     var buttonName = 'saveEditedCamera';
     console.log(performance.now() + ", saveEditedCamera( " + buttonName + " ), START: " + starttime + '\n');
+    
+    function getCamOldNew (newCam, oldCam) {
+        
+        var date = getCurrentDateString();
+        var cam = { 
+            camid: {
+                value: newCam.editcamid,
+                originalvalue: oldCam.editcamid,
+                name: 'camera_id'
+            }, objectid: {
+                value: newCam.editcamoid,
+                originalvalue: oldCam.editcamoid,
+                name: 'objectid'
+            }, gmlid: {
+                value: newCam.editcamgmlid,
+                originalvalue: oldCam.editcamgmlid,
+                name: 'gml:id'
+            }, region: {
+                value: newCam.editcamregion,
+                originalvalue: oldCam.editcamregion,
+                name: 'location_region'
+            }, area: {
+                value: newCam.editcamarea,
+                originalvalue: oldCam.editcamarea,
+                name: 'location_area'
+            }, type: {
+                value: newCam.editcamtype,
+                originalvalue: oldCam.editcamtype,
+                name: 'camera_type'
+            }, brand: {
+                value: newCam.editcambrand,
+                originalvalue: oldCam.editcambrand,
+                name: 'brand'
+            }, model: {
+                value: newCam.editcammodel,
+                originalvalue: oldCam.editcammodel,
+                name: 'model'
+            }, lat: {
+                value: newCam.editcamlat + '',
+                originalvalue: oldCam.editcamlat + '',
+                name: 'location_latitude'
+            }, lon: {
+                value: newCam.editcamlon + '',
+                originalvalue: oldCam.editcamlon + '',
+                name: 'location_longitude'
+            }, azimuth: {
+                value: newCam.editcamrot,
+                originalvalue: oldCam.editcamrot,
+                name: 'orientation_pan'
+            }, height: {
+                value: newCam.editcamheight,
+                originalvalue: oldCam.editcamheight,
+                name: 'location_height'
+            }, tilt: {
+                value: newCam.editcamtilt,
+                originalvalue: oldCam.editcamtilt,
+                name: 'orientation_tilt'
+            }, comments: {
+                value: newCam.editcamcomm,
+                originalvalue: oldCam.editcamcomm,
+                name: 'comments'
+            }, ssh: {
+                value: newCam.editcamssh,
+                originalvalue: oldCam.editcamssh,
+                name: 'sensorsizeheight'
+            }, ssw: {
+                value: newCam.editcamssw,
+                originalvalue: oldCam.editcamssw,
+                name: 'sensorsizewidth'
+            }, srv: {
+                value: newCam.editcamsrv,
+                originalvalue: oldCam.editcamsrv,
+                name: 'sensorresolutionvertical'
+            }, srh: {
+                value: newCam.editcamsrh,
+                originalvalue: oldCam.editcamsrh,
+                name: 'sensorresolutionhorizontal'
+            }, fld: {
+                value: newCam.editcamfld,
+                originalvalue: oldCam.editcamfld,
+                name: 'focallengthdefault'
+            }, flmax: {
+                value: newCam.editcamflma,
+                originalvalue: oldCam.editcamflma,
+                name: 'focallengthmax'
+            }, flmin: {
+                value: newCam.editcamflmi,
+                originalvalue: oldCam.editcamflmi,
+                name: 'focallengthmin'
+            }, flc: {
+                value: newCam.editcamflc,
+                originalvalue: oldCam.editcamflc,
+                name: 'focallengthcurrent'
+//            }, canpan: {
+//                value: newCam.canpan,
+//                originalvalue: oldCam.canpan,
+//                name: 'canpan'
+//            }, cantilt: {
+//                value: newCam.cantilt,
+//                originalvalue: oldCam.cantilt,
+//                name: 'cantilt'
+//            }, canzoom: {
+//                value: newCam.canzoom,
+//                originalvalue: oldCam.canzoom,
+//                name: 'canzoom'
+            }, createdat: {
+                value: newCam.editcamcreated,
+                originalvalue: oldCam.editcamcreated,
+                name: 'createdat'
+            }, updatedat: {
+                value: date,
+                originalvalue: oldCam.editcamupdated,
+                name: 'lastupdatedat'
+            }, shape: {
+                value: newCam.editcamshape,
+                originalvalue: oldCam.editcamshape,
+                name: 'shape'
+            } 
+        };
+        
+        console.log(cam);
+        return cam;
+    }
 
     var fields = ['editcamid','editcamtype','editcambrand','editcammodel','editcamregion','editcamarea','editcamlat','editcamlon','editcamrot','editcamflc','editcamflma','editcamflmi','editcamfld','editcamssh','editcamssw','editcamsrh','editcamsrv','editcamheight','editcamtilt','editcamoid','editcamgmlid','editcamglobalid','editcamcreated','editcamupdated','editcamshape','editcamcomm','editcamcom2'];
 
@@ -267,15 +433,10 @@ function saveEditedCamera() {
         visible: appContent.cameras.visible
     };
 
-    // Remove Camera and FoVs layers
-    removeCameraLayerWithId(camId);
-    removeFovLayersWithCameraId(camId);
-
     // Create new GeoJSON Camera
     var c = appContent.saveeditinfeature;
     var newCamera = createGeoJsonCamera3 (
         c.editcamid, 
-//            c.editcamtype + ' - ' + c.editcamid, 
         c.editcamtype, 
         c.editcammodel, 
         c.editcambrand, 
@@ -306,7 +467,14 @@ function saveEditedCamera() {
     newCamera.properties.updatedat = date;
     newCamera.properties.name = c.newcameratype + ' - ' + c.newcameraid;
 
-    // Create Camera GeoJSON CSS layer and add to map
+    var camOldNew = getCamOldNew (c, e);
+    updateCameraWFS(camOldNew);
+    
+    // Remove Old Camera and FoVs layers
+    removeCameraLayerWithId(camId);
+    removeFovLayersWithCameraId(camId);
+    
+    // Create New Camera GeoJSON CSS layer and add to cameras layer
     var ops = {
         title: newCamera.name,
         alt: newCamera.name
@@ -315,7 +483,7 @@ function saveEditedCamera() {
     camerasLayer.addLayer(cameraFeature);
 
     // Get new camera FoVs
-    var newFovs = getFovs(
+    var newFovs = getFovs2(
         c.editcamid, 
         c.editcamlon, 
         c.editcamlat, 
@@ -325,10 +493,6 @@ function saveEditedCamera() {
         c.editcamsrv, 
         fovLayers);
 
-//    for (var i=0; i<fields.length; i++) {
-//        var field = fields[i];
-//        $('#'+field).attr('disabled', true);    // Disable editing fields
-//    }
     // Hide buttons and show Edit button
     $('#editcambutton').removeClass('hidden');
     $('#saveeditcambutton').addClass('hidden');
@@ -359,17 +523,6 @@ function saveNewCamera() {
 
     var fields = ['newcameraid','newcameratype','newcamerabrand','newcameramodel','newcameraregion','newcameraarea','newcameralat','newcameralon','newcamerarot','newcameratilt','newcameraheight','newcameraflc','newcamerafld','newcameraflmax','newcameraflmin','newcamerassw','newcamerassh','newcamerasrv','newcamerasrh','newcameracomments'];
 
-//    function AddZero(num) {
-//        return (num >= 0 && num < 10) ? "0" + num : num + "";
-//    }
-//    var d = new Date(),
-//        year = d.getFullYear(), 
-//        month = AddZero(d.getMonth()+1), 
-//        day = AddZero(d.getDate()), 
-//        hours = AddZero(d.getHours()), 
-//        minutes = AddZero(d.getMinutes()), 
-//        seconds = AddZero(d.getSeconds()),    
-//        date = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes + ':' + seconds;
     var date = getCurrentDateString();
     
     appContent.savecreatedcam = {};
@@ -392,6 +545,8 @@ function saveNewCamera() {
 
     // Create new GeoJSON Camera
     var c = appContent.savecreatedcam;
+    console.log(performance.now().toFixed(2) + ", poly-fov.js - saveNewCamera() - c: ");console.log(c);
+    
     var newCamera = createGeoJsonCamera3 (
         c.newcameraid, 
 //            c.newcameratype + ' - ' + c.newcameraid, 
@@ -422,7 +577,9 @@ function saveNewCamera() {
     newCamera.properties.comments = c.newcameracomments;
     newCamera.properties.createdat = date;
     newCamera.properties.updatedat = date;
-    newCamera.properties.name = c.newcameratype + ' - ' + c.newcameraid;
+    newCamera.properties.name = c.newcameraid + ' - ' + c.newcameratype;
+    
+    console.log(performance.now().toFixed(2) + ", poly-fov.js - saveNewCamera() - newCamera: ");console.log(newCamera);
 
     // Create Camera GeoJSON CSS layer and add to map
     var ops = {
@@ -430,13 +587,27 @@ function saveNewCamera() {
         alt: newCamera.name
     };
     var cameraFeature = L.geoJson.css(newCamera, ops);
+    
+//    console.log(cameraFeature);
+//    console.log(cameraFeature._layers);
+//    for (l in cameraFeature._layers) {
+//        console.log(cameraFeature._layers[l].feature);
+//    }
+    
+    console.log(performance.now().toFixed(2) + ", poly-fov.js - saveNewCamera() - cameraFeature: ");console.log(cameraFeature);
+    console.log(cameraFeature.toGeoJSON().features[0]);
+    
     camerasLayer.addLayer(cameraFeature);
+    
+    
+    console.log(performance.now().toFixed(2) + ", poly-fov.js - saveNewCamera() - newCamera.properties: ");console.log(newCamera.properties);
+    createCameraWFS(newCamera.properties);
     
 //    var e = { layer: cameraFeature };
 //    map.fireEvent('draw:created',e);
 
     // Get FoVs for camera
-    var newFovs = getFovs(
+    var newFovs = getFovs2(
         c.newcameraid,      // Camera ID
         c.newcameralon,     // Longitude
         c.newcameralat,     // Latitude
@@ -490,64 +661,33 @@ function restoreNewCameraFormValues() {
 
 
 
+
 // Menu buttons with some debug functionality
-    function mainMenuClick () {
-        console.log("MAIN MENU");
-        console.log("appContent track");
-        console.log(JSON.stringify(appContent.track));
-    }
-    function searchMenuClick () {
-        console.log("SEARCH MENU");
-        console.log("populate layer buttons");
-        console.log(layers);
-        populatelayerbuttons(layers);
-    }
-    function moreMenuClick () {
-        console.log("MORE MENU");
-        console.log("appContent track times");
-        console.log('Start time: ' + appContent.track.starttime + ' ms \n');
-        console.log('End time: ' + appContent.track.endtime + ' ms \n');
-        console.log('Elapsed time: ' + appContent.track.elapsedtime + ' ms \n');
-        console.log('Total time: ' + appContent.track.totaltime + ' ms \n');
-    }
-
-
+function mainMenuClick () {
+    console.log("MAIN MENU");
+    console.log("appContent track");
+    console.log(JSON.stringify(appContent.track));
+}
+function searchMenuClick () {
+    console.log("SEARCH MENU");
+    console.log("populate layer buttons");
+    console.log(layers);
+    populatelayerbuttons(layers);
+}
+function moreMenuClick () {
+    console.log("MORE MENU");
+    console.log("appContent track times");
+    console.log('Start time: ' + appContent.track.starttime + ' ms \n');
+    console.log('End time: ' + appContent.track.endtime + ' ms \n');
+    console.log('Elapsed time: ' + appContent.track.elapsedtime + ' ms \n');
+    console.log('Total time: ' + appContent.track.totaltime + ' ms \n');
+}
 
 
 // Document Loaded
 document.addEventListener('load', function() {
     console.log(performance.now() + ', Document loaded');
 });
-
-
-
-
-
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////////////                           //////////////
-//////////////       loadConfig()        //////////////
-//////////////                           //////////////
-///////////////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//  loadConfig() - Load Config from file
-function loadConfig () {
-//    var config = {};
-    var configFileUrl = './config/config.json';
-    
-    $.getJSON(configFileUrl, function (data) {
-        console.log(data);
-        config = data.config;
-        return data.config;
-    });
-//    
-//    console.log(config);
-//    
-//    return config;
-}
-
-
-
 
 
 
@@ -559,7 +699,6 @@ function loadConfig () {
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-
 var tabs = document.querySelector('paper-tabs');
 tabs.addEventListener('core-select', function() {
     console.log(performance.now() + ", TAB Selected: " + tabs.selected + '\n');
@@ -606,110 +745,52 @@ tabs.addEventListener('core-select', function() {
     }
 });
 
-    function tabAll () {
-        if (map != null) { map.remove(); }
-//            map = initMap(1);
-        var result = initMap(1);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(1);
-    }
+function parseResult (result) {
+    map = result.map;
+    appContent.cameras = result.cameras;
+    appContent.basemaps = result.basemaps;
+    appContent.activebasemap = result.activebasemap;
+    appContent.overlays = result.overlays;
+    appContent.featurelayers = result.featurelayers;
+    appContent.controls = result.controls;
+    appContent.settings = result.settings;
+}
 
-    function tabCameras () {
-        if (map != null) { map.remove(); }
-//        map = initMap(2);
-        var result = initMap(2);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(2);
-    }
-
-    function tabIdentification () {
-        if (map != null) { map.remove(); }
-//        map = initMap(3);
-        var result = initMap(3);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(3);
-    }
-
-    function tabRecognition () {
-        if (map != null) { map.remove(); }
-//        map = initMap(4);
-        var result = initMap(4);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(4);
-    }
-
-    function tabDetection () {
-        if (map != null) { map.remove(); }
-//        map = initMap(5);
-        var result = initMap(5);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(5);
-    }
-
-    function tabMonitor () {
-        if (map != null) { map.remove(); }
-//        map = initMap(6);
-        var result = initMap(6);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(6);
-    }
-
-    function tabVisible () {
-        if (map != null) { map.remove(); }
-//        map = initMap(7);
-        var result = initMap(7);
-        map = result.map;
-        appContent.cameras = result.cameras;
-        appContent.basemaps = result.basemaps;
-        appContent.activebasemap = result.activebasemap;
-        appContent.overlays = result.overlays;
-        appContent.featurelayers = result.featurelayers;
-        appContent.controls = result.controls;
-        appContent.settings = result.settings;
-//            loadlayersByTab(7);
-    }
+function tabAll () {
+    if (map != null) { map.remove(); }
+    var result = initMap(1);
+    parseResult(result);
+}
+function tabCameras () {
+    if (map != null) { map.remove(); }
+    var result = initMap(2);
+    parseResult(result);
+}
+function tabIdentification () {
+    if (map != null) { map.remove(); }
+    var result = initMap(3);
+    parseResult(result);
+}
+function tabRecognition () {
+    if (map != null) { map.remove(); }
+    var result = initMap(4);
+    parseResult(result);
+}
+function tabDetection () {
+    if (map != null) { map.remove(); }
+    var result = initMap(5);
+    parseResult(result);
+}
+function tabMonitor () {
+    if (map != null) { map.remove(); }
+    var result = initMap(6);
+    parseResult(result);
+}
+function tabVisible () {
+    if (map != null) { map.remove(); }
+    var result = initMap(7);
+    parseResult(result);
+}
 
 //    function tabAddCamera () {
 //
@@ -730,10 +811,241 @@ tabs.addEventListener('core-select', function() {
 //    function tabSaveLOG () {
 ////            console.downloadLog();
 ////            console.save();
-//
 //    }
 
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////   addCamData2Sidebar()    //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  addCamData2Sidebar() - 
+function addCamData2Sidebar (camLayer) {
+    var feature;
+    for (l in camLayer._layers) {
+        feature = camLayer._layers[l].feature;
+    }
     
+    var header = $("<h5/>").text(feature.properties.name);
+    
+    var camspecs = $("<table/>");
+    for (p in feature.properties) {
+        var row = $("<tr/>"), 
+            prop = $("<td/>").text(p), 
+            val = $("<td/>").text(feature.properties[p]);
+        row.append(prop);
+        row.append(val);
+        camspecs.append(row);
+    }
+    
+    var camera = $('<div/>');
+    camera.attr('id', feature.properties.id);
+    camera.attr('onClick', "openCamPopup('" + feature.properties.id + "')");
+    camera.addClass('sidebarcameradiv');
+    camera.append(header);
+    camera.append(camspecs);
+    
+    $('#sidebarCameraData').append(camera);
+}
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////      openCamPopup()       //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  openCamPopup() - Centers map and opens popup for camera with id = camId
+function openCamPopup(camId) {
+    var layer = findCamLayerById(camId), 
+        center = layer.getLatLng(), 
+        zoom = 17;
+    
+    map.setView(center, zoom);
+    layer.openPopup();
+}
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////       loadConfig()        //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//  loadConfig() - Load Config from file
+function loadConfig () {
+//    var config = {};
+    var configFileUrl = './config/config.json';
+    
+    $.getJSON(configFileUrl, function (data) {
+        console.log(data);
+        config = data.config;
+        return data.config;
+    });
+//    
+//    console.log(config);
+//    
+//    return config;
+}
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////      switchButton()       //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+function switchButton (buttonName) {
+    var starttime = performance.now();
+    console.log(performance.now() + ", switchButton( " + buttonName + " ), START: " + starttime + '\n');
+    var layer = null;
+
+    switch (buttonName) {
+        //  WFS-T LOCALHOST
+        case 'buttoncamera':
+            layer = appContent.overlays["LH WFST CAMS"];
+            console.log(performance.now() + ", switchButton( buttoncamera ) \n");
+            break;
+        case 'buttonfovmonitor':
+            layer = appContent.overlays["LH WFST CAMS FoV M&C"];
+            console.log(performance.now() + ", switchButton( buttonfovmonitor ) \n");
+            break;
+        case 'buttonfovdetection':
+            layer = appContent.overlays["LH WFST CAMS FoV Detection"];
+            console.log(performance.now() + ", switchButton( buttonfovdetection ) \n");
+            break;
+        case 'buttonfovrecognition':
+            layer = appContent.overlays["LH WFST CAMS FoV Recognition"];
+            console.log(performance.now() + ", switchButton( buttonfovrecognition ) \n");
+            break;
+        case 'buttonfovidentification':
+            layer = appContent.overlays["LH WFST CAMS FoV Identification"];
+            console.log(performance.now() + ", switchButton( buttonfovidentification ) \n");
+            break;
+        case 'buttonfovvisible':
+            layer = appContent.overlays["LH WFST CAMS FoV Visible"];
+            console.log(performance.now() + ", switchButton( buttonfovvisible ) \n");
+            break;
+
+        //  WFS-T GEODAN
+        case 'buttoncamerag':
+            layer = appContent.cameras.cameras;
+            console.log(performance.now() + ", switchButton( buttoncamera ) \n");
+            break;
+        case 'buttonfovmonitorg':
+            layer = appContent.cameras.monitor;
+            console.log(performance.now() + ", switchButton( buttonfovmonitor ) \n");
+            break;
+        case 'buttonfovdetectiong':
+            layer = appContent.cameras.detection;
+            console.log(performance.now() + ", switchButton( buttonfovdetection ) \n");
+            break;
+        case 'buttonfovrecognitiong':
+            layer = appContent.cameras.recognition;
+            console.log(performance.now() + ", switchButton( buttonfovrecognition ) \n");
+            break;
+        case 'buttonfovidentificationg':
+            layer = appContent.cameras.identification;
+            console.log(performance.now() + ", switchButton( buttonfovidentification ) \n");
+            break;
+        case 'buttonfovvisibleg':
+            layer = appContent.cameras.visible;
+            console.log(performance.now() + ", switchButton( buttonfovvisible ) \n");
+            break;
+
+//            //  WFS-T GEODAN INTRANET
+//            case 'buttoncameragi':
+//                layer = appContent.overlays["Geodan WFST CAMS"];
+//                console.log(performance.now() + ", switchButton( buttoncameragi ) \n");
+//                break;
+//            case 'buttonfovmonitorgi':
+//                layer = appContent.overlays["Geodan WFST CAMS FoV M&C"];
+//                console.log(performance.now() + ", switchButton( buttonfovmonitorgi ) \n");
+//                break;
+//            case 'buttonfovdetectiongi':
+//                layer = appContent.overlays["Geodan WFST CAMS FoV Detection"];
+//                console.log(performance.now() + ", switchButton( buttonfovdetectiongi ) \n");
+//                break;
+//            case 'buttonfovrecognitiongi':
+//                layer = appContent.overlays["Geodan WFST CAMS FoV Recognition"];
+//                console.log(performance.now() + ", switchButton( buttonfovrecognitiongi ) \n");
+//                break;
+//            case 'buttonfovidentificationgi':
+//                layer = appContent.overlays["Geodan WFST CAMS FoV Identification"];
+//                console.log(performance.now() + ", switchButton( buttonfovidentificationgi ) \n");
+//                break;
+//            case 'buttonfovvisiblegi':
+//                layer = appContent.overlays["Geodan WFST CAMS FoV Visible"];
+//                console.log(performance.now() + ", switchButton( buttonfovvisiblegi ) \n");
+//                break;
+
+        //  JSON GeoJSON
+        case 'buttoncameragi':
+            layer = appContent.overlays["GeoJSON Ekkersrijt Cameras"];
+            console.log(performance.now() + ", switchButton( buttoncameragi ) \n");
+            break;
+        case 'buttonfovmonitorgi':
+            layer = appContent.overlays["GeoJSON FoV Monitor"];
+            console.log(performance.now() + ", switchButton( buttonfovmonitorgi ) \n");
+            break;
+        case 'buttonfovdetectiongi':
+            layer = appContent.overlays["GeoJSON FoV Detection"];
+            console.log(performance.now() + ", switchButton( buttonfovdetectiongi ) \n");
+            break;
+        case 'buttonfovrecognitiongi':
+            layer = appContent.overlays["GeoJSON FoV Recognition"];
+            console.log(performance.now() + ", switchButton( buttonfovrecognitiongi ) \n");
+            break;
+        case 'buttonfovidentificationgi':
+            layer = appContent.overlays["GeoJSON FoV Identification"];
+            console.log(performance.now() + ", switchButton( buttonfovidentificationgi ) \n");
+            break;
+        case 'buttonfovvisiblegi':
+            layer = appContent.overlays["GeoJSON FoV Visible"];
+            console.log(performance.now() + ", switchButton( buttonfovvisiblegi ) \n");
+            break;
+
+        case 'buttonoverlaypand':
+            layer = appContent.overlays["Building footprints (Pand)"];
+            console.log(performance.now() + ", switchButton( buttonoverlaypand ) \n");
+            break;
+        case 'buttonoverlayterrain':
+            layer = appContent.overlays["Height map"];
+            console.log(performance.now() + ", switchButton( buttonoverlayterrain ) \n");
+            break;
+
+        default:
+            layer = null;
+            console.log(performance.now() + ", switchButton( DEFAULT ) \n");
+            break;
+    }   // END switch(buttonName)
+
+    switchMapLayer(layer);
+
+    console.log(buttonName);
+    console.log(layer);
+
+    var endtime = performance.now();
+    var exectime = endtime - starttime;
+    console.log(performance.now() + ", switchButton( " + buttonName + " ), END: " + endtime + ", Exec time (ms): " + exectime + '\n');
+}
+
+
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////   populatelayerbuttons()  //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 function populatelayerbuttons (layers) {
     console.log('populatelayerbuttons');
     var sidebarfl = document.getElementById('featurelayers');
@@ -750,15 +1062,24 @@ function populatelayerbuttons (layers) {
             if (lay.category == 'Feature Layers') {
                 console.log('Feature Layers');
                 setTimeout(addMapLayerButton(l, lb, '#featurelayers'), 1500);
-            }
+            }   // end if
             else {
                 console.log('populatelayerbuttons else');
-            }
-        }
-    }
+            }   // end else
+        }   // end if
+    }   // end for
 }
 
 
+
+
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////////////                           //////////////
+//////////////    addMapLayerButton()    //////////////
+//////////////                           //////////////
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 function addMapLayerButton (layer, label, pane) {
     var starttime = performance.now();
     console.log(performance.now() + ", addMapLayerButton(), START: " + starttime + '\n');
@@ -803,9 +1124,7 @@ function addMapLayerButton (layer, label, pane) {
     $(pane).append(button);
 
     var name = "";
-    if ( (layer != null) && (layer.options != null) && (layer.options.name != null) ) {   
-        name = layer.options.name;
-    }
+    if ( (layer != null) && (layer.options != null) && (layer.options.name != null) ) { name = layer.options.name; }
     console.log("Layer " + name + " has a button now!!");
 
     if (appContent.console.outputLevel >= 4) { 
@@ -824,151 +1143,6 @@ function addMapLayerButton (layer, label, pane) {
     var exectime = endtime - starttime;
     console.log(performance.now() + ", addMapLayerButton(), END: " + endtime + ", Exec time (ms): " + exectime + '\n');
 }
-
-
-
-
-
-    function switchButton (buttonName) {
-        var starttime = performance.now();
-        console.log(performance.now() + ", switchButton( " + buttonName + " ), START: " + starttime + '\n');
-        var layer = null;
-        
-        switch (buttonName) {
-            //  WFS-T LOCALHOST
-            case 'buttoncamera':
-                layer = appContent.overlays["LH WFST CAMS"];
-                console.log(performance.now() + ", switchButton( buttoncamera ) \n");
-                break;
-            case 'buttonfovmonitor':
-                layer = appContent.overlays["LH WFST CAMS FoV M&C"];
-                console.log(performance.now() + ", switchButton( buttonfovmonitor ) \n");
-                break;
-            case 'buttonfovdetection':
-                layer = appContent.overlays["LH WFST CAMS FoV Detection"];
-                console.log(performance.now() + ", switchButton( buttonfovdetection ) \n");
-                break;
-            case 'buttonfovrecognition':
-                layer = appContent.overlays["LH WFST CAMS FoV Recognition"];
-                console.log(performance.now() + ", switchButton( buttonfovrecognition ) \n");
-                break;
-            case 'buttonfovidentification':
-                layer = appContent.overlays["LH WFST CAMS FoV Identification"];
-                console.log(performance.now() + ", switchButton( buttonfovidentification ) \n");
-                break;
-            case 'buttonfovvisible':
-                layer = appContent.overlays["LH WFST CAMS FoV Visible"];
-                console.log(performance.now() + ", switchButton( buttonfovvisible ) \n");
-                break;
-                
-            //  WFS-T GEODAN
-            case 'buttoncamerag':
-                layer = appContent.cameras.cameras;
-                console.log(performance.now() + ", switchButton( buttoncamera ) \n");
-                break;
-            case 'buttonfovmonitorg':
-                layer = appContent.cameras.monitor;
-                console.log(performance.now() + ", switchButton( buttonfovmonitor ) \n");
-                break;
-            case 'buttonfovdetectiong':
-                layer = appContent.cameras.detection;
-                console.log(performance.now() + ", switchButton( buttonfovdetection ) \n");
-                break;
-            case 'buttonfovrecognitiong':
-                layer = appContent.cameras.recognition;
-                console.log(performance.now() + ", switchButton( buttonfovrecognition ) \n");
-                break;
-            case 'buttonfovidentificationg':
-                layer = appContent.cameras.identification;
-                console.log(performance.now() + ", switchButton( buttonfovidentification ) \n");
-                break;
-            case 'buttonfovvisibleg':
-                layer = appContent.cameras.visible;
-                console.log(performance.now() + ", switchButton( buttonfovvisible ) \n");
-                break;
-                
-//            //  WFS-T GEODAN INTRANET
-//            case 'buttoncameragi':
-//                layer = appContent.overlays["Geodan WFST CAMS"];
-//                console.log(performance.now() + ", switchButton( buttoncameragi ) \n");
-//                break;
-//            case 'buttonfovmonitorgi':
-//                layer = appContent.overlays["Geodan WFST CAMS FoV M&C"];
-//                console.log(performance.now() + ", switchButton( buttonfovmonitorgi ) \n");
-//                break;
-//            case 'buttonfovdetectiongi':
-//                layer = appContent.overlays["Geodan WFST CAMS FoV Detection"];
-//                console.log(performance.now() + ", switchButton( buttonfovdetectiongi ) \n");
-//                break;
-//            case 'buttonfovrecognitiongi':
-//                layer = appContent.overlays["Geodan WFST CAMS FoV Recognition"];
-//                console.log(performance.now() + ", switchButton( buttonfovrecognitiongi ) \n");
-//                break;
-//            case 'buttonfovidentificationgi':
-//                layer = appContent.overlays["Geodan WFST CAMS FoV Identification"];
-//                console.log(performance.now() + ", switchButton( buttonfovidentificationgi ) \n");
-//                break;
-//            case 'buttonfovvisiblegi':
-//                layer = appContent.overlays["Geodan WFST CAMS FoV Visible"];
-//                console.log(performance.now() + ", switchButton( buttonfovvisiblegi ) \n");
-//                break;
-                
-            //  JSON GeoJSON
-            case 'buttoncameragi':
-                layer = appContent.overlays["GeoJSON Ekkersrijt Cameras"];
-                console.log(performance.now() + ", switchButton( buttoncameragi ) \n");
-                break;
-            case 'buttonfovmonitorgi':
-                layer = appContent.overlays["GeoJSON FoV Monitor"];
-                console.log(performance.now() + ", switchButton( buttonfovmonitorgi ) \n");
-                break;
-            case 'buttonfovdetectiongi':
-                layer = appContent.overlays["GeoJSON FoV Detection"];
-                console.log(performance.now() + ", switchButton( buttonfovdetectiongi ) \n");
-                break;
-            case 'buttonfovrecognitiongi':
-                layer = appContent.overlays["GeoJSON FoV Recognition"];
-                console.log(performance.now() + ", switchButton( buttonfovrecognitiongi ) \n");
-                break;
-            case 'buttonfovidentificationgi':
-                layer = appContent.overlays["GeoJSON FoV Identification"];
-                console.log(performance.now() + ", switchButton( buttonfovidentificationgi ) \n");
-                break;
-            case 'buttonfovvisiblegi':
-                layer = appContent.overlays["GeoJSON FoV Visible"];
-                console.log(performance.now() + ", switchButton( buttonfovvisiblegi ) \n");
-                break;
-                
-            case 'buttonoverlaypand':
-                layer = appContent.overlays["Building footprints (Pand)"];
-                console.log(performance.now() + ", switchButton( buttonoverlaypand ) \n");
-                break;
-            case 'buttonoverlayterrain':
-                layer = appContent.overlays["Height map"];
-                console.log(performance.now() + ", switchButton( buttonoverlayterrain ) \n");
-                break;
-                
-            default:
-                layer = null;
-                console.log(performance.now() + ", switchButton( DEFAULT ) \n");
-                break;
-        }   // END switch(buttonName)
-
-        switchMapLayer(layer);
-        
-        console.log(buttonName);
-        console.log(layer);
-        
-        var endtime = performance.now();
-        var exectime = endtime - starttime;
-        console.log(performance.now() + ", switchButton( " + buttonName + " ), END: " + endtime + ", Exec time (ms): " + exectime + '\n');
-    }
-
-
-
-
-
-
 
 
 
