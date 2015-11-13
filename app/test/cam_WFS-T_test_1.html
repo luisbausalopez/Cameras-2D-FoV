@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta charset="UTF-8">
+
+        <title>Cameras WFS-T Service Requests</title>
+
+        <meta name="author" content="Luis Bausá López">
+        <meta name="description" content="Cameras WFS-T service requests performance testing">
+        <meta name="keywords" content="Cameras, CCTV, FoV, coverage, VU Amsterdam, Geodan, DITSS">
+
+        <!--    // JQUERY -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+        <!--    // WFST Camera Requests -->
+        <script type="text/javascript" src="cam_WFS-T_test_1.js"></script>
+        <style>
+            table, th, td {
+                border-collapse: collapse;
+            }
+            table {
+                border: 2px solid grey;
+                width: 90%;
+            }
+            th {
+                background-color: darkgrey;
+                text-align: center;
+                border: 1px solid black;
+            }
+            td {
+/*                text-align: right;*/
+                text-align: left;
+                border: 1px solid black;
+/*                width: 25px;*/
+/*                max-width: 150px;*/
+/*                text-overflow: ellipsis;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Cameras WFS-T Service Performance Testing</h1>
+            <p>
+                This test will create a predefined number of camera features and, for each camera created, it will perform a series of requests to the WFS-T service to insert, edit and delete the cameras. &nbsp; 
+                Whenever a camera is to be updated or deleted it must be locked first, and the returned lock Id provided to the update/delete request. As a result the test will perform the following actions:
+            <ul style="list-style-type:none">
+                <li>Create N cameras</li>
+                <li>Perform N Insert requests</li>
+                <li>Perform N Update requests</li>
+                <li>Perform N Delete requests</li>
+                <li>Perform 2*N Lock requests</li>
+            </ul>  
+            Example: for 10 cameras, the test will perform a total of 50 requests: 10 Insert, 10 Update, 10 Delete and 20 Lock requests.&nbsp;
+            The number of cameras N is specified by the nCameras variable below. The URL of the Cameras WFS-T service is defined by serviceUrl.
+            </p>
+            <hr/><br/>
+        </div>
+        <div>
+            <input id="nCameras" type="number" value="nCameras">
+            <button onclick="setNCameras()">Set # of Cameras</button>
+            <br/>
+        </div>
+        <div id="buttons">
+            <button onclick="createCameras()">Create Cameras</button>
+            <button onclick="runInserts()">Run Inserts</button>
+            <button onclick="runUpdates()">Run Updates</button>
+            <button onclick="runDeletes()">Run Deletes</button>
+            <button onclick="populateSummary()">Summary</button>
+            <hr/><br/>
+        </div>
+        <div hidden>
+            <h2>Cameras</h2>
+            <table id="Cameras">
+                <tr>
+                    <th>#</th>
+                    <th>Camera</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div>
+            <h2>Requests</h2>
+            <table id="Requests">
+                <tr>
+                    <th>#</th>
+                    <th>Cam</th>
+                    <th>Request</th>
+                    <th>Response</th>
+                    <th>Lock</th>
+                    <th>Type</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Elapsed</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div hidden>
+            <h2>Inserts</h2>
+            <table id="Inserts" >
+                <tr>
+                    <th>#</th>
+                    <th>Cam</th>
+                    <th>Request</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div hidden>
+            <h2>Locks</h2>
+            <table id="Locks" >
+                <tr>
+                    <th>#</th>
+                    <th>Cam</th>
+                    <th>Request</th>
+                    <th>Camera_ID</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div hidden>
+            <h2>Updates</h2>
+            <table id="Updates" >
+                <tr>
+                    <th>#</th>
+                    <th>Cam</th>
+                    <th>Request</th>
+                    <th>Lock</th>
+                    <th>Camera_ID</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div hidden>
+            <h2>Deletes</h2>
+            <table id="Deletes" >
+                <tr>
+                    <th>#</th>
+                    <th>Cam</th>
+                    <th>Request</th>
+                    <th>Lock</th>
+                    <th>Camera_ID</th>
+                </tr>
+            </table><hr/><br/>
+        </div>
+        <div id="summary"></div><hr/>
+
+    </body>
+</html>
