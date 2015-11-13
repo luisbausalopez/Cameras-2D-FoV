@@ -49,12 +49,8 @@
 // Cameras WFS-T Service URL
 var serviceUrl = '/service/geodanarcgis/services/multipos/Cameras_Ekkersrijt_20150511/MapServer/WFSServer';
 
-// N - Number of cameras to create for the test
-//var nCameras = 50; 
-//var nCameras = 100; 
-var nCameras = 500; 
-//var nCameras = 1000;
-//var nCameras = 10000;
+// N - Number of cameras to create for the test. Default 100.
+var nCameras = 100; 
 
 
 //$('#nCameras').val() = nCameras;
