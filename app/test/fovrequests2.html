@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta charset="UTF-8">
+
+        <title>2D FoV Service Requests</title>
+
+        <meta name="author" content="Luis Bausá López">
+        <meta name="description" content="Cameras 2D FoV service requests performance testing">
+        <meta name="keywords" content="Cameras, CCTV, FoV, coverage, VU Amsterdam, Geodan, DITSS">
+
+        <!--    // JQUERY -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+<!--        // FoV Requests-->
+        <script type="text/javascript" src="fovrequests2.js"></script>
+        
+        <style>
+            table, th, td {
+                border-collapse: collapse;
+            }
+            table {
+                border: 2px solid grey;
+                width: 800px;
+            }
+            th {
+                background-color: darkgrey;
+            }
+            td, th {
+                text-align: center;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div>
+            <div><button onclick="startNow()">Start</button></div><hr/>
+            <div>
+                <table id="fovstats">
+                    <tr>
+                        <th>Lote</th>
+                        <th>Request_Number</th>
+                        <th>Type</th>
+                        <th>Elapsed_Time</th>
+                        <th>Focal_Length</th>
+                        <th>Vertices</th>
+                        <th>Area</th>
+                    </tr>
+                </table>
+            </div><hr/>
+        </div>
+        
+    </body>
+</html>
