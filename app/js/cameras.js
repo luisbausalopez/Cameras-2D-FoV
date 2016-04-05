@@ -32,7 +32,7 @@
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //  createRequestUrl() - returns a string containing the URL of the request to the 2D FoV service
-function createRequestUrl(longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical) {
+function createRequestUrl (longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical) {
     var starttime = performance.now();
     if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", createRequestUrl(), START: " + starttime + '\n'); }
     
@@ -103,7 +103,8 @@ function getFovArea (coordinates) {
 //  getFovLayer - Returns a layer object of the FoV Feature
 function getFovLayer (fov) {
     var starttime = performance.now();
-    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + ", " + cam + "), START: " + starttime + '\n'); }
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + "), START: " + starttime + '\n'); }
+//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + ", " + cam + "), START: " + starttime + '\n'); }
     
     var result;
     var fovType = fov.properties.fovtype;
@@ -190,7 +191,8 @@ function getFovLayer (fov) {
     appContent.track.elapsedtime += totaltime;
     
     if (appContent.console.outputLevel >= 3) { console.log("result");console.log(result); }
-    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + ", " + cam + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
+//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovLayer(" + fov + ", " + cam + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
     
     return result;
 }
@@ -205,10 +207,10 @@ function getFovLayer (fov) {
 //////////////                           //////////////
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
-//  fovGeoJson - Returns the GeoJSON feature of the FoV
+//  fovGeoJson - Returns the GeoJSON feature of the FoV passed as a parameter
 function fovGeoJson (fov, cam, fovtype) {
     var starttime = performance.now();
-    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", fovGeoJson(" + fov + ", " + cam + "), START: " + starttime + '\n'); }
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", fovGeoJson(" + fov + ", " + cam + ", " + fovtype + "), START: " + starttime + '\n'); }
         
     var feature = fov;
     var camProperties = cam.properties;
@@ -285,10 +287,10 @@ function fovGeoJson (fov, cam, fovtype) {
     appContent.track.elapsedtime += totaltime;
     
     if (appContent.console.outputLevel >= 3) { console.log("feature");console.log(feature); }
-    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", fovGeoJson(" + fov + ", " + cam + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
+    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", fovGeoJson(" + fov + ", " + cam + ", " + fovtype + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
     
     return feature;
-}   // END fovGeoJson(fov,cam)
+}   // END fovGeoJson(fov,cam, fovtype)
 
 
 
@@ -390,206 +392,6 @@ function getFovs2(cameraid, longitude, latitude, rotation, focallength, sensorwi
 
 
 
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-////////////////                           //////////////
-////////////////         getFovs()         //////////////
-////////////////                           //////////////
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-////  getFovs - performs a request to the 2D FoV service and adds the response FoV polygons to the map
-//function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical, layers) {
-//    var starttime = performance.now();
-//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", addFov(" + cameraid + "), START: " + starttime + '\n'); }
-//
-//    // get 2D FoV Service request URL
-//    var fovreq = createRequestUrl(longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical);
-//    
-//    if (appContent.console.outputLevel >= 3) { 
-//        console.log("cameraid");console.log(cameraid); 
-//        console.log("fovreq");console.log(fovreq); 
-//    }
-//    
-//    var result = {};
-//        
-//    var fovStyles = {
-//        identification: {
-//            color: 'red', 
-//            weight: 7, 
-//            fillOpacity: 0.15, 
-//            opacity: 0.65,
-//            title: 'FoV Identification',
-//            alt: 'FoV Identification'
-//        },
-//        recognition: {
-//            color: 'magenta', 
-//            weight: 6, 
-//            fillOpacity: 0.10, 
-//            opacity: 0.60,
-//            title: 'FoV Recognition',
-//            alt: 'FoV Recognition'
-//        },
-//        detection: {
-//            color: 'orange', 
-//            weight: 5, 
-//            fillOpacity: 0.05, 
-//            opacity: 0.55,
-//            title: 'FoV Detection',
-//            alt: 'FoV Detection'
-//        },
-//        monitor: {
-////            color: 'yellow', 
-////            color: '#FFE87C', // Sun Yellow
-//            color: '#FBB117', // Beer
-//            weight: 4, 
-//            fillOpacity: 0.05, 
-//            opacity: 0.50,
-//            title: 'FoV Monitor & Control',
-//            alt: 'FoV Monitor & Control'
-//        },
-//        visible: {
-//            color: 'green', 
-//            weight: 1, 
-//            fillOpacity: 0.30, 
-//            opacity: 0.10,
-//            title: 'FoV Visible',
-//            alt: 'FoV Visible'
-//        }
-//    };
-//    
-//    
-//    function success (data) {
-//        if ( (appContent.console.logFovs == true) && (appContent.console.outputLevel >= 4) ) { console.log("success");console.log(data); }
-//        
-//        // get FoV features
-//        var fovFeatures = [ 
-//                data.features[0],   // Monitor & Control area
-//                data.features[1],   // Detection area
-//                data.features[2],   // Recognition area
-//                data.features[3]   // Identification area
-//            ];
-//        if (data.features[4] != null) { fovFeatures[4] = data.features[4]; }  // Visible area
-////        else { fovFeatures[4] = null; }
-//        
-//        // FoV Popup Template
-//        var fovpopuptemplate = fovPopupTemplate();
-//
-//        // Enrich FoV features with camera specifications
-//        for (var i = 0; i < fovFeatures.length; i++) {
-//            if ( (data.features[i] != null) && (fovFeatures[i] != null) ) {
-//                fovFeatures[i].popupTemplate = fovpopuptemplate;
-//                fovFeatures[i].crs = 4326;
-//                fovFeatures[i].geometry.crs = 4326;
-//                fovFeatures[i].properties.crs = 4326;
-//                fovFeatures[i].properties.cameraid = cameraid;
-//                fovFeatures[i].properties.latitude = latitude;
-//                fovFeatures[i].properties.longitude = longitude;
-//                fovFeatures[i].properties.rotation = rotation;
-//                fovFeatures[i].properties.focallength = focallength;
-//                fovFeatures[i].properties.resolutionvert = resolutionvertical;
-//                fovFeatures[i].properties.sensorwidth = sensorwidth;
-//                fovFeatures[i].properties.polyarea = getFovArea(fovFeatures[i].geometry.coordinates[0]);
-//                fovFeatures[i].properties.featuretype = "FoV";
-//                
-////                switch (fovFeatures[i].properties.zone) {
-////                    case "Monitoring":
-////                        fovFeatures[i].properties.fovtype = "Monitor & Control";
-////                        break;
-////                    case "Detection":
-////                        fovFeatures[i].properties.fovtype = "Detection";
-////                        break;
-////                    case "Recognition":
-////                        fovFeatures[i].properties.fovtype = "Recognition";
-////                        break;
-////                    case "Identification":
-////                        fovFeatures[i].properties.fovtype = "Identification";
-////                        break;
-//////                    case "Visible":
-//////                        fovFeatures[i].properties.fovtype = "Visible";
-//////                        break;
-////                    default:
-//////                        fovFeatures[i].properties.fovtype = "ERROR";
-////                        fovFeatures[i].properties.fovtype = "Visible";
-////                        break;
-////                }   // END SWITCH
-//                switch (i) {
-//                    case 0:
-//                        fovFeatures[i].properties.fovtype = "Monitor & Control";
-//                        break;
-//                    case 1:
-//                        fovFeatures[i].properties.fovtype = "Detection";
-//                        break;
-//                    case 2:
-//                        fovFeatures[i].properties.fovtype = "Recognition";
-//                        break;
-//                    case 3:
-//                        fovFeatures[i].properties.fovtype = "Identification";
-//                        break;
-//                    case 4:
-//                        fovFeatures[i].properties.fovtype = "Visible";
-//                        break;
-//                    default:
-////                        fovFeatures[i].properties.fovtype = "ERROR";
-//                        fovFeatures[i].properties.fovtype = "Visible";
-//                        break;
-//                }   // END SWITCH
-//            }   // END IF
-//        }   // END FOR
-//
-//        // Create FoV GeoJSON feature layers, bind popups, add FoV features to FoV layers
-//        result.monitor = L.geoJson.css(fovFeatures[0], fovStyles.monitor);
-//        result.monitor.addTo(layers.monitor);
-//        result.detection = L.geoJson.css(fovFeatures[1], fovStyles.detection);
-//        result.detection.addTo(layers.detection);
-//        result.recognition = L.geoJson.css(fovFeatures[2], fovStyles.recognition);
-//        result.recognition.addTo(layers.recognition);
-//        result.identification = L.geoJson.css(fovFeatures[3], fovStyles.identification);
-//        result.identification.addTo(layers.identification);
-//        if ( (data.features[4] != null) && (fovFeatures[4] != null) ) {
-//            result.visible = L.geoJson.css(fovFeatures[4], fovStyles.visible);
-//            result.visible.addTo(layers.visible);
-//        }
-//        
-//        appContent.track.fovs[appContent.track.fovs.length] = fovFeatures;
-//        if (appContent.console.outputLevel >= 4) { console.log("fovFeatures");console.log(JSON.stringify(fovFeatures)); }
-//        
-//        map.spin(false);    // Stop Spin
-//        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovs(), Stop Spinning"); }
-//    }
-//    
-//        
-//    map.spin(true);    // Start Spin
-//    if (appContent.console.outputLevel >= 2) { 
-//        console.log(performance.now() + ", getFovs(), Start Spinning"); 
-//    }
-//    
-//    $.ajax({
-//        method: 'GET',
-//        dataType: "json",
-//        url: fovreq,
-//        success: success
-//    });
-//    
-//    
-//    // some variables for logging, tracking and debug
-//    var endtime = performance.now();
-//    var totaltime = endtime - starttime;
-//    
-//    if (appContent.track.endtime < endtime) {
-//        appContent.track.endtime = endtime;
-//        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
-//    }
-//    appContent.track.elapsedtime += totaltime;
-//    
-//    if (appContent.console.outputLevel >= 3) { console.log("result");console.log(result); }
-//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", addFov(" + cameraid + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
-//    
-//    return result;
-//}       // END getFovs()
-
-
-
-
 
 ///////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -608,22 +410,22 @@ function fovPopupTemplate () {
     fovPopup = fovPopup + "<div class='popup'>";    // Main Popup Div
     fovPopup = fovPopup + "<h3 style='background-color:lightblue; text-align:center;'>{fovtype} FoV of <b>{cameraid}</b></h3>";    // Popup header
     fovPopup = fovPopup + "<table>";    // Open Table
-    fovPopup = fovPopup + "<tr><td><label>Feature Type: </label></td><td><input value='{featuretype}' disabled></input></td></tr>";    // Feature Type
-    fovPopup = fovPopup + "<tr><td><label>FoV type: </label></td><td><input value='{fovtype}' disabled></input></td></tr>";    // FoV Type
-    fovPopup = fovPopup + "<tr><td><label>FoV zone: </label></td><td><input value='{zone}' disabled></input></td></tr>";    // FoV Type 2
-    fovPopup = fovPopup + "<tr><td><label>Create Date: </label></td><td><input value='{created}' disabled></input></td></tr>";    // Create date
-    fovPopup = fovPopup + "<tr><td><label>CRS: </label></td><td><input value='{crs}' disabled></input></td></tr>";    // CRS
-    fovPopup = fovPopup + "<tr><td><label>Camera ID: </label></td><td><input value='{cameraid}' disabled></input></td></tr>";    // Camera ID
-    fovPopup = fovPopup + "<tr><td><label>Latitude: </label></td><td><input value='{latitude}' disabled></input></td></tr>";    // Camera location - latitude 
-    fovPopup = fovPopup + "<tr><td><label>Longitude: </label></td><td><input value='{longitude}' disabled></input></td></tr>";    // Camera location - longitude
-    fovPopup = fovPopup + "<tr><td><label>Rotation: </label></td><td><input value='{rotation}' disabled>dg</input></td></tr>";    // Camera location - rotation (azimuth)
-    fovPopup = fovPopup + "<tr><td><label>Current Focal length: </label></td><td><input value='{focallength}' disabled>m</input></td></tr>";    // Current focal length
-    fovPopup = fovPopup + "<tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}' disabled>m</input></td></tr>";    // Sensor width
-    fovPopup = fovPopup + "<tr><td><label>Area: </label></td><td><input value='{polyarea}' disabled>m&sup2;</input></td></tr>";    // FoV Area
-    fovPopup = fovPopup + "<tr><td><label>Area2: </label></td><td><input value='{area}' disabled>m&sup2;</input></td></tr>";    // FoV Area 2
-    fovPopup = fovPopup + "<tr><td><label>Bounds: </label></td><td><input value='{bbox}' disabled></input></td></tr>";    // BBOX
-    fovPopup = fovPopup + "<tr><td><label>Geometry: </label></td><td><input value='{geometry}' disabled></input></td></tr>";    // Coords
-    fovPopup = fovPopup + "<tr><td><label>Vertical resolution: </label></td><td><input value='{resolutionvert}' disabled>px</input></td></tr></table></div>";    // Sensor resolution vertical (rows)
+    fovPopup = fovPopup + "<tr><td><label>Feature Type: </label></td><td><input value='{featuretype}' maxlength='10' type='text' disabled></input></td></tr>";    // Feature Type
+    fovPopup = fovPopup + "<tr><td><label>FoV type: </label></td><td><input value='{fovtype}' maxlength='20' type='text' disabled></input></td></tr>";    // FoV Type
+    fovPopup = fovPopup + "<tr><td><label>FoV zone: </label></td><td><input value='{zone}' maxlength='20' type='text' disabled></input></td></tr>";    // FoV Type 2
+    fovPopup = fovPopup + "<tr><td><label>Camera ID: </label></td><td><input value='{cameraid}' maxlength='255' type='text' disabled></input></td></tr>";    // Camera ID
+    fovPopup = fovPopup + "<tr><td><label>Latitude: </label></td><td><input value='{latitude}' maxlength='50' disabled></input></td></tr>";    // Camera location - latitude 
+    fovPopup = fovPopup + "<tr><td><label>Longitude: </label></td><td><input value='{longitude}' maxlength='50' type='number' disabled></input></td></tr>";    // Camera location - longitude
+    fovPopup = fovPopup + "<tr><td><label>Rotation: </label></td><td><input value='{rotation}' maxlength='50' type='number' min='0' disabled>dg</input></td></tr>";    // Camera location - rotation (azimuth)
+    fovPopup = fovPopup + "<tr><td><label>Current Focal length: </label></td><td><input value='{focallength}' maxlength='50' type='number' min='0' disabled>m</input></td></tr>";    // Current focal length
+    fovPopup = fovPopup + "<tr><td><label>Sensor width: </label></td><td><input value='{sensorwidth}' maxlength='50' type='number' min='0' disabled>m</input></td></tr>";    // Sensor width
+    fovPopup = fovPopup + "<tr><td><label>Vertical resolution: </label></td><td><input value='{resolutionvert}' maxlength='50' type='number' min='0' disabled>px</input></td></tr>";    // Sensor resolution vertical (rows)
+    fovPopup = fovPopup + "<tr><td><label>Create Date: </label></td><td><input value='{created}' maxlength='50' disabled></input></td></tr>";    // Create date
+    fovPopup = fovPopup + "<tr><td><label>Area: </label></td><td><input value='{polyarea}' maxlength='50' type='number' min='0' disabled>m&sup2;</input></td></tr>";    // FoV Area
+    fovPopup = fovPopup + "<tr><td><label>Area2: </label></td><td><input value='{area}' type='number' disabled>m&sup2;</input></td></tr>";    // FoV Area 2
+    fovPopup = fovPopup + "<tr><td><label>CRS: </label></td><td><input value='{crs}' maxlength='10' type='number' disabled></input></td></tr>";    // CRS
+    fovPopup = fovPopup + "<tr><td><label>Geometry: </label></td><td><input value='{geometry}' maxlength='50' type='text' disabled></input></td></tr>";    // Geometry
+    fovPopup = fovPopup + "<tr><td><label>Bounds: </label></td><td><input value='{bbox}' maxlength='50' type='text' disabled></input></td></tr>";    // BBOX
     fovPopup = fovPopup + "</table>";    // Close Table
     fovPopup = fovPopup + "</div>";    // Close Main Div
     
@@ -796,8 +598,8 @@ function cameraPopupTemplate2 () {
     camPopup = camPopup + "<tr><td><label>Object ID: </label></td><td><input id='editcamoid' name='objectid' type='number' value='{objectid}' maxlength='50' min='0' disabled></input></td></tr>";    // Camera description - object id
     camPopup = camPopup + "<tr><td><label>GML ID: </label></td><td><input id='editcamgmlid' name='gmlid' value='{gmlid}' maxlength='255' disabled></input></td></tr>";    // Camera description - GML id
     camPopup = camPopup + "<tr><td><label>Global ID: </label></td><td><input id='editcamglobalid' name='globalid' value='{globalid}' maxlength='255' disabled></input></td></tr>";    // Camera description - globalid
-    camPopup = camPopup + "<tr><td><label>Created: </label></td><td><input id='editcamcreated' name='createdat' value='{createdat}' disabled></input></td></tr>";    // Camera description - Created date
-    camPopup = camPopup + "<tr><td><label>Updated: </label></td><td><input id='editcamupdated' name='updatedat' value='{updatedat}' disabled></input></td></tr>";    // Camera description - Updated date
+    camPopup = camPopup + "<tr><td><label>Created: </label></td><td><input id='editcamcreated' name='createdat' value='{createdat}' type='datetime' disabled></input></td></tr>";    // Camera description - Created date
+    camPopup = camPopup + "<tr><td><label>Updated: </label></td><td><input id='editcamupdated' name='updatedat' value='{updatedat}' type='datetime' disabled></input></td></tr>";    // Camera description - Updated date
     camPopup = camPopup + "<tr><td><label>Shape: </label></td><td><input id='editcamshape' name='shape' value='{shape}' maxlength='255' disabled></input></td></tr>";    // Camera location - shape
     camPopup = camPopup + "<tr><td><label>Comments: </label></td><td><input id='editcamcomm' name='comments' value='{comments}' maxlength='255' disabled></input></td></tr>";    // Camera description - comments
     camPopup = camPopup + "<tr><td><label>Comments: </label></td><td><textarea id='editcamcom2' name='comments' rows='2' cols='18' maxlength='255' disabled>{comments}</textarea></td></tr>";    // Camera description - comments
@@ -2143,6 +1945,209 @@ function deleteCameraWFS (objectid) {
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
+
+
+
+
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////////////////                           //////////////
+////////////////         getFovs()         //////////////
+////////////////                           //////////////
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+////  getFovs - performs a request to the 2D FoV service and adds the response FoV polygons to the map
+//function getFovs(cameraid, longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical, layers) {
+//    var starttime = performance.now();
+//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", addFov(" + cameraid + "), START: " + starttime + '\n'); }
+//
+//    // get 2D FoV Service request URL
+//    var fovreq = createRequestUrl(longitude, latitude, rotation, focallength, sensorwidth, resolutionvertical);
+//    
+//    if (appContent.console.outputLevel >= 3) { 
+//        console.log("cameraid");console.log(cameraid); 
+//        console.log("fovreq");console.log(fovreq); 
+//    }
+//    
+//    var result = {};
+//        
+//    var fovStyles = {
+//        identification: {
+//            color: 'red', 
+//            weight: 7, 
+//            fillOpacity: 0.15, 
+//            opacity: 0.65,
+//            title: 'FoV Identification',
+//            alt: 'FoV Identification'
+//        },
+//        recognition: {
+//            color: 'magenta', 
+//            weight: 6, 
+//            fillOpacity: 0.10, 
+//            opacity: 0.60,
+//            title: 'FoV Recognition',
+//            alt: 'FoV Recognition'
+//        },
+//        detection: {
+//            color: 'orange', 
+//            weight: 5, 
+//            fillOpacity: 0.05, 
+//            opacity: 0.55,
+//            title: 'FoV Detection',
+//            alt: 'FoV Detection'
+//        },
+//        monitor: {
+////            color: 'yellow', 
+////            color: '#FFE87C', // Sun Yellow
+//            color: '#FBB117', // Beer
+//            weight: 4, 
+//            fillOpacity: 0.05, 
+//            opacity: 0.50,
+//            title: 'FoV Monitor & Control',
+//            alt: 'FoV Monitor & Control'
+//        },
+//        visible: {
+//            color: 'green', 
+//            weight: 1, 
+//            fillOpacity: 0.30, 
+//            opacity: 0.10,
+//            title: 'FoV Visible',
+//            alt: 'FoV Visible'
+//        }
+//    };
+//    
+//    
+//    function success (data) {
+//        if ( (appContent.console.logFovs == true) && (appContent.console.outputLevel >= 4) ) { console.log("success");console.log(data); }
+//        
+//        // get FoV features
+//        var fovFeatures = [ 
+//                data.features[0],   // Monitor & Control area
+//                data.features[1],   // Detection area
+//                data.features[2],   // Recognition area
+//                data.features[3]   // Identification area
+//            ];
+//        if (data.features[4] != null) { fovFeatures[4] = data.features[4]; }  // Visible area
+////        else { fovFeatures[4] = null; }
+//        
+//        // FoV Popup Template
+//        var fovpopuptemplate = fovPopupTemplate();
+//
+//        // Enrich FoV features with camera specifications
+//        for (var i = 0; i < fovFeatures.length; i++) {
+//            if ( (data.features[i] != null) && (fovFeatures[i] != null) ) {
+//                fovFeatures[i].popupTemplate = fovpopuptemplate;
+//                fovFeatures[i].crs = 4326;
+//                fovFeatures[i].geometry.crs = 4326;
+//                fovFeatures[i].properties.crs = 4326;
+//                fovFeatures[i].properties.cameraid = cameraid;
+//                fovFeatures[i].properties.latitude = latitude;
+//                fovFeatures[i].properties.longitude = longitude;
+//                fovFeatures[i].properties.rotation = rotation;
+//                fovFeatures[i].properties.focallength = focallength;
+//                fovFeatures[i].properties.resolutionvert = resolutionvertical;
+//                fovFeatures[i].properties.sensorwidth = sensorwidth;
+//                fovFeatures[i].properties.polyarea = getFovArea(fovFeatures[i].geometry.coordinates[0]);
+//                fovFeatures[i].properties.featuretype = "FoV";
+//                
+////                switch (fovFeatures[i].properties.zone) {
+////                    case "Monitoring":
+////                        fovFeatures[i].properties.fovtype = "Monitor & Control";
+////                        break;
+////                    case "Detection":
+////                        fovFeatures[i].properties.fovtype = "Detection";
+////                        break;
+////                    case "Recognition":
+////                        fovFeatures[i].properties.fovtype = "Recognition";
+////                        break;
+////                    case "Identification":
+////                        fovFeatures[i].properties.fovtype = "Identification";
+////                        break;
+//////                    case "Visible":
+//////                        fovFeatures[i].properties.fovtype = "Visible";
+//////                        break;
+////                    default:
+//////                        fovFeatures[i].properties.fovtype = "ERROR";
+////                        fovFeatures[i].properties.fovtype = "Visible";
+////                        break;
+////                }   // END SWITCH
+//                switch (i) {
+//                    case 0:
+//                        fovFeatures[i].properties.fovtype = "Monitor & Control";
+//                        break;
+//                    case 1:
+//                        fovFeatures[i].properties.fovtype = "Detection";
+//                        break;
+//                    case 2:
+//                        fovFeatures[i].properties.fovtype = "Recognition";
+//                        break;
+//                    case 3:
+//                        fovFeatures[i].properties.fovtype = "Identification";
+//                        break;
+//                    case 4:
+//                        fovFeatures[i].properties.fovtype = "Visible";
+//                        break;
+//                    default:
+////                        fovFeatures[i].properties.fovtype = "ERROR";
+//                        fovFeatures[i].properties.fovtype = "Visible";
+//                        break;
+//                }   // END SWITCH
+//            }   // END IF
+//        }   // END FOR
+//
+//        // Create FoV GeoJSON feature layers, bind popups, add FoV features to FoV layers
+//        result.monitor = L.geoJson.css(fovFeatures[0], fovStyles.monitor);
+//        result.monitor.addTo(layers.monitor);
+//        result.detection = L.geoJson.css(fovFeatures[1], fovStyles.detection);
+//        result.detection.addTo(layers.detection);
+//        result.recognition = L.geoJson.css(fovFeatures[2], fovStyles.recognition);
+//        result.recognition.addTo(layers.recognition);
+//        result.identification = L.geoJson.css(fovFeatures[3], fovStyles.identification);
+//        result.identification.addTo(layers.identification);
+//        if ( (data.features[4] != null) && (fovFeatures[4] != null) ) {
+//            result.visible = L.geoJson.css(fovFeatures[4], fovStyles.visible);
+//            result.visible.addTo(layers.visible);
+//        }
+//        
+//        appContent.track.fovs[appContent.track.fovs.length] = fovFeatures;
+//        if (appContent.console.outputLevel >= 4) { console.log("fovFeatures");console.log(JSON.stringify(fovFeatures)); }
+//        
+//        map.spin(false);    // Stop Spin
+//        if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", getFovs(), Stop Spinning"); }
+//    }
+//    
+//        
+//    map.spin(true);    // Start Spin
+//    if (appContent.console.outputLevel >= 2) { 
+//        console.log(performance.now() + ", getFovs(), Start Spinning"); 
+//    }
+//    
+//    $.ajax({
+//        method: 'GET',
+//        dataType: "json",
+//        url: fovreq,
+//        success: success
+//    });
+//    
+//    
+//    // some variables for logging, tracking and debug
+//    var endtime = performance.now();
+//    var totaltime = endtime - starttime;
+//    
+//    if (appContent.track.endtime < endtime) {
+//        appContent.track.endtime = endtime;
+//        appContent.track.totaltime = appContent.track.endtime - appContent.track.starttime;
+//    }
+//    appContent.track.elapsedtime += totaltime;
+//    
+//    if (appContent.console.outputLevel >= 3) { console.log("result");console.log(result); }
+//    if (appContent.console.outputLevel >= 2) { console.log(performance.now() + ", addFov(" + cameraid + "), END: " + endtime + ", Exec Time (ms): " + totaltime + '\n'); }
+//    
+//    return result;
+//}       // END getFovs()
+
+
 
 
 /////////////////////////////////////////////////////////

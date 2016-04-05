@@ -658,22 +658,11 @@ function runInserts () {
                     endTime = performance.now().toFixed(2), 
                     elapsedTime = endTime - startTime;
                 console.log(performance.now().toFixed(2) + ", Success ajax Insert Request() ");
-//                console.log('xml: '); console.log(xml);
+                console.log('xml: '); console.log(xml);
 //                console.log('inJSON: '); console.log(inJSON);
                 requests[requests.length] = { cam: cam, type: 'Insert', lock: '-', request: request, response: { xml: xml, json: inJSON }, time: { start: startTime, end: endTime, elapsed: elapsedTime } };
-                
-//                var row = $('<tr/>');
-//                $('<td/>').text(count).appendTo(row);
-//                $('<td/>').text(JSON.stringify(camera)).appendTo(row);
-//                $('<td/>').text(request).appendTo(row);
-//                $('<td/>').text(xml).appendTo(row);
-//                $('<td/>').text('-').appendTo(row);
-//                $('<td/>').text('Insert').appendTo(row);
-//                $('<td/>').text(startTime).appendTo(row);
-//                $('<td/>').text(endTime).appendTo(row);
-//                $('<td/>').text(elapsedTime).appendTo(row);
-//                row.appendTo('#Requests');
-                fillRequest(count, cam, request, inJSON, '-', 'Insert', startTime, endTime, elapsedTime);
+
+                fillRequest(count, cam, request, inJSON, '-', 'Insert', startTime, endTime, elapsedTime.toFixed(2));
                 
                 count++;
                 runInsert();
@@ -708,9 +697,10 @@ function runDeletes () {
                 var lock = getLock(xml);
 //                var lock = inJSON["wfs:FeatureCollection"]["@attributes"].lockId;
                 console.log(performance.now().toFixed(2) + ", Success ajax Lock Request() "); 
-//                console.log('xml: '); console.log(xml); console.log('inJSON: '); console.log(inJSON);
+                console.log('xml: '); console.log(xml); 
+//                console.log('inJSON: '); console.log(inJSON);
                 requests[requests.length] = { cam: cam, lock: lock, type: 'Lock', request: request, response: { xml: xml, json: inJSON }, time: { start: startTime, end: endTime, elapsed: elapsedTime } };
-                fillRequest(count, cam, request, inJSON, lock, 'Lock', startTime, endTime, elapsedTime);
+                fillRequest(count, cam, request, inJSON, lock, 'Lock', startTime, endTime, elapsedTime.toFixed(2));
                 deleteCam(cam, lock);
             }
             runRequest(request, success);
@@ -724,10 +714,10 @@ function runDeletes () {
                     endTime = performance.now().toFixed(2), 
                     elapsedTime = endTime - startTime;
                 console.log(performance.now().toFixed(2) + ", Success ajax Delete Request() ");
-//                console.log('xml: '); console.log(xml);
+                console.log('xml: '); console.log(xml);
 //                console.log('inJSON: '); console.log(inJSON);
                 requests[requests.length] = { cam: cam, lock: lock, type: 'Delete', request: request, response: { xml: xml, json: inJSON }, time: { start: startTime, end: endTime, elapsed: elapsedTime } };
-                fillRequest(count, cam, request, inJSON, lock, 'Delete', startTime, endTime, elapsedTime);
+                fillRequest(count, cam, request, inJSON, lock, 'Delete', startTime, endTime, elapsedTime.toFixed(2));
                 count++;
                 runDelete();
             }
@@ -765,10 +755,10 @@ function runUpdates () {
                 var inJSON = xml2JSON(xml); 
                 var lock = getLock(xml);
                 console.log(performance.now().toFixed(2) + ", Success ajax Lock Request() "); 
-//                console.log('xml: '); console.log(xml); 
+                console.log('xml: '); console.log(xml); 
 //                console.log('inJSON: '); console.log(inJSON);
                 requests[requests.length] = { cam: cam, lock: lock, type: 'Lock', request: request, response: { xml: xml, json: inJSON }, time: { start: startTime, end: endTime, elapsed: elapsedTime } };
-                fillRequest(count, cam, request, inJSON, lock, 'Lock', startTime, endTime, elapsedTime);
+                fillRequest(count, cam, request, inJSON, lock, 'Lock', startTime, endTime, elapsedTime.toFixed(2));
                 updateCam(cam, lock);
             }
             runRequest(request, success);
@@ -782,10 +772,10 @@ function runUpdates () {
                     endTime = performance.now().toFixed(2), 
                     elapsedTime = endTime - startTime;
                 console.log(performance.now().toFixed(2) + ", Success ajax Update Request() ");
-//                console.log('xml: '); console.log(xml);
+                console.log('xml: '); console.log(xml);
 //                console.log('inJSON: '); console.log(inJSON);
                 requests[requests.length] = { cam: cam, lock: lock, type: 'Update', request: request, response: { xml: xml, json: inJSON }, time: { start: startTime, end: endTime, elapsed: elapsedTime } };
-                fillRequest(count, cam, request, inJSON, lock, 'Update', startTime, endTime, elapsedTime);
+                fillRequest(count, cam, request, inJSON, lock, 'Update', startTime, endTime, elapsedTime.toFixed(2));
                 count++;
                 runUpdate();
             }
@@ -961,9 +951,9 @@ function populateSummary () {
 function fillRequest(n, cam, req, res, lock, type, start, end, elapsed) {
     var row = $('<tr/>');
     $('<td/>').text(n).appendTo(row);
-    $('<td/>').text(JSON.stringify(cam)).appendTo(row);
-    $('<td/>').text(req).appendTo(row);
-    $('<td/>').text(JSON.stringify(res)).appendTo(row);
+//    $('<td/>').text(JSON.stringify(cam)).appendTo(row);
+//    $('<td/>').text(req).appendTo(row);
+//    $('<td/>').text(JSON.stringify(res)).appendTo(row);
     $('<td/>').text(lock).appendTo(row);
     $('<td/>').text(type).appendTo(row);
     $('<td/>').text(start).appendTo(row);
@@ -1027,7 +1017,7 @@ function fillDelete(n, cam, req, lock, camid) {
 
 ///////////////////////////////////////////////////////////////////////
 // 
-// Functions to Clean the cameras dataset by removin test cameras
+// Functions to Clean the cameras dataset by removing test cameras
 // 
 // These functions are used in case there is an error during the test and, 
 // as a consequence, not all the cameras created by the test are removed.
@@ -1307,6 +1297,7 @@ function cleanTestCameras () {
             console.log(performance.now().toFixed(2) + ", Success ajax Delete Request() ");
             console.log('xml: '); console.log(xml);
             console.log('inJSON: '); console.log(inJSON);
+            console.log('Range: OID > ' + c);
             c++;
             starting();
         }

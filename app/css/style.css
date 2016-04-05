@@ -1,18 +1,20 @@
-	
+
+
+
+
+/*  INDEX HTML STYLES	*/
     html {
         width: 100%;
 		height: 100%;
 		margin: 0;
         padding: 0;
 	}
-
     body {
         width: 100%;
 		height: 100%;
         padding: 0;
         margin: 0;
     }
-
     html, body {
 		background-color: #E5E5E5;
         color: #333;
@@ -23,26 +25,256 @@
 /*		font-family: fantasy, sans-serif;*/
 /*		font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;*/
 	}
-
     .hidden {
         display: none;
     }
+    label {     /*  Used in the popups  */
+/*		background-color: #E5E5E5;*/
+        color: #03a9f4;
+        font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
 
+
+
+
+/*  POLYMER STYLES	*/
 	core-header-panel {
-/*		height: 15%;*/
-        height: 95px;
-/*        min-height: 95px;*/
-/*		overflow: auto;*/
 		-webkit-overflow-scrolling: touch;
         vertical-align: top;
+        height: 95px;
+/*		height: 15%;*/
+/*		min-height: 95px;*/
+/*		overflow: auto;*/
 	}
-
-
     core-icon {
         color: azure;
         width: 32px;
         height: 32px;
     }
+    paper-button.newcamerabutton {
+		background-color: white;
+        color: #333;
+        width: 50px;
+        height: 28px;
+        font: 15pt RobotoDraft, sans-serif;
+        text-align: center;
+    }
+    paper-item.sidebarp {
+		background-color: white;
+        color: #333;
+        font: 10pt RobotoDraft, sans-serif;
+        text-align: justify;
+    }
+    paper-item.paperitembutton {
+		background-color: white;
+        color: #03a9f4;
+        font: 12pt 'Helvetica Neue', Helvetica, sans-serif;
+    }
+    paper-item.paperitemsubtitle {
+		background-color: azure;
+        color: #03a9f4;
+        font: 15pt 'Helvetica Neue', Arial, sans-serif;
+    }
+    paper-item.paperitemtitle {
+		background: #03a9f4;
+        color: white;
+        font: 18pt RobotoDraft, sans-serif;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+	paper-tabs, core-toolbar {
+		background: #03a9f4;
+		color: white;
+        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+	}
+    paper-tabs[noink][nobar] paper-tab.core-selected {
+      color: #ffff8d;
+    }
+    core-toolbar paper-tabs {
+      box-shadow: none;
+    }
+	#tabs {
+		width: 100%;
+/*        max-width: 600px;*/
+        min-width: 120px;
+/*        min-height: 60px;*/
+		margin: 0;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+/*		text-transform: uppercase;*/
+	}
+    paper-toggle-button.camera::shadow [checked] .toggle-ink {
+      color: #4285f4;
+    }
+    paper-toggle-button.camera::shadow [checked] .toggle {
+      background-color: #4285f4;
+    }
+    paper-toggle-button.camera::shadow [checked] .toggle-button {
+      background-color: #9c27b0;
+    }
+    paper-toggle-button.fov::shadow [checked] .toggle-ink {
+      color: #4285f4;
+    }
+    paper-toggle-button.fov::shadow [checked] .toggle {
+      background-color: #4285f4;
+    }
+    paper-toggle-button.overlay::shadow [checked] .toggle-ink {
+      color: #4285f4;
+    }
+    paper-toggle-button.overlay::shadow [checked] .toggle {
+      background-color: #4285f4;
+    }
+    paper-toggle-button.basemap::shadow [checked] .toggle-ink {
+      color: #4285f4;
+    }
+    paper-toggle-button.basemap::shadow [checked] .toggle {
+      background-color: #4285f4;
+    }
+    paper-input {
+      width: 80%;
+/*      width: auto;*/
+      max-width: 90%;
+    }
+    paper-input-decorator {
+      width: 80%;
+/*      width: auto;*/
+      max-width: 90%;
+    }
+    @media only screen and (min-width : 320px) {
+      paper-input {
+        width: 100%;
+      }
+      paper-input-decorator {
+        max-width: 100%;
+      }
+    }
+    paper-input.narrow {
+      width: 150px;
+    }
+    paper-input-decorator.username {
+      color: #1a237e;
+    }
+    paper-input-decorator.emailaddress {
+      color: #0f9d58;
+    }
+    paper-input-decorator.description {
+      color: #f06292;
+    }
+    paper-spinner.blue::shadow .circle {
+        border-color: #4285f4;
+    }
+
+
+
+
+/*  LEAFLET & MAP STYLES	*/
+    #themap {
+        min-height: 500px;
+        height: 87%;
+        width: 100%;
+        vertical-align: bottom;
+/*        height: 89%;*/
+/*        margin-top: 100px;*/
+/*        padding-top: 100px;*/
+/*        top: 10%;*/
+    }
+    #camerasmap {
+        height: 100%;
+        width: 100%;
+    }
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+    .sidebar {
+        position: fixed;
+        left: 10px;
+        margin-top: 100px;
+        top: 5%;
+        bottom: 5%;
+        max-height: 650px;
+        min-height: 325px;
+        height: auto;
+        overflow: auto;
+        overflow-y: auto;
+        overflow-x: auto;
+        vertical-align: middle;
+/*        position: absolute;*/
+/*        position: inherit;*/
+/*        position: sticky;*/
+/*        top: 15%;*/
+/*        top: 110px;*/
+/*        bottom: 0;*/
+/*        max-height: 325px;*/
+/*        height: 325px;*/
+/*        height: inherit;*/
+/*        max-width: 500px;*/
+/*        min-width: 250px;*/
+/*        width: auto;*/
+/*        overflow: inherit;*/
+    }
+    .popup {
+        max-height: 500px;
+        min-height: 250px;
+        height: auto;
+        max-width: 800px;
+        min-width: 300px;
+        width: auto;
+        overflow: auto;
+/*        max-height: 600px;*/
+/*        max-height: 40%;*/
+/*        height: 300px;*/
+/*        max-width: 40%;*/
+/*        display: flex;*/
+/*        overflow: scroll;*/
+/*        overflow-y: auto;*/
+/*        overflow-y: scroll;*/
+/*        overflow-x: auto;*/
+    }
+    .leaflet-control-search .search-input {
+        min-width: 150px;
+    }
+    .leaflet-control-layers-list {
+        max-height: 400px;
+        min-height: 250px;
+        height: auto;
+        max-width: 500px;
+        min-width: 250px;
+        overflow: inherit;
+        overflow-y: auto;
+/*        height: 300px;*/
+/*        width: auto;*/
+/*        overflow: auto;*/
+/*        overflow-x: auto;*/
+    }
+    .popup table tr td label {
+/*        width: 100px;*/
+        min-width: 50px;
+        max-width: 90px;
+        width: auto;
+        overflow: auto;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
     core-icon[icon="layers"] {
@@ -82,20 +314,17 @@
     }
 */
 
-
-    label {
-/*		background-color: #E5E5E5;*/
-        color: #03a9f4;
-        font: 10pt 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    }
-
+/*
     paper-item.fov {
         
     }
+*/
 
+/*
     paper-item.camera {
         
     }
+*/
 
 /*
     paper-item {
@@ -105,77 +334,6 @@
     }
 */
 
-    paper-button.newcamerabutton {
-		background-color: white;
-        color: #333;
-        width: 50px;
-        height: 28px;
-        font: 15pt RobotoDraft, sans-serif;
-        text-align: center;
-    }
-
-    paper-item.sidebarp {
-		background-color: white;
-        color: #333;
-        font: 10pt RobotoDraft, sans-serif;
-        text-align: justify;
-    }
-
-    paper-item.paperitembutton {
-		background-color: white;
-        color: #03a9f4;
-        font: 12pt 'Helvetica Neue', Helvetica, sans-serif;
-    }
-
-    paper-item.paperitemsubtitle {
-		background-color: azure;
-        color: #03a9f4;
-        font: 15pt 'Helvetica Neue', Arial, sans-serif;
-    }
-
-    paper-item.paperitemtitle {
-		background: #03a9f4;
-        color: white;
-        font: 18pt RobotoDraft, sans-serif;
-        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-        text-align: center;
-    }
-
-
-	paper-tabs, core-toolbar {
-		background: #03a9f4;
-		color: white;
-        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-	}
-
-    paper-tabs[noink][nobar] paper-tab.core-selected {
-      color: #ffff8d;
-    }
-
-    core-toolbar paper-tabs {
-      box-shadow: none;
-    }
-
-    #themap {
-/*        margin-top: 100px;*/
-/*        padding-top: 100px;*/
-/*        top: 10%;*/
-        min-height: 500px;
-/*        height: 89%;*/
-        height: 87%;
-        width: 100%;
-        vertical-align: bottom;
-    }
-
-    #camerasmap {
-        height: 100%;
-        width: 100%;
-    }
-
-    #map {
-        height: 100%;
-        width: 100%;
-    }
 /*
     fov-app {
         width: 100%;
@@ -184,117 +342,14 @@
 	}
 */
 
-    .sidebar {
-        position: fixed;
-/*        position: absolute;*/
-/*        position: inherit;*/
-/*        position: sticky;*/
-        left: 10px;
-        margin-top: 100px;
-        top: 5%;
-/*        top: 15%;*/
-/*        top: 110px;*/
-        bottom: 5%;
-/*        bottom: 0;*/
-        max-height: 650px;
-/*        max-height: 325px;*/
-        min-height: 325px;
-        height: auto;
-/*        height: 325px;*/
-/*        height: inherit;*/
-/*        max-width: 500px;*/
-/*        min-width: 250px;*/
-/*        width: auto;*/
+/*
+    .sidebar-pane {
         overflow: auto;
-/*        overflow: inherit;*/
         overflow-y: auto;
         overflow-x: auto;
-        vertical-align: middle;
     }
+*/
 
-
-
-    paper-spinner.blue::shadow .circle {
-        border-color: #4285f4;
-    }
-
-
-	#tabs {
-		width: 100%;
-/*        max-width: 600px;*/
-        min-width: 120px;
-/*        min-height: 60px;*/
-		margin: 0;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-/*		text-transform: uppercase;*/
-	}
-
-    .popup {
-/*        max-height: 600px;*/
-        max-height: 500px;
-/*        max-height: 40%;*/
-        min-height: 250px;
-/*        height: 300px;*/
-        height: auto;
-        max-width: 800px;
-/*        max-width: 40%;*/
-        min-width: 300px;
-        width: auto;
-/*        display: flex;*/
-        overflow: auto;
-/*        overflow-y: auto;*/
-/*        overflow-y: scroll;*/
-/*        overflow-x: auto;*/
-    }
-
-    .sidebar-pane {
-/*        overflow: auto;*/
-/*        overflow-y: auto;*/
-/*        overflow-x: auto;*/
-    }
-
-
-
-
-    paper-toggle-button.camera::shadow [checked] .toggle-ink {
-      color: #4285f4;
-    }
-
-    paper-toggle-button.camera::shadow [checked] .toggle {
-      background-color: #4285f4;
-    }
-
-    paper-toggle-button.camera::shadow [checked] .toggle-button {
-      background-color: #9c27b0;
-    }
-
-    paper-toggle-button.fov::shadow [checked] .toggle-ink {
-      color: #4285f4;
-    }
-
-    paper-toggle-button.fov::shadow [checked] .toggle {
-      background-color: #4285f4;
-    }
-
-    paper-toggle-button.overlay::shadow [checked] .toggle-ink {
-      color: #4285f4;
-    }
-
-    paper-toggle-button.overlay::shadow [checked] .toggle {
-      background-color: #4285f4;
-    }
-
-    paper-toggle-button.basemap::shadow [checked] .toggle-ink {
-      color: #4285f4;
-    }
-
-    paper-toggle-button.basemap::shadow [checked] .toggle {
-      background-color: #4285f4;
-    }
-    
 /*
     paper-toggle-button.bluetooth::shadow [checked] .toggle-ink {
       color: #4285f4;
@@ -316,47 +371,6 @@
       background-color: #9c27b0;
     }
 */
-
-
- paper-input {
-      width: 80%;
-/*      width: auto;*/
-      max-width: 90%;
-    }
-
-    paper-input-decorator {
-      width: 80%;
-/*      width: auto;*/
-      max-width: 90%;
-    }
-
-    @media only screen and (min-width : 320px) {
-      paper-input {
-        width: 100%;
-      }
-
-      paper-input-decorator {
-        max-width: 100%;
-      }
-    }
-
-    paper-input.narrow {
-      width: 150px;
-    }
-
-
-    paper-input-decorator.username {
-      color: #1a237e;
-    }
-
-    paper-input-decorator.emailaddress {
-      color: #0f9d58;
-    }
-
-    paper-input-decorator.description {
-      color: #f06292;
-    }
-
 
 /*
     .custom /deep/ ::-webkit-input-placeholder {
@@ -402,29 +416,6 @@
     }
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
     .leaflet-control-layers .leaflet-control-layers-list, .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
         overflow: auto;
@@ -463,20 +454,6 @@
     }
 */
 
-    .leaflet-control-layers-list {
-        max-height: 400px;
-        min-height: 250px;
-/*        height: 300px;*/
-        height: auto;
-        max-width: 500px;
-        min-width: 250px;
-/*        width: auto;*/
-/*        overflow: auto;*/
-        overflow: inherit;
-        overflow-y: auto;
-/*        overflow-x: auto;*/
-    }
-
 /*
     paper-tab {
         min-width: 100px;
@@ -490,6 +467,7 @@
         height: 250px;
 	}
 */
+
 /*
 	@media (min-width: 481px) {
 		#tabs {
@@ -502,10 +480,3 @@
 */
     
 
-.leaflet-control-search .search-input {
-    min-width: 150px;
-}
-
-
-
-	
